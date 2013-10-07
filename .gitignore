@@ -6,3 +6,7 @@ pom.xml
 .lein-deps-sum
 .lein-repl-history
 .nrepl-port
+/cljs-src/wireframes/renderer/vector.cljs
+/cljs-src/wireframes/shape.clj
+/cljs-src/wireframes/transform.cljs
+/.lein-failures
