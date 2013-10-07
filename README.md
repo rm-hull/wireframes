@@ -1,4 +1,4 @@
-# Wireframes
+# Wireframes [![Build Status](https://secure.travis-ci.org/rm-hull/wireframes.png)](http://travis-ci.org/rm-hull/wireframes)
 
 A lightweight real-time 3D rendering engine in Clojure & ClojureScript.
 
