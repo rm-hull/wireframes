@@ -7,6 +7,6 @@ pom.xml
 .lein-repl-history
 .nrepl-port
 /cljs-src/wireframes/renderer/vector.cljs
-/cljs-src/wireframes/shape.clj
+/cljs-src/wireframes/shape.cljs
 /cljs-src/wireframes/transform.cljs
 /.lein-failures
