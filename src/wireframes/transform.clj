@@ -12,7 +12,7 @@
   (translate 0.0  0.0  0.0))
 
 (defn rotate
-  "Rotation aroiund the Z-axis"
+  "Rotation around the Z-axis"
   [theta]
   (let [s (Math/sin theta)
         c (Math/cos theta)]
@@ -37,9 +37,9 @@
   ([a b]
     (let [a (conj a [0.0  0.0  0.0  1.0])
           b (conj b [0.0  0.0  0.0  1.0])
-          transposed  (apply map vector b)
+          transposed  (apply mapv vector a)
           row-mult    (fn [x] (mapv (partial dot-product x) transposed))]
-      (subvec (mapv row-mult a) 0 3)))
+      (subvec (mapv row-mult b) 0 3)))
   ([a b & more]
     (let [initial (concat a b)]
       (reduce concat initial more))))
