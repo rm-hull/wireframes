@@ -64,6 +64,7 @@ Produces:
 
 * http://pobox.com/~kragen/sw/torus.html
 * http://lists.canonical.org/pipermail/kragen-hacks/2007-February/000448.html
+* http://www.sjbaker.org/wiki/index.php?title=The_History_of_The_Teapot
 
 ## License
 
