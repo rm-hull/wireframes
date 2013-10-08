@@ -76,6 +76,9 @@
 (defn- intervals->radians [num-intervals]
    (/ (* (Math/atan 1) 8.0) (double num-intervals)))
 
+(defn degrees->radians [d]
+  (/ (* (double d) Math/PI) 180.0))
+
 (defn make-circle
   "Approximate a circle in the X-Y plane around the origin wth radius r and n points"
   [r n]
@@ -99,14 +102,20 @@
       circle
       n2)))
 
-(defn make-cube [n]
+(defn make-cube
+  "Start with a point, extrude to a line alone the Z-plane, then extrude that
+   line in the Y-axis to make a square... extrude again along the X-axis to
+   complete the square. "[n]
   (->>
     (make-point 0 0 0)
     (extrude (translate 0 0 n))
     (extrude (translate 0 n 0))
     (extrude (translate n 0 0))))
 
-(defn make)
+(defn make-cylinder [r n h]
+  (->>
+    (make-circle r n)
+    (extrude (translate 0 0 h))))
 
 (comment
 
