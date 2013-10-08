@@ -23,9 +23,9 @@ create a cube, as per the following code:
 ```clojure
 (->>
   (make-point 0 0 0)
-  (extrude (translate 0 0 n))
-  (extrude (translate 0 n 0))
-  (extrude (translate n 0 0)))
+  (extrude (translate 0 0 1))
+  (extrude (translate 0 1 0))
+  (extrude (translate 1 0 0)))
 ```
 
 ### Drawing shapes
