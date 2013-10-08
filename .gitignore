@@ -10,3 +10,6 @@ pom.xml
 /cljs-src/wireframes/shape.cljs
 /cljs-src/wireframes/transform.cljs
 /.lein-failures
+/cljs-src/wireframes/bezier_patch.cljs
+/cljs-src/wireframes/shape_loader.cljs
+/cljs-src/wireframes/shape_primitives.cljs

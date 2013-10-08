@@ -1,7 +1,7 @@
 (ns wireframes.renderer.bitmap
   (:refer-clojure :exclude [identity concat])
   (:use [wireframes.transform]
-        [wireframes.shape])
+        [wireframes.shape-primitives])
   (:import [java.awt.image BufferedImage]
            [java.awt.geom AffineTransform GeneralPath]
            [java.awt Color Graphics2D RenderingHints BasicStroke GraphicsEnvironment]
@@ -54,11 +54,11 @@
   (write-png
     (->img
       (concat
-        (rotate angle)
-        (transpose-axes :y :z)
-        (rotate (/ angle 1.618))
-        (transpose-axes :y :z)
-        (translate 0 0 6))
+	(rotate angle)
+	(transpose-axes :y :z)
+	(rotate (/ angle 1.618))
+	(transpose-axes :y :z)
+	(translate 0 0 6))
       (make-torus 1 3 60 60)
       [400 400])
     "tourus-65.png")

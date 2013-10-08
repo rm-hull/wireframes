@@ -1,6 +1,7 @@
-(ns wireframes.shape
+(ns wireframes.shape-primitives
   (:refer-clojure :exclude [identity concat])
-  (:use [wireframes.transform]))
+  (:use [wireframes.transform]
+        [clojure.string :only [split-lines split]]))
 
 ;; Shapes are represented as:
 ;;
@@ -117,42 +118,12 @@
     (make-circle r n)
     (extrude (translate 0 0 h))))
 
-(comment
+(defn make-cone [r n h]
+  (extrude
+    (concat
+      (translate 0 0 1)
+      (scale 0.9))
+    (make-circle r n)
+    h))
 
-  (def n 12)
-  (def r 10)
 
-  (clojure.pprint/pprint (make-circle 10 12))
-
-  (clojure.pprint/pprint (make-cube 5))
-
-  (clojure.pprint/pprint (make-torus 1 3 12 12))
-
-  (def xf (rotate (/ (* (Math/atan 1) 8.0) (double n))))
-
-  (clojure.pprint/pprint (take 10 (iterate (partial transform-shape xf) (make-point r 0 0))))
-
-  (augment
-    (make-point 1 1 1)
-    (make-point 1 2 1))
-
-  (offsets [[1 2]] )
-
-  (def x
-    (->
-      (make-point 1 1 1)
-      (augment (make-point 1 2 1))
-      (connect-points (make-point 1 2 1))
-        ))
-
-  (def y
-    (-> x
-      (augment (make-point 1 3 1))
-      (connect-points (make-point 1 3 1))))
-
-  (def z
-    (-> y
-      (augment (make-point 1 1 5))
-      (connect-points (make-point 1 1 5))))
-
-)

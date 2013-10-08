@@ -28,6 +28,8 @@
            (translate 5 4 3)
            (translate 3 3 10)))))
 
+; TODO: rotate test --> concat is not associative
+
 (deftest transform-single-point
   (is (= [8.0 10.0 13.0]
          (transform-point
