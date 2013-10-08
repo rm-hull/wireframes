@@ -4,15 +4,15 @@
         [wireframes.transform]))
 
 (deftest concat-identity-identity
-  (is (= (identity)
+  (is (= identity
          (concat
-           (identity)
-           (identity)))))
+           identity
+           identity))))
 
 (deftest concat-identity-vector
   (is (= (translate 4 6 9)
          (concat
-           (identity)
+           identity
            (translate 4 6 9)))))
 
 (deftest concat-two-vectors
@@ -20,3 +20,27 @@
          (concat
            (translate 5 3 2)
            (translate 3 7 19)))))
+
+(deftest concat-three-vectors
+  (is (= (translate 11 12 19)
+         (concat
+           (translate 3 5 6)
+           (translate 5 4 3)
+           (translate 3 3 10)))))
+
+(deftest transform-point
+  (is (= [8.0 10.0 13.0]
+         (transform
+           (translate 3 5 6)
+           [5 5 7]))))
+
+(deftest perspective-point
+  (is (= [1.4 0.7]
+         (perspective [12.6 6.3 9.0]))))
+
+(deftest normal-3d-triangle
+  (is (= [0.2493773340269082 -0.9476338693022512 0.19950186722152657]
+         (normal
+           [3 5 6]
+           [7 5 11]
+           [3 5 14]))))
