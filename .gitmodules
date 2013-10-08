@@ -1,3 +1,3 @@
 [submodule "resources/newell-teapot"]
 	path = resources/newell-teapot
-	url = git@github.com:rm-hull/newell-teapot.git
+	url = https://github.com/rm-hull/newell-teapot.git
