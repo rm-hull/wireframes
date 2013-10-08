@@ -38,17 +38,16 @@
     (let [a (conj a [0.0  0.0  0.0  1.0])
           b (conj b [0.0  0.0  0.0  1.0])
           transposed  (apply map vector b)
-          row-mult    (fn [x] (vec (map (partial dot-product x) transposed)))]
-      (vec (take 3 (map row-mult a)))))
+          row-mult    (fn [x] (mapv (partial dot-product x) transposed))]
+      (subvec (mapv row-mult a) 0 3)))
   ([a b & more]
     (let [initial (concat a b)]
       (reduce concat initial more))))
 
-(defn transform [a point]
+(defn transform-point [a point]
   (->
     (partial dot-product (conj point 1.0))
-    (map a)
-    vec))
+    (mapv a)))
 
 (defn perspective
   "Perspective transform a point into 2D"

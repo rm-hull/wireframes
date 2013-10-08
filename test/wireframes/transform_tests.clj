@@ -28,9 +28,9 @@
            (translate 5 4 3)
            (translate 3 3 10)))))
 
-(deftest transform-point
+(deftest transform-single-point
   (is (= [8.0 10.0 13.0]
-         (transform
+         (transform-point
            (translate 3 5 6)
            [5 5 7]))))
 
