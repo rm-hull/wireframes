@@ -1,6 +1,6 @@
 # Wireframes [![Build Status](https://secure.travis-ci.org/rm-hull/wireframes.png)](http://travis-ci.org/rm-hull/wireframes)
 
-A lightweight real-time 3D rendering engine in Clojure & ClojureScript.
+A lightweight 3D rendering engine in Clojure & ClojureScript.
 
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/solid-torus.png)
 
