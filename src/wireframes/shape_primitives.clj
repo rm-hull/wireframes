@@ -98,15 +98,6 @@
       circle
       n2)))
 
-(defn make-cube
-  "Start with a point, extrude to a line alone the Z-plane, then extrude that
-   line in the Y-axis to make a square... extrude again along the X-axis to
-   complete the square. "[n]
-  (->>
-    (make-point 0 0 0)
-    (extrude (t/translate 0 0 n))
-    (extrude (t/translate 0 n 0))
-    (extrude (t/translate n 0 0))))
 
 (defn make-cylinder [r n h]
   (->>

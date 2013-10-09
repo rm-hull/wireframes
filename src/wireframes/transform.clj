@@ -15,9 +15,6 @@
     [0.0  sy   0.0  0.0]
     [0.0  0.0  sz   0.0]]))
 
-(def identity
-  (translate 0.0  0.0  0.0))
-
 (defn rotate
   "Rotate around the given axis by theta radians"
   [axis theta]
@@ -35,6 +32,9 @@
       :z [[   c  (- s)  0.0   0.0]
           [   s     c   0.0   0.0]
           [ 0.0   0.0   1.0   0.0]])))
+
+(def identity
+  (translate 0.0  0.0  0.0))
 
 (defn dot-product [a b]
   (reduce + (map * a b)))
@@ -74,3 +74,11 @@
                        (- (* v10 v21) (- v11 v20))]
         mag (Math/sqrt (+ (* n0 n0) (* n1 n1) (* n2 n2)))]
     [ (/ n0 mag) (/ n1 mag) (/ n2 mag)]))
+
+(defn sqr [x]
+  (* x x))
+
+(defn distance
+  "Distance between two points"
+  [a b]
+  (Math/sqrt (reduce + (map (comp sqr -) a b))))

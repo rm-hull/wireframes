@@ -1,7 +1,8 @@
 (ns wireframes.renderer.bitmap
   (:require [wireframes.transform :as t]
             [wireframes.shape-primitives :as sp]
-            [wireframes.shape-loader :as sl])
+            [wireframes.shape-loader :as sl]
+            [wireframes.shapes.platonic-solids :as ps])
   (:import [java.awt.image BufferedImage]
            [java.awt.geom AffineTransform GeneralPath]
            [java.awt Color Graphics2D RenderingHints BasicStroke GraphicsEnvironment]
@@ -75,5 +76,15 @@
       [400 400])
     "torus-65.png")
 
+  (write-png
+    (->img
+      3
+      (t/concat
+        (t/rotate :z (sp/degrees->radians 65))
+        (t/rotate :y (sp/degrees->radians -30))
+        (t/translate 0 0 16))
+      ps/tetrahedron
+      [400 400])
+    "tetrahedron.png")
 )
 
