@@ -14,7 +14,7 @@
   :hooks [leiningen.dalap leiningen.cljsbuild]
   :source-path "src"
   :cljsbuild {
-    :builds [{:source-paths ["cljs-src"], :id "main", :jar true}]}
+    :builds [{:source-paths ["target/generated"], :id "main", :jar true}]}
   :min-lein-version "2.3.2"
   :global-vars {*warn-on-reflection* true}
   )

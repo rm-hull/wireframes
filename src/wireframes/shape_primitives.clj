@@ -1,7 +1,5 @@
 (ns wireframes.shape-primitives
-  (:refer-clojure :exclude [identity concat])
-  (:use [wireframes.transform]
-        [clojure.string :only [split-lines split]]))
+  (:require [wireframes.transform :as t]))
 
 ;; Shapes are represented as:
 ;;
@@ -10,7 +8,7 @@
 ;;     :polygons [pg1 pg2 ...]}    pg_n = 3 indices into points array
 
 (defn transform-shape [transform {:keys [points] :as shape}]
-  (assoc shape :points (mapv (partial transform-point transform) points)))
+  (assoc shape :points (mapv (partial t/transform-point transform) points)))
 
 (defn- offsets [coll1 coll2]
   (mapv #(mapv (partial + (count coll1)) %) coll2))
@@ -19,7 +17,7 @@
   "Add two shapes together"
   [shape1 shape2]
   (let [offsets (partial offsets (:points shape1))]
-    (merge-with (comp vec clojure.core/concat)
+    (merge-with (comp vec concat)
       shape1
       {:points   (:points shape2)
        :lines    (offsets (:lines shape2))
@@ -29,14 +27,14 @@
   (let [e (count (:points extruded-shape))
         n (count (:points new-part))
         new-lines (->> (range n e) (mapv #(vector (- % n) %)))]
-    (merge-with (comp vec distinct clojure.core/concat)
+    (merge-with (comp vec distinct concat)
       extruded-shape
       {:lines new-lines})))
 
 (defn- connect-triangles [extruded-shape new-part offset1 offset2]
   extruded-shape
 ;  (let [line (partial nth (:lines extruded-shape))]
-;    (apply clojure.core/concat
+;    (apply concat
 ;      (for [i (range (count (:lines new-part)))
 ;            :let [[ol0 ol1] (line (+ i offset1))
 ;                  [nl0 nl1] (line (+ i offset2))]]
@@ -84,7 +82,7 @@
   "Approximate a circle in the X-Y plane around the origin wth radius r and n points"
   [r n]
   (extrude
-    (rotate (intervals->radians n))
+    (t/rotate (intervals->radians n))
     (make-point r 0 0)
     n))
 
@@ -93,13 +91,13 @@
    with correspondingly n2 and n1 points around each axis."
   [r1 r2 n1 n2]
   (let [circle (transform-shape
-                 (translate r2 0 0)
+                 (t/translate r2 0 0)
                  (make-circle r1 n1))]
     (extrude
-      (concat
-        (transpose-axes :y :z)
-        (rotate (intervals->radians n2))
-        (transpose-axes :y :z))
+      (t/concat
+        (t/transpose-axes :y :z)
+        (t/rotate (intervals->radians n2))
+        (t/transpose-axes :y :z))
       circle
       n2)))
 
@@ -109,20 +107,20 @@
    complete the square. "[n]
   (->>
     (make-point 0 0 0)
-    (extrude (translate 0 0 n))
-    (extrude (translate 0 n 0))
-    (extrude (translate n 0 0))))
+    (extrude (t/translate 0 0 n))
+    (extrude (t/translate 0 n 0))
+    (extrude (t/translate n 0 0))))
 
 (defn make-cylinder [r n h]
   (->>
     (make-circle r n)
-    (extrude (translate 0 0 h))))
+    (extrude (t/translate 0 0 h))))
 
 (defn make-cone [r n h]
   (extrude
     (concat
-      (translate 0 0 1)
-      (scale 0.9))
+      (t/translate 0 0 1)
+      (t/scale 0.9))
     (make-circle r n)
     h))
 

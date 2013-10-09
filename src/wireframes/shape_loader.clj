@@ -1,9 +1,6 @@
 (ns wireframes.shape-loader
-  (:refer-clojure :exclude [identity concat])
-  (:use [wireframes.transform]
-        [wireframes.shape-primitives]
-        [wireframes.bezier-patch]
-        [clojure.string :only [split-lines split]]))
+  (:require [clojure.string :as str]
+            [wireframes.bezier-patch :as bp]))
 
 (defn- parse-int [s]
   (Integer/parseInt s))
@@ -13,7 +10,7 @@
 
 (defn- parse-csv [converter line]
   (->>
-    (split line #",")
+    (str/split line #",")
     (map converter)))
 
 (defn- create-points [vertices-data]
@@ -26,7 +23,7 @@
       (map f))))
 
 (defn load-shape [file]
-  (let [raw-data    (vec (split-lines (slurp file)))
+  (let [raw-data    (vec (str/split-lines (slurp file)))
         num-patches (Integer/parseInt (raw-data 0))]
     {:patches (create-patches (subvec raw-data 1 (inc num-patches)))
      :vertices (create-points (subvec raw-data (+ num-patches 2))) }))
@@ -35,9 +32,9 @@
 
   (def patches (:patches (load-shape "resources/newell-teapot/teapot")))
   (def vertices (:vertices (load-shape "resources/newell-teapot/teapot")))
-  (def control-points (compute-control-points (first patches) vertices))
+  (def control-points (bp/compute-control-points (first patches) vertices))
 
-  (evaluate-bezier-patch control-points 0 0)
+  (bp/evaluate-bezier-patch control-points 0 0)
 
 
 )
