@@ -40,15 +40,11 @@ For example, in Clojure, to generate a torus angled in the Y- and Z-axles, writt
 out to a PNG file:
 
 ```clojure
-(def angle (degrees->radians 65))
-
-(def img 
+(def img
   (->img
     (concat
-      (rotate angle)
-      (transpose-axes :y :z)
-      (rotate (/ angle 1.618))
-      (transpose-axes :y :z)
+      (rotate :z (degrees->radians 65))
+      (rotate :y (degrees->radians -30))
       (translate 0 0 6))
     (make-torus 1 3 60 60)
     [400 400]))
@@ -65,6 +61,7 @@ Produces:
 * Efficiently calculate polygons on shapes
 * Rewrite/rename wireframes.transform/concat - unroll loops for performance
 * Complete Bezier patch code
+* Rectilinear perspective mapping
 * SVG renderer
 * Canvas renderer
 * Simple flat shading / lighting
