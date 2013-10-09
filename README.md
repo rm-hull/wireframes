@@ -60,6 +60,21 @@ Produces:
 
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/torus-65.png)
 
+## TODO
+
+* Efficiently calculate polygons on shapes
+* Rewrite/rename wireframes.transform/concat - unroll loops for performance
+* Complete Bezier patch code
+* SVG renderer
+* Canvas renderer
+* Simple flat shading / lighting
+* Colours
+* Gourand shading
+* Texture mapping
+* Backface removal
+* Improve documentation
+* Examples
+
 ## References
 
 * http://lists.canonical.org/pipermail/kragen-hacks/2007-February/000448.html
