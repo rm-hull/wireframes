@@ -82,7 +82,7 @@
   "Approximate a circle in the X-Y plane around the origin wth radius r and n points"
   [r n]
   (extrude
-    (t/rotate (intervals->radians n))
+    (t/rotate :z (intervals->radians n))
     (make-point r 0 0)
     n))
 
@@ -94,10 +94,7 @@
                  (t/translate r2 0 0)
                  (make-circle r1 n1))]
     (extrude
-      (t/concat
-        (t/transpose-axes :y :z)
-        (t/rotate (intervals->radians n2))
-        (t/transpose-axes :y :z))
+      (t/rotate :y (intervals->radians n2))
       circle
       n2)))
 

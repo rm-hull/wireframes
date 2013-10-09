@@ -1,5 +1,6 @@
 (ns wireframes.shape-loader
   (:require [clojure.string :as str]
+            [wireframes.shape-primitives :as sp]
             [wireframes.bezier-patch :as bp]))
 
 (defn- parse-int [s]
@@ -22,19 +23,26 @@
       patch-data
       (map f))))
 
-(defn load-shape [file]
+(defn- create-surface [divisions vertices patch]
+  (let [control-points (bp/compute-control-points vertices patch)]
+    {:points (bp/surface-points control-points divisions)
+     :lines  (bp/face-connectivity divisions)
+     :polygons nil }))
+
+(defn load-shape [file divisions]
   (let [raw-data    (vec (str/split-lines (slurp file)))
-        num-patches (Integer/parseInt (raw-data 0))]
-    {:patches (create-patches (subvec raw-data 1 (inc num-patches)))
-     :vertices (create-points (subvec raw-data (+ num-patches 2))) }))
+        num-patches (Integer/parseInt (raw-data 0))
+        patches     (create-patches (subvec raw-data 1 (inc num-patches)))
+        vertices    (create-points (subvec raw-data (+ num-patches 2)))]
+      (->>
+        patches
+        (map (partial create-surface divisions vertices))
+        (reduce sp/augment)
+        ; TODO: create polygons
+        )))
 
 (comment
 
-  (def patches (:patches (load-shape "resources/newell-teapot/teapot")))
-  (def vertices (:vertices (load-shape "resources/newell-teapot/teapot")))
-  (def control-points (bp/compute-control-points (first patches) vertices))
-
-  (bp/evaluate-bezier-patch control-points 0 0)
-
+  (load-shape "resources/newell-teapot/teapot" 16)
 
 )

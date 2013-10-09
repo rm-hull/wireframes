@@ -19,23 +19,22 @@
   (translate 0.0  0.0  0.0))
 
 (defn rotate
-  "Rotation around the Z-axis"
-  [theta]
+  "Rotate around the given axis by theta radians"
+  [axis theta]
   (let [s (Math/sin theta)
         c (Math/cos theta)]
-    [[c    (- s)  0.0   0.0]
-     [s       c   0.0   0.0]
-     [0.0   0.0   1.0   0.0]]))
+    (condp = axis
+      :x [[ 1.0   0.0   0.0   0.0]
+          [ 0.0     c  (- s)  0.0]
+          [ 0.0     s     c   0.0]]
 
-(def transpose-axes
-  "Exchange two of the X, Y, Z axes - useful for making rotate go around another axis"
-  (let [axes {:x 0 :y 1 :z 2}]
-    (fn [a b]
-      (let [a-index (axes a)
-            b-index (axes b)]
-        (assoc identity
-          a-index (identity b-index)
-          b-index (identity a-index))))))
+      :y [[   c   0.0     s   0.0]
+          [ 0.0   1.0   0.0   0.0]
+          [(- s)  0.0     c   0.0]]
+
+      :z [[   c  (- s)  0.0   0.0]
+          [   s     c   0.0   0.0]
+          [ 0.0   0.0   1.0   0.0]])))
 
 (defn dot-product [a b]
   (reduce + (map * a b)))

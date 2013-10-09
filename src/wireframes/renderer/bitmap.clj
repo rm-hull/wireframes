@@ -1,14 +1,14 @@
 (ns wireframes.renderer.bitmap
-  (:refer-clojure :exclude [identity concat])
-  (:use [wireframes.transform]
-        [wireframes.shape-primitives])
+  (:require [wireframes.transform :as t]
+            [wireframes.shape-primitives :as sp]
+            [wireframes.shape-loader :as sl])
   (:import [java.awt.image BufferedImage]
            [java.awt.geom AffineTransform GeneralPath]
            [java.awt Color Graphics2D RenderingHints BasicStroke GraphicsEnvironment]
            [javax.imageio ImageIO]))
 
 (defn- draw-shape [^Graphics2D g2d transform shape]
-  (let [points (mapv (comp perspective (partial transform-point transform)) (:points shape))
+  (let [points (mapv (comp t/perspective (partial t/transform-point transform)) (:points shape))
         path (GeneralPath.)]
     (doseq [[idx1 idx2] (:lines shape)
             :let [[ax ay] (points idx1)
@@ -49,18 +49,15 @@
 
 (comment
 
-  (def angle (degrees->radians 65))
-
   (write-png
     (->img
-      (concat
-	(rotate angle)
-	(transpose-axes :y :z)
-	(rotate (/ angle 1.618))
-	(transpose-axes :y :z)
-	(translate 0 0 6))
-      (make-torus 1 3 60 60)
-      [400 400])
-    "tourus-65.png")
+      (t/concat
+        (t/rotate :z (sp/degrees->radians 90))
+        (t/rotate :x (sp/degrees->radians 70))
+        (t/translate 0 0 4)
+      )
+      (sl/load-shape "resources/newell-teapot/teapot" 16)
+      [800 800])
+    "teapot.png")
 )
 
