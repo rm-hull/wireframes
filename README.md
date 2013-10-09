@@ -78,6 +78,7 @@ Produces:
 * http://www.sjbaker.org/wiki/index.php?title=The_History_of_The_Teapot
 * http://www.scratchapixel.com/lessons/3d-basic-lessons/lesson-11-rendering-the-teapot-bezier-surfaces/b-zier-surface/
 * https://en.wikipedia.org/wiki/Rotation_matrix#Basic_rotations
+* https://www.mathdisk.com/pub/safi/worksheets/Perspective_Projection
 
 ## License
 
