@@ -11,10 +11,9 @@
                  [rm-hull/monet "0.1.8"]]
   :plugins [[lein-cljsbuild "0.3.3"]
             [com.birdseye-sw/lein-dalap "0.1.0"]]
-  :hooks [leiningen.dalap leiningen.cljsbuild]
+  :hooks [leiningen.dalap]
   :source-path "src"
   :cljsbuild {
     :builds [{:source-paths ["target/generated"], :id "main", :jar true}]}
   :min-lein-version "2.3.2"
-  :global-vars {*warn-on-reflection* true}
-  )
+  :global-vars {*warn-on-reflection* true})
