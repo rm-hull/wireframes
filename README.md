@@ -81,8 +81,8 @@ currently on the TODO list.
 
 * Efficiently calculate polygons on shapes
 * Rewrite/rename wireframes.transform/concat - unroll loops for performance
-* ~~~Complete Bezier patch code
-* ~~~Rectilinear perspective mapping
+* ~~Complete Bezier patch code~~
+* ~~Rectilinear perspective mapping~~
 * Stitch adjacent surface panels together
 * SVG renderer
 * Canvas renderer
