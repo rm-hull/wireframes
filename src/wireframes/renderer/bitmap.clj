@@ -7,8 +7,12 @@
            [java.awt Color Graphics2D RenderingHints BasicStroke GraphicsEnvironment]
            [javax.imageio ImageIO]))
 
-(defn- draw-shape [^Graphics2D g2d transform shape]
-  (let [points (mapv (comp t/perspective (partial t/transform-point transform)) (:points shape))
+(defn- draw-shape [^Graphics2D g2d focal-length transform shape]
+  (let [points (mapv
+                 (comp
+                   (t/perspective focal-length)
+                   (partial t/transform-point transform))
+                 (:points shape))
         path (GeneralPath.)]
     (doseq [[idx1 idx2] (:lines shape)
             :let [[ax ay] (points idx1)
@@ -27,7 +31,7 @@
            (GraphicsEnvironment/getLocalGraphicsEnvironment)))
        w h)))
 
-(defn ->img [transform shape [w h]]
+(defn ->img [focal-length transform shape [w h]]
   (let [img (create-image w h)
         g2d (.createGraphics img)
         scale (min (quot w 2) (quot h 2))]
@@ -40,7 +44,7 @@
       (.setStroke (BasicStroke. (/ 1.0 (quot w 2))))
       (.setRenderingHint RenderingHints/KEY_ANTIALIASING RenderingHints/VALUE_ANTIALIAS_ON)
       (.setRenderingHint RenderingHints/KEY_RENDERING RenderingHints/VALUE_RENDER_QUALITY))
-    (draw-shape g2d transform shape)
+    (draw-shape g2d focal-length transform shape)
     (.dispose g2d)
     img))
 
@@ -51,13 +55,25 @@
 
   (write-png
     (->img
+      10
       (t/concat
-        (t/rotate :z (sp/degrees->radians 90))
-        (t/rotate :x (sp/degrees->radians 70))
-        (t/translate 0 0 4)
-      )
+        (t/rotate :z (sp/degrees->radians 35))
+        (t/rotate :x (sp/degrees->radians -70))
+        (t/translate 0 -1 40))
       (sl/load-shape "resources/newell-teapot/teapot" 16)
-      [800 800])
+      [600 600])
     "teapot.png")
+
+  (write-png
+    (->img
+      3
+      (t/concat
+        (t/rotate :z (sp/degrees->radians 65))
+        (t/rotate :y (sp/degrees->radians -30))
+        (t/translate 0 0 16))
+      (sp/make-torus 1 3 60 60)
+      [400 400])
+    "torus-65.png")
+
 )
 

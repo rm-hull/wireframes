@@ -56,9 +56,13 @@
     (mapv a)))
 
 (defn perspective
-  "Perspective transform a point into 2D"
-  [[x y z]]
-  [(/ x z) (/ y z)])
+  "Constructs a perspective function for a given focal-length, which
+   can be used to project a 3D point into 2D cartesian co-ordinates."
+  [focal-length]
+  (let [focal-length (double focal-length)]
+    (fn [[x y z]]
+      (let [p (/ focal-length (- focal-length z))]
+        [(* p x) (* p y)]))))
 
 (defn normal
   "Calculate the normal of a triangle"

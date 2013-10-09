@@ -40,28 +40,50 @@ For example, in Clojure, to generate a torus angled in the Y- and Z-axles, writt
 out to a PNG file:
 
 ```clojure
-(def img
-  (->img
-    (concat
-      (rotate :z (degrees->radians 65))
-      (rotate :y (degrees->radians -30))
-      (translate 0 0 6))
-    (make-torus 1 3 60 60)
-    [400 400]))
-
-(write-png img "torus-65.png")
+  (write-png
+    (->img
+      3
+      (concat
+        (rotate :z (degrees->radians 65))
+        (rotate :y (degrees->radians -30))
+        (translate 0 0 16))
+      (make-torus 1 3 60 60)
+      [400 400])
+    "torus-65.png")
 ```
-
 Produces:
 
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/torus-65.png)
+
+The defacto/clichéd Utah teapot (or any patch/vertex 3D file) can be loaded in with the following
+code sample:
+
+```clojure
+(write-png
+(->img
+  10
+  (t/concat
+    (t/rotate :z (sp/degrees->radians 35))
+    (t/rotate :x (sp/degrees->radians -70))
+    (t/translate 0 -1 40))
+  (sl/load-shape "resources/newell-teapot/teapot" 16)
+  [600 600])
+"teapot.png")
+```
+which generates:
+
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/teapot.png)
+
+Notice how the surface panels are not stitched together properly however... this is
+currently on the TODO list.
 
 ## TODO
 
 * Efficiently calculate polygons on shapes
 * Rewrite/rename wireframes.transform/concat - unroll loops for performance
-* Complete Bezier patch code
-* Rectilinear perspective mapping
+* ~~~Complete Bezier patch code
+* ~~~Rectilinear perspective mapping
+* Stitch adjacent surface panels together
 * SVG renderer
 * Canvas renderer
 * Simple flat shading / lighting
