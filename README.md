@@ -2,7 +2,7 @@
 
 A lightweight 3D rendering engine in Clojure & ClojureScript.
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/solid-torus.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/solid-torus.png)
 
 Ported from javascript (see references below) into ClojureScript (that will
 render to SVG or an HTML5 Canvas), and Clojure (that will render to a Graphics2D object
@@ -58,7 +58,7 @@ out to a PNG file:
 
 Produces:
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/torus-65.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/torus-65.png)
 
 ## TODO
 
@@ -80,6 +80,7 @@ Produces:
 * http://lists.canonical.org/pipermail/kragen-hacks/2007-February/000448.html
 * http://www.sjbaker.org/wiki/index.php?title=The_History_of_The_Teapot
 * http://www.scratchapixel.com/lessons/3d-basic-lessons/lesson-11-rendering-the-teapot-bezier-surfaces/b-zier-surface/
+* https://en.wikipedia.org/wiki/Rotation_matrix#Basic_rotations
 
 ## License
 
