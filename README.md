@@ -74,16 +74,13 @@ which generates:
 
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/teapot.png)
 
-Notice how the surface panels are not stitched together properly however... this is
-currently on the TODO list.
-
 ## TODO
 
 * Efficiently calculate polygons on shapes
 * Rewrite/rename wireframes.transform/concat - unroll loops for performance
 * ~~Complete Bezier patch code~~
 * ~~Rectilinear perspective mapping~~
-* Stitch adjacent surface panels together
+* ~~Stitch adjacent surface panels together~~
 * SVG renderer
 * Canvas renderer
 * Simple flat shading / lighting
