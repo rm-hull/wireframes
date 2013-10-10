@@ -23,5 +23,4 @@
 (defn calculate-illumination
   "Lighting from (1,-1,-1) direction, results in range 0 .. 255"
   [points]
-  (println points)
   (int (* 255 (/ (reduce - (apply t/normal points)) √3))))
