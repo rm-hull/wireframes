@@ -16,12 +16,11 @@
 (defn augment
   "Add two shapes together"
   [shape1 shape2]
-  (let [offsets (partial offsets (:points shape1))]
-    (merge-with (comp vec concat)
-      shape1
-      {:points   (:points shape2)
-       :lines    (offsets (:lines shape2))
-       :polygons (offsets (:polygons shape2))})))
+  (let [offsets  (partial offsets (:points shape1))
+        adjusted (assoc shape2
+                   :lines (offsets (:lines shape2))
+                   :polygons (offsets (:polygons shape2)))]
+    (merge-with (comp vec concat) shape1 adjusted)))
 
 (defn- connect-points [extruded-shape new-part]
   (let [e (count (:points extruded-shape))
