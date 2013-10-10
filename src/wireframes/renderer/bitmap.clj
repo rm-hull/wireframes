@@ -17,7 +17,7 @@
     (.moveTo ax ay)
     (.lineTo bx by)))
 
-(defn- draw-wireframe [^Graphics2D g2d focal-length transform shape]
+(defn draw-wireframe [^Graphics2D g2d focal-length transform shape]
   (let [path (GeneralPath.)
         points-3d (get-3d-points transform shape)
         points-2d (get-2d-points focal-length points-3d)]
