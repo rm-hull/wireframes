@@ -4,23 +4,33 @@
             [wireframes.shape-loader :as sl]
             [wireframes.shapes.platonic-solids :as ps])
   (:import [java.awt.image BufferedImage]
-           [java.awt.geom AffineTransform GeneralPath]
+           [java.awt.geom AffineTransform GeneralPath Ellipse2D$Double]
            [java.awt Color Graphics2D RenderingHints BasicStroke GraphicsEnvironment]
            [javax.imageio ImageIO]))
 
+(defn- draw-dot [^Graphics2D g2d [^Double x ^Double y] size]
+  (.fill g2d (Ellipse2D$Double. (- x (/ size 2)) (- y (/ size 2)) size size)))
+
+(defn- draw-line [^GeneralPath path [^Double ax ^Double ay] [^Double bx ^Double by]]
+  (doto path
+    (.moveTo ax ay)
+    (.lineTo bx by)))
+
 (defn- draw-shape [^Graphics2D g2d focal-length transform shape]
-  (let [points (mapv
+  (let [path (GeneralPath.)
+        points (mapv
                  (comp
                    (t/perspective focal-length)
                    (partial t/transform-point transform))
-                 (:points shape))
-        path (GeneralPath.)]
-    (doseq [[idx1 idx2] (:lines shape)
-            :let [[ax ay] (points idx1)
-                  [bx by] (points idx2)]]
-      (doto path
-        (.moveTo ax ay)
-        (.lineTo bx by)))
+                 (:points shape))]
+
+;    (.setColor g2d Color/RED)
+;    (doseq [[idx1 idx2] (:lines shape)]
+;      (draw-dot g2d (points idx1) 0.008))
+
+    (.setColor g2d Color/BLACK)
+    (doseq [[idx1 idx2] (:lines shape)]
+      (draw-line path (points idx1) (points idx2)))
     (.draw g2d path)))
 
 (defn create-image [w h]
@@ -63,7 +73,7 @@
         (t/translate 0 -1 40))
       (sl/load-shape "resources/newell-teapot/teapot" 16)
       [600 600])
-    "teapot.png")
+    "doc/gallery/teapot.png")
 
   (write-png
     (->img
