@@ -72,7 +72,7 @@ code sample:
 ```
 which generates:
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/teapot.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-teapot.png)
 
 ## TODO
 
