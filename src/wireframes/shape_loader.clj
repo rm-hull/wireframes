@@ -60,8 +60,8 @@
 (defn load-shape [file divisions]
   (let [raw-data    (vec (str/split-lines (slurp file)))
         num-patches (Integer/parseInt (raw-data 0))
-	patches     (create-patches (subvec raw-data 1 (inc num-patches)))
-	vertices    (create-vertices (subvec raw-data (+ num-patches 2)))]
+        patches     (create-patches (subvec raw-data 1 (inc num-patches)))
+        vertices    (create-vertices (subvec raw-data (+ num-patches 2)))]
       (->>
 	;(take 2 (drop 5 patches))
 	patches
