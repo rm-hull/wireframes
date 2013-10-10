@@ -17,3 +17,11 @@
   (mapv
     (t/perspective focal-length)
     points-3d))
+
+(def √3 (Math/sqrt 3))
+
+(defn calculate-illumination
+  "Lighting from (1,-1,-1) direction, results in range 0 .. 255"
+  [points]
+  (println points)
+  (int (* 255 (/ (reduce - (apply t/normal points)) √3))))
