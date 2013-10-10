@@ -63,15 +63,7 @@
         patches     (create-patches (subvec raw-data 1 (inc num-patches)))
         vertices    (create-vertices (subvec raw-data (+ num-patches 2)))]
       (->>
-	;(take 2 (drop 5 patches))
-	patches
-	(map (partial create-surface divisions vertices))
-	(reduce sp/augment)
-	; TODO: create polygons
-        )))
-
-(comment
-
-  (load-shape "resources/newell-teapot/teapot" 16)
-
-)
+        ;(take 3 (drop 4 patches))
+        patches
+        (map (partial create-surface divisions vertices))
+        (reduce sp/augment))))
