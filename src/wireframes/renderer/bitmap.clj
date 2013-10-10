@@ -35,7 +35,7 @@
 
 (defn create-image [w h]
   (if (GraphicsEnvironment/isHeadless)
-    (BufferedImage. w h BufferedImage/TYPE_INT_RGB)
+    (BufferedImage. w h BufferedImage/TYPE_INT_ARGB)
     (.createCompatibleImage
        (.getDefaultConfiguration
          (.getDefaultScreenDevice
