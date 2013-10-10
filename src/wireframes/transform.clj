@@ -67,11 +67,15 @@
 (defn normal
   "Calculate the normal of a triangle"
   [[ax ay az] [bx by bz] [cx cy cz]]
-  (let [[v10 v11 v12] [(- ax bx) (- ay by) (- az bz)]
-        [v20 v21 v22] [(- bx cx) (- by cy) (- bz cz)]
-        [n0  n1  n2]  [(- (* v11 v22) (- v12 v21))
-                       (- (* v12 v20) (- v10 v22))
-                       (- (* v10 v21) (- v11 v20))]
+  (let [v10 (- ax bx)
+        v11 (- ay by)
+        v12 (- az bz)
+        v20 (- bx cx)
+        v21 (- by cy)
+        v22 (- bz cz)
+        n0  (- (* v11 v22) (- v12 v21))
+        n1  (- (* v12 v20) (- v10 v22))
+        n2  (- (* v10 v21) (- v11 v20))
         mag (Math/sqrt (+ (* n0 n0) (* n1 n1) (* n2 n2)))]
     [ (/ n0 mag) (/ n1 mag) (/ n2 mag)]))
 
