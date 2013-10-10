@@ -82,3 +82,13 @@
   "Distance between two points"
   [a b]
   (Math/sqrt (reduce + (map (comp sqr -) a b))))
+
+(defn triangulate [points]
+  (when (>= (count points) 3)
+    (loop [acc []
+           [a b c & more] points]
+      (if (empty? more)
+        (conj acc [a b c])
+        (recur
+          (conj acc [a b c])
+          (cons a (cons c more)))))))
