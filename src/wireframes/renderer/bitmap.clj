@@ -1,4 +1,5 @@
 (ns wireframes.renderer.bitmap
+  (:use [wireframes.renderer :only [get-3d-points get-2d-points]])
   (:require [wireframes.transform :as t]
             [wireframes.shape-primitives :as sp]
             [wireframes.shape-loader :as sl]
@@ -18,11 +19,8 @@
 
 (defn- draw-wireframe [^Graphics2D g2d focal-length transform shape]
   (let [path (GeneralPath.)
-        points (mapv
-                 (comp
-                   (t/perspective focal-length)
-                   (partial t/transform-point transform))
-                 (:points shape))]
+        points-3d (get-3d-points transform shape)
+        points-2d (get-2d-points focal-length points-3d)]
 
 ;    (.setColor g2d Color/RED)
 ;    (doseq [[idx1 idx2] (:lines shape)]
@@ -72,7 +70,7 @@
         (t/rotate :x (sp/degrees->radians -70))
         (t/translate 0 -1 40))
       (sl/load-shape "resources/newell-teapot/teapot" 16)
-      [600 600])
+      [1000 900])
     "doc/gallery/teapot.png")
 
   (write-png
