@@ -16,7 +16,7 @@
     (.moveTo ax ay)
     (.lineTo bx by)))
 
-(defn- draw-shape [^Graphics2D g2d focal-length transform shape]
+(defn- draw-wireframe [^Graphics2D g2d focal-length transform shape]
   (let [path (GeneralPath.)
         points (mapv
                  (comp
@@ -55,7 +55,7 @@
       (.setStroke (BasicStroke. (/ 1.0 (quot w 2))))
       (.setRenderingHint RenderingHints/KEY_ANTIALIASING RenderingHints/VALUE_ANTIALIAS_ON)
       (.setRenderingHint RenderingHints/KEY_RENDERING RenderingHints/VALUE_RENDER_QUALITY))
-    (draw-shape g2d focal-length transform shape)
+    (draw-wireframe g2d focal-length transform shape)
     (.dispose g2d)
     img))
 
