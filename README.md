@@ -83,7 +83,8 @@ which generates:
 * ~~Stitch adjacent surface panels together~~
 * SVG renderer
 * Canvas renderer
-* Simple flat shading / lighting
+* ~~Simple flat shading / lighting~~
+* Configurable lighting position(s)
 * Colours
 * Gourand shading
 * Texture mapping
