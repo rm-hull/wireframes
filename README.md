@@ -84,6 +84,7 @@ which generates:
 * SVG renderer
 * Canvas renderer
 * ~~Simple flat shading / lighting~~
+* Improve depth criteria for priority fill/painters algorithm
 * Configurable lighting position(s)
 * Colours
 * Gourand shading
