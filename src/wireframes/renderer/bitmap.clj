@@ -12,7 +12,7 @@
 (def create-color
   (memoize
     (fn [^long brightness]
-      (let [brightness (Math/max 20 (Math/min brightness 235))]
+      (let [brightness (Math/max 5 (Math/min brightness 250))]
         (Color. brightness brightness brightness)))))
 
 (defn- draw-dot [^Graphics2D g2d [^double x ^double y] size]
@@ -122,7 +122,7 @@
         (t/translate 0 0 16))
       (sp/make-torus 1 3 60 60)
       [400 400])
-    "torus-65.png")
+    "doc/gallery/solid-torus-65.png")
 
   (write-png
     (->img
