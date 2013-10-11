@@ -2,7 +2,7 @@
 
 ## Tetrahedron
 
-![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/tetraahedron.png)
+![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/tetrahedron.png)
 
 ## Icosahedron
 
