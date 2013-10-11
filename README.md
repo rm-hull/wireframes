@@ -76,7 +76,7 @@ which generates:
 
 ## TODO
 
-* Efficiently calculate polygons on shapes
+* Efficiently calculate polygons on extruded shapes
 * Rewrite/rename wireframes.transform/concat - unroll loops for performance
 * ~~Complete Bezier patch code~~
 * ~~Rectilinear perspective mapping~~
@@ -89,6 +89,7 @@ which generates:
 * Gourand shading
 * Texture mapping
 * Backface removal
+* Support loading from .dae files
 * Improve documentation
 * Examples
 
