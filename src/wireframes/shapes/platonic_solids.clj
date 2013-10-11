@@ -20,11 +20,11 @@
   "Start with a point, extrude to a line alone the Z-plane, then extrude that
    line in the Y-axis to make a square... extrude again along the X-axis to
    complete the square. "
-  (->>
+  (->
     (sp/make-point 0 0 0)
-    (sp/extrude (t/translate 0 0 1))
-    (sp/extrude (t/translate 0 1 0))
-    (sp/extrude (t/translate 1 0 0))))
+    (sp/extrude (t/translate 0 0 1) 1)
+    (sp/extrude (t/translate 0 1 0) 1)
+    (sp/extrude (t/translate 1 0 0) 1)))
 
 (def octahedron nil)
 

@@ -53,7 +53,7 @@ out to a PNG file:
 ```
 Produces:
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/torus-65.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-torus.png)
 
 The defacto/clichéd Utah teapot (or any patch/vertex 3D file) can be loaded in with the following
 code sample:
@@ -72,7 +72,12 @@ code sample:
 ```
 which generates:
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-teapot.png)
+![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-teapot.png)
+
+## Gallery
+
+A variety of (in-progress) generated wireframe and solid shapes can be found 
+in the [gallery](https://raw.github.com/rm-hull/wireframes/master/GALLERY.md).
 
 ## TODO
 
