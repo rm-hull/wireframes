@@ -77,7 +77,7 @@ which generates:
 ## Gallery
 
 A variety of (in-progress) generated wireframe and solid shapes can be found 
-in the [gallery](https://raw.github.com/rm-hull/wireframes/master/GALLERY.md).
+in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
 
 ## TODO
 
