@@ -15,13 +15,16 @@
   (mapv #(mapv (partial + (count coll1)) %) coll2))
 
 (defn augment
-  "Add two shapes together"
-  [shape1 shape2]
-  (let [offsets  (partial offsets (:points shape1))
-        adjusted (assoc shape2
-                   :lines (offsets (:lines shape2))
-                   :polygons (offsets (:polygons shape2)))]
-    (merge-with (comp vec concat) shape1 adjusted)))
+  "Add two or more shapes together"
+  ([shape1 shape2]
+    (let [offsets  (partial offsets (:points shape1))
+          adjusted (assoc shape2
+                     :lines (offsets (:lines shape2))
+                     :polygons (offsets (:polygons shape2)))]
+      (merge-with (comp vec concat) shape1 adjusted)))
+  ([shape1 shape2 & more]
+    (let [initial (augment shape1 shape2)]
+      (reduce augment initial more))))
 
 (defn- connect-points [extruded-shape new-part]
   (let [e (count (:points extruded-shape))
