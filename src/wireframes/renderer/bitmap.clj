@@ -160,5 +160,18 @@
       (cs/make-sphere 3 30)
       [900 900])
     "doc/gallery/wireframe-sphere.png")
+
+
+  (write-png
+    (->img
+      8
+      (t/concat
+        (t/rotate :z (sp/degrees->radians 15))
+        (t/rotate :x (sp/degrees->radians  -20))
+        (t/translate 0 -0.2 5.5)
+      )
+      (cs/make-wineglass 60)
+      [900 900])
+    "doc/gallery/wireframe-wineglass.png")
 )
 

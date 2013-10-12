@@ -16,6 +16,10 @@
 
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-torus.png)
 
+## Wine Glass
+
+![Wine Glass](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-wineglass.png)
+
 ## Utah Teapot & Cup
 
 ![Wireframe Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-teapot.png)
