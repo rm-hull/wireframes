@@ -32,12 +32,14 @@
 
 (defn- connect-triangles [extruded-shape new-part offset1 offset2]
   extruded-shape
-;  (let [line (partial nth (:lines extruded-shape))]
-;    (apply concat
-;      (for [i (range (count (:lines new-part)))
-;            :let [[ol0 ol1] (line (+ i offset1))
-;                  [nl0 nl1] (line (+ i offset2))]]
-;          [[ol0 ol1 nl0] [nl1 nl1 ol1]])))
+;  (let [line (:lines extruded-shape)
+;        triangles (vec
+;                    (apply concat
+;                      (for [i (range (count (:lines new-part)))
+;                            :let [[ol0 ol1] (line (+ i offset1))
+;                                  [nl0 nl1] ((:lines new-part) (+ i offset2))]]
+;                        [[ol0 ol1 nl0] [nl1 nl1 ol1]])))]
+;      (assoc extruded-shape :polygons triangles))
   )
 
 (defn extrude
@@ -97,7 +99,6 @@
       circle
       n2)))
 
-
 (defn make-cylinder [r n h]
   (->>
     (make-circle r n)
@@ -111,4 +112,9 @@
     (make-circle r n)
     h))
 
+(comment
+  (make-torus 1 3 8 8)
+  )
+
+(cons 1 (cons 2 [ 3 4]))
 
