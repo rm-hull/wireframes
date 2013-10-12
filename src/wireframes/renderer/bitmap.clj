@@ -1,8 +1,8 @@
 (ns wireframes.renderer.bitmap
   (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill calculate-illumination]])
   (:require [wireframes.transform :as t]
-            [wireframes.shape-primitives :as sp]
-            [wireframes.shape-loader :as sl]
+            [wireframes.shapes.primitives :as p]
+            [wireframes.shapes.patch-loader :as pl]
             [wireframes.shapes.platonic-solids :as ps]
             [wireframes.shapes.curved-solids :as cs])
   (:import [java.awt.image BufferedImage]
@@ -108,10 +108,10 @@
     (->img
       10
       (t/concat
-        (t/rotate :z (sp/degrees->radians 35))
-        (t/rotate :x (sp/degrees->radians -120))
-        (t/translate 0 -1 40))
-      (sl/load-shape "resources/newell-teapot/teapot" 16)
+	(t/rotate :z (sp/degrees->radians 35))
+	(t/rotate :x (sp/degrees->radians -120))
+	(t/translate 0 -1 40))
+      (pl/load-shape "resources/newell-teapot/teapot" 16)
       [1000 900])
     "doc/gallery/solid-teapot.png")
 
@@ -119,9 +119,9 @@
     (->img
       10
       (t/concat
-        (t/rotate :x (sp/degrees->radians -30))
-        (t/translate 0 0 25))
-      (sl/load-shape "resources/newell-teapot/teacup" 16)
+	(t/rotate :x (sp/degrees->radians -30))
+	(t/translate 0 0 25))
+      (pl/load-shape "resources/newell-teapot/teacup" 16)
       [1000 900])
     "doc/gallery/solid-teacup.png")
 
@@ -129,9 +129,9 @@
     (->img
       3
       (t/concat
-        (t/rotate :z (sp/degrees->radians 65))
-        (t/rotate :y (sp/degrees->radians -30))
-        (t/translate 0 0 16))
+	(t/rotate :z (sp/degrees->radians 65))
+	(t/rotate :y (sp/degrees->radians -30))
+	(t/translate 0 0 16))
       (cs/make-torus 1 3 60 60)
       [400 400])
     "doc/gallery/wireframe-torus.png")
@@ -140,9 +140,9 @@
     (->img
       3
       (t/concat
-        (t/rotate :z (sp/degrees->radians 65))
-        (t/rotate :y (sp/degrees->radians -30))
-        (t/translate 0 0 16))
+	(t/rotate :z (sp/degrees->radians 65))
+	(t/rotate :y (sp/degrees->radians -30))
+	(t/translate 0 0 16))
       ps/tetrahedron
       [400 400])
     "tetrahedron.png")
@@ -152,10 +152,10 @@
     (->img
       3
       (t/concat
-        ;(t/rotate :z (sp/degrees->radians 65))
-        (t/rotate :x (sp/degrees->radians 60))
-        (t/rotate :y (sp/degrees->radians -15))
-        (t/translate 0 0 16)
+	;(t/rotate :z (sp/degrees->radians 65))
+	(t/rotate :x (sp/degrees->radians 60))
+	(t/rotate :y (sp/degrees->radians -15))
+	(t/translate 0 0 16)
       )
       (cs/make-sphere 3 30)
       [900 900])
@@ -166,9 +166,9 @@
     (->img
       8
       (t/concat
-        (t/rotate :z (sp/degrees->radians 15))
-        (t/rotate :x (sp/degrees->radians  -20))
-        (t/translate 0 -0.2 5.5)
+	(t/rotate :z (sp/degrees->radians 15))
+	(t/rotate :x (sp/degrees->radians  -20))
+	(t/translate 0 -0.2 5.5)
       )
       (cs/make-wineglass 60)
       [900 900])

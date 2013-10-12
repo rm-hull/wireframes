@@ -1,4 +1,4 @@
-(ns wireframes.shape-primitives
+(ns wireframes.shapes.primitives
   (:require [wireframes.transform :as t]))
 
 ;; Shapes are represented as:

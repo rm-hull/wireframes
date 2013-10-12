@@ -1,7 +1,7 @@
-(ns wireframes.shape-loader
+(ns wireframes.shapes.patch-loader
   (:require [clojure.string :as str]
             [wireframes.transform :as t]
-            [wireframes.shape-primitives :as sp]
+            [wireframes.shapes.primitives :as p]
             [wireframes.bezier :as b]))
 
 (defn- parse-int [s]
@@ -66,4 +66,4 @@
         ;(take 3 (drop 4 patches))
         patches
         (map (partial create-surface divisions vertices))
-        (reduce sp/augment))))
+        (reduce p/augment))))

@@ -1,5 +1,5 @@
 (ns wireframes.shapes.curved-solids
-  (:require [wireframes.shape-primitives :as sp]
+  (:require [wireframes.shapes.primitives :as p]
             [wireframes.bezier :as b]
             [wireframes.transform :as t]))
 
@@ -11,8 +11,8 @@
 (defn make-circle
   "Approximate a circle in the X-Y plane around the origin wth radius r and n points"
   [^double r n]
-  (sp/extrude
-    (sp/make-point (Math/max 0.0 r) 0 0)
+  (p/extrude
+    (p/make-point (Math/max 0.0 r) 0 0)
     (t/rotate :z (intervals->radians n))
     n))
 
@@ -26,21 +26,21 @@
   "Approximate a torus with major radius r2 and minor radius r1,
    with correspondingly n2 and n1 points around each axis."
   [r1 r2 n1 n2]
-  (let [move (sp/transform-shape (t/translate r2 0 0))
+  (let [move (p/transform-shape (t/translate r2 0 0))
         circle (move (make-circle r1 n1))]
-    (sp/extrude
+    (p/extrude
       circle
       (t/rotate :y (intervals->radians n2))
       n2)))
 
 (defn make-cylinder [r n h]
-  (sp/extrude
+  (p/extrude
     (make-circle r n)
     (t/translate 0 0 h)
     1))
 
 (defn make-cone [r n h]
-  (sp/extrude
+  (p/extrude
     (make-circle r n)
     (t/concat
       (t/translate 0 0 1)
@@ -51,15 +51,15 @@
   "Approximate a sphere at the origin wth radius r and n points"
   [r n]
   (let [angle (intervals->radians (* n 2))]
-    (sp/extrude
-      (map #((sp/transform-shape (t/translate 0 0 (* r (Math/cos %))))
+    (p/extrude
+      (map #((p/transform-shape (t/translate 0 0 (* r (Math/cos %))))
                (make-circle (* r (Math/sin %)) n))
            (iterate (partial + angle) 0))
       n)))
 
 (defn make-wineglass [n]
-  (sp/extrude
-    (apply sp/augment
+  (p/extrude
+    (apply p/augment
       (for [control-points [[[ 0.000 0.425 0.000] [-0.007 0.412 0.000] [ 0.136 0.448 0.000] [ 0.151 0.446 0.000]]
                             [[ 0.151 0.446 0.000] [ 0.167 0.444 0.000] [ 0.161 0.447 0.000] [ 0.160 0.432 0.000]]
                             [[ 0.160 0.432 0.000] [ 0.159 0.417 0.000] [ 0.044 0.421 0.000] [ 0.023 0.401 0.000]]

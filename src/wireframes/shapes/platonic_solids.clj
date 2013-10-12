@@ -1,5 +1,5 @@
 (ns wireframes.shapes.platonic-solids
-  (:require [wireframes.shape-primitives :as sp]
+  (:require [wireframes.shapes.primitives :as p]
             [wireframes.transform :as t]))
 
 (def √2 (Math/sqrt 2))
@@ -21,10 +21,10 @@
    line in the Y-axis to make a square... extrude again along the X-axis to
    complete the square. "
   (->
-    (sp/make-point 0 0 0)
-    (sp/extrude (t/translate 0 0 1) 1)
-    (sp/extrude (t/translate 0 1 0) 1)
-    (sp/extrude (t/translate 1 0 0) 1)))
+    (p/make-point 0 0 0)
+    (p/extrude (t/translate 0 0 1) 1)
+    (p/extrude (t/translate 0 1 0) 1)
+    (p/extrude (t/translate 1 0 0) 1)))
 
 (def octahedron nil)
 
