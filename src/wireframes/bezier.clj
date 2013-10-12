@@ -24,7 +24,11 @@
                   (partition 4 control-points))]
     (evaluate-bezier-curve v u-curve)))
 
-(defn line-points [divisions control-points]
+(defn line-points
+  "Given a list of 4 control points, calculate the line points that fit the
+   bezier curve with the supplied number of divisions. The controlpoints may
+   be specified in 2D or 3D."
+  [divisions control-points]
   (let [divisions (double divisions)]
     (vec
       (for [i (range (inc divisions))]
@@ -32,7 +36,11 @@
           (/ i divisions)
           control-points)))))
 
-(defn surface-points [divisions control-points]
+(defn surface-points
+  "Given a grid of 16 (4 x 4) control points, calculate the surface points
+   with the supplied number of divisions. The control points may be specified
+   in 2D or 3D."
+  [divisions control-points]
   (let [divisions (double divisions)]
     (vec
       (for [j (range (inc divisions))
