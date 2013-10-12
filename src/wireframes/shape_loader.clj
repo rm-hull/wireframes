@@ -2,7 +2,7 @@
   (:require [clojure.string :as str]
             [wireframes.transform :as t]
             [wireframes.shape-primitives :as sp]
-            [wireframes.bezier-patch :as bp]))
+            [wireframes.bezier :as b]))
 
 (defn- parse-int [s]
   (Integer/parseInt s))
@@ -53,7 +53,7 @@
         (t/triangulate [a b d c]))))) ; order of points is important
 
 (defn- create-surface [divisions vertices patch]
-  {:points (bp/surface-points divisions vertices patch)
+  {:points (b/surface-points divisions (map vertices patch))
    :lines  (face-connectivity (inc divisions))
    :polygons (polygons divisions)})
 

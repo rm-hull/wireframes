@@ -1,4 +1,4 @@
-(ns wireframes.bezier-patch)
+(ns wireframes.bezier)
 
 (defn- add
   "Add two points"
@@ -10,27 +10,34 @@
   [pt c]
   (mapv (partial * c) pt))
 
-(defn- evaluate-bezier-curve [t p]
+(defn- evaluate-bezier-curve [t control-points]
   (let [omt (- 1 t) ; = one-minus-t
         b   [(* omt omt omt)
              (* 3 t omt omt)
              (* 3 t t omt)
              (* t t t)]]
-    (reduce add (map mult p b))))
+    (reduce add (map mult control-points b))))
 
-(defn- evaluate-bezier-patch [control-points u v]
+(defn- evaluate-bezier-patch [u v control-points]
   (let [u-curve (mapv
                   (partial evaluate-bezier-curve u)
                   (partition 4 control-points))]
     (evaluate-bezier-curve v u-curve)))
 
-(defn surface-points [divisions vertices patch]
-  (let [control-points (map vertices patch)
-        divisions (double divisions)]
+(defn line-points [divisions control-points]
+  (let [divisions (double divisions)]
+    (vec
+      (for [i (range (inc divisions))]
+        (evaluate-bezier-curve
+          (/ i divisions)
+          control-points)))))
+
+(defn surface-points [divisions control-points]
+  (let [divisions (double divisions)]
     (vec
       (for [j (range (inc divisions))
             i (range (inc divisions))]
         (evaluate-bezier-patch
-          control-points
           (/ i divisions)
-          (/ j divisions))))))
+          (/ j divisions)
+          control-points)))))
