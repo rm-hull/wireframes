@@ -94,8 +94,8 @@
       (.setRenderingHint RenderingHints/KEY_STROKE_CONTROL RenderingHints/VALUE_STROKE_NORMALIZE)
       (.setRenderingHint RenderingHints/KEY_ANTIALIASING RenderingHints/VALUE_ANTIALIAS_ON)
       (.setRenderingHint RenderingHints/KEY_RENDERING RenderingHints/VALUE_RENDER_QUALITY))
-    (draw-wireframe g2d focal-length transform shape)
-    ;(draw-solid g2d focal-length transform shape)
+    ;(draw-wireframe g2d focal-length transform shape)
+    (draw-solid g2d focal-length transform shape)
     (.dispose g2d)
     img))
 

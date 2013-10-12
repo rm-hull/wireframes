@@ -4,8 +4,9 @@
 (defn priority-fill [points polygon]
   (->>
     polygon
-    (map (comp peek points))
-    (reduce +)
+    (mapv (comp peek points))
+    ;(second)
+    (reduce +) ; min/max/+
     -))
 
 (defn get-3d-points [transform shape]
