@@ -106,6 +106,7 @@ in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
 * http://www.scratchapixel.com/lessons/3d-basic-lessons/lesson-11-rendering-the-teapot-bezier-surfaces/b-zier-surface/
 * https://en.wikipedia.org/wiki/Rotation_matrix#Basic_rotations
 * https://www.mathdisk.com/pub/safi/worksheets/Perspective_Projection
+* http://www.cs.berkeley.edu/~jrs/mesh/
 
 ## License
 
