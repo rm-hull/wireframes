@@ -53,7 +53,7 @@ out to a PNG file:
 ```
 Produces:
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/torus-65.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-torus.png)
 
 The defacto/clichéd Utah teapot (or any patch/vertex 3D file) can be loaded in with the following
 code sample:
@@ -72,22 +72,31 @@ code sample:
 ```
 which generates:
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-teapot.png)
+![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-teapot.png)
+
+## Gallery
+
+A variety of (in-progress) generated wireframe and solid shapes can be found 
+in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
 
 ## TODO
 
-* Efficiently calculate polygons on shapes
+* Efficiently calculate polygons on extruded shapes
 * Rewrite/rename wireframes.transform/concat - unroll loops for performance
 * ~~Complete Bezier patch code~~
 * ~~Rectilinear perspective mapping~~
 * ~~Stitch adjacent surface panels together~~
 * SVG renderer
 * Canvas renderer
-* Simple flat shading / lighting
+* ~~Simple flat shading / lighting~~
+* Improve depth criteria for priority fill/painters algorithm
+* Configurable lighting position(s)
 * Colours
 * Gourand shading
 * Texture mapping
 * Backface removal
+* Compute shape bounds
+* Support loading from .dae files
 * Improve documentation
 * Examples
 
@@ -98,6 +107,8 @@ which generates:
 * http://www.scratchapixel.com/lessons/3d-basic-lessons/lesson-11-rendering-the-teapot-bezier-surfaces/b-zier-surface/
 * https://en.wikipedia.org/wiki/Rotation_matrix#Basic_rotations
 * https://www.mathdisk.com/pub/safi/worksheets/Perspective_Projection
+* http://www.cs.berkeley.edu/~jrs/mesh/
+* http://www.victoriakirst.com/beziertool/
 
 ## License
 
