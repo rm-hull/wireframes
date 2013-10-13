@@ -1,13 +1,29 @@
 (ns wireframes.renderer
   (:require [wireframes.transform :as t]))
 
-(defn priority-fill [points polygon]
-  (->>
-    polygon
-    (mapv (comp peek points))
-    ;(second)
-    (reduce +) ; min/max/+
-    -))
+(def √3 (Math/sqrt 3))
+
+(defn calculate-illumination
+  "Lighting from (1,-1,-1) direction, results in range 0 .. 255"
+  [points]
+  (int (* 255 (/ (reduce - (apply t/normal points)) √3))))
+
+(defn shader [points-3d color-fn]
+  (fn [polygon]
+    (->>
+      polygon
+      (map points-3d)
+      (calculate-illumination)
+      (color-fn))))
+
+(defn priority-fill [points-3d]
+  (fn [polygon]
+    (->>
+      polygon
+      (mapv (comp peek points-3d))
+      ;(second)
+      (reduce +) ; min/max/+
+      -)))
 
 (defn get-3d-points [transform shape]
   (mapv
@@ -18,10 +34,3 @@
   (mapv
     (t/perspective focal-length)
     points-3d))
-
-(def √3 (Math/sqrt 3))
-
-(defn calculate-illumination
-  "Lighting from (1,-1,-1) direction, results in range 0 .. 255"
-  [points]
-  (int (* 255 (/ (reduce - (apply t/normal points)) √3))))
