@@ -2,7 +2,7 @@
 
 A lightweight 3D rendering engine in Clojure & ClojureScript.
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/solid-torus.png)
+![Aventador](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/aventador.png)
 
 Ported from javascript (see references below) into ClojureScript (that will
 render to SVG or an HTML5 Canvas), and Clojure (that will render to a Graphics2D object
