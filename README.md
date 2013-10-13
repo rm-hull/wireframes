@@ -4,9 +4,9 @@ A lightweight 3D rendering engine in Clojure & ClojureScript.
 
 ![Aventador](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/aventador.png)
 
-Ported from javascript (see references below) into ClojureScript (that will
-render to SVG or an HTML5 Canvas), and Clojure (that will render to a Graphics2D object
-or SVG).
+Adapted and extended from a javascript (originally by Kragen Javier Sitaker, see references below) 
+into ClojureScript (that will render to SVG or an HTML5 Canvas), and Clojure (that will render to a 
+Graphics2D object or SVG).
 
 ## Usage
 
