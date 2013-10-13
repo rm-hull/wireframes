@@ -94,8 +94,8 @@
       (.setRenderingHint RenderingHints/KEY_STROKE_CONTROL RenderingHints/VALUE_STROKE_NORMALIZE)
       (.setRenderingHint RenderingHints/KEY_ANTIALIASING RenderingHints/VALUE_ANTIALIAS_ON)
       (.setRenderingHint RenderingHints/KEY_RENDERING RenderingHints/VALUE_RENDER_QUALITY))
-    ;(draw-wireframe g2d focal-length transform shape)
-    (draw-solid g2d focal-length transform shape)
+    (draw-wireframe g2d focal-length transform shape)
+    ;(draw-solid g2d focal-length transform shape)
     (.dispose g2d)
     img))
 
@@ -108,9 +108,9 @@
     (->img
       10
       (t/concat
-	(t/rotate :z (sp/degrees->radians 35))
-	(t/rotate :x (sp/degrees->radians -120))
-	(t/translate 0 -1 40))
+        (t/rotate :z (p/degrees->radians 35))
+        (t/rotate :x (p/degrees->radians -120))
+        (t/translate 0 -1 40))
       (pl/load-shape "resources/newell-teapot/teapot" 16)
       [1000 900])
     "doc/gallery/solid-teapot.png")
@@ -119,8 +119,8 @@
     (->img
       10
       (t/concat
-	(t/rotate :x (sp/degrees->radians -30))
-	(t/translate 0 0 25))
+        (t/rotate :x (p/degrees->radians -30))
+        (t/translate 0 0 25))
       (pl/load-shape "resources/newell-teapot/teacup" 16)
       [1000 900])
     "doc/gallery/solid-teacup.png")
@@ -129,9 +129,9 @@
     (->img
       3
       (t/concat
-	(t/rotate :z (sp/degrees->radians 65))
-	(t/rotate :y (sp/degrees->radians -30))
-	(t/translate 0 0 16))
+        (t/rotate :z (p/degrees->radians 65))
+        (t/rotate :y (p/degrees->radians -30))
+        (t/translate 0 0 16))
       (cs/make-torus 1 3 60 60)
       [400 400])
     "doc/gallery/wireframe-torus.png")
@@ -140,9 +140,9 @@
     (->img
       3
       (t/concat
-	(t/rotate :z (sp/degrees->radians 65))
-	(t/rotate :y (sp/degrees->radians -30))
-	(t/translate 0 0 16))
+        (t/rotate :z (p/degrees->radians 65))
+        (t/rotate :y (p/degrees->radians -30))
+        (t/translate 0 0 16))
       ps/tetrahedron
       [400 400])
     "tetrahedron.png")
@@ -152,11 +152,10 @@
     (->img
       3
       (t/concat
-	;(t/rotate :z (sp/degrees->radians 65))
-	(t/rotate :x (sp/degrees->radians 60))
-	(t/rotate :y (sp/degrees->radians -15))
-	(t/translate 0 0 16)
-      )
+        ;(t/rotate :z (p/degrees->radians 65))
+        (t/rotate :x (p/degrees->radians 60))
+        (t/rotate :y (p/degrees->radians -15))
+        (t/translate 0 0 16))
       (cs/make-sphere 3 30)
       [900 900])
     "doc/gallery/wireframe-sphere.png")
@@ -166,10 +165,9 @@
     (->img
       8
       (t/concat
-	(t/rotate :z (sp/degrees->radians 15))
-	(t/rotate :x (sp/degrees->radians  -20))
-	(t/translate 0 -0.2 5.5)
-      )
+        (t/rotate :z (p/degrees->radians 15))
+        (t/rotate :x (p/degrees->radians  -20))
+        (t/translate 0 -0.2 5.5))
       (cs/make-wineglass 60)
       [900 900])
     "doc/gallery/wireframe-wineglass.png")
