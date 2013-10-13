@@ -11,11 +11,11 @@
 (defn harness [{:keys [shape focal-length transform draw-fn filename size]}]
   (println filename)
   (time
-    (b/write-png
-      (b/->img
-        (partial draw-fn focal-length transform shape)
-        (or size [1000 900]))
-      filename)))
+    (is (b/write-png
+        (b/->img
+          (partial draw-fn focal-length transform shape)
+          (or size [1000 900]))
+        filename))))
 
 (deftest ^:examples wireframes
 
