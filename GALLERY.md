@@ -53,3 +53,13 @@ Another wavefront file (from http://tf3dm.com/3d-model/sonic-3267.html).
 ![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/sonic.png)
 ![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/sonic.png)
 ![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/sonic.png)
+
+
+## Lamborghini Aventador
+
+Can't help myself... (from http://tf3dm.com/3d-model/lamborghini-aventador-42591.html).
+
+![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/aventador.png)
+![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/aventador.png)
+![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/aventador.png)
+![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/aventador.png)

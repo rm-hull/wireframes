@@ -98,7 +98,8 @@
   (let [teapot (pl/load-shape "resources/newell-teapot/teapot" 16)
         teacup (pl/load-shape "resources/newell-teapot/teacup" 16)
         plane (wl/load-shape "resources/obj_IconA5.obj")
-        sonic (wl/load-shape "resources/Sonic.obj")]
+        sonic (wl/load-shape "resources/Sonic.obj")
+        avent (wl/load-shape "resources/Avent.obj")]
     (doseq [style [:transparent :translucent :opaque :shaded]]
       (harness {
         :filename "teapot.png"
@@ -138,6 +139,16 @@
         :transform (t/concat
                      (t/rotate :x (p/degrees->radians 0))
                      (t/rotate :y (p/degrees->radians -150))
-                     (t/translate 3 -15 60))}))))
+                     (t/translate 3 -15 60))})
 
-
+      (harness {
+        :filename "aventador.png"
+        :style style
+        :size [1024 550]
+        :shape avent
+        :focal-length 4
+        :transform (t/concat
+                     (t/rotate :x (p/degrees->radians 20))
+                     (t/rotate :y (p/degrees->radians -120))
+                     (t/rotate :z (p/degrees->radians -20))
+                     (t/translate -0.6 -0.28 8.85))}))))
