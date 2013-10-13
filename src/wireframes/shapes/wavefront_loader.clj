@@ -13,15 +13,10 @@
   (let [converter1 (partial c/parse-string #"/" (comp dec c/parse-int))
         converter2 (partial c/parse-string #" " converter1)]
     (fn [s]
-      (let [faces (converter2 s)]
-        (when (> (count faces) 2)
-          (let [vertex-indexes (mapv first (converter2 s))]
-            {:lines (->>  ; add 1st element onto the end to form a closed path
-                      (conj vertex-indexes (first vertex-indexes))
-                      (partition 2 1)
-                      (map vec)
-                      (fv/vec))
-             :polygons (fv/vec (t/triangulate vertex-indexes))}))))))
+      (let [vertices (converter2 s)]
+        ; discard any polygons with less than two faces
+        (when (> (count vertices) 2)
+          {:polygons (->> vertices (mapv first) fv/vector)})))))
 
 (def directives
   [[#"^v (.*)" vertex-matcher]

@@ -13,14 +13,17 @@
          (vertex-matcher ""))))
 
 (deftest face-matcher-test
-  (is (= {:lines [[42 41] [41 51] [51 50] [50 42]], :polygons [[42 41 51] [42 51 50]]}
+  ; discard any polygons with less than two faces
+  (is (nil? (face-matcher "43/1/1 42/4/2")))
+
+  (is (= {:polygons [[42 41 51 50]]}
          (face-matcher "43/1/1 42/4/2 52/3/3 51/2/4")))
 
-  (is (= {:lines [[42 41] [41 51] [51 50] [50 42]], :polygons [[42 41 51] [42 51 50]]}
+  (is (= {:polygons [[42 41 51 50]]}
          (face-matcher "43 42 52 51"))))
 
 (deftest parse-line-test
-  (is (= {:lines [[42 41] [41 51] [51 50] [50 42]], :polygons [[42 41 51] [42 51 50]]}
+  (is (= {:polygons [[42 41 51 50]]}
          (parse-line directives "f 43/1/1 42/4/2 52/3/3 51/2/4")))
 
   (is (= {:points [[1.288484 6.238661 1.455338]]}
@@ -42,5 +45,4 @@
 (deftest load-shape-test
   (let [shape (load-shape "resources/obj_IconA5.obj")]
     (is (= 31734  (count (:points shape))))
-    (is (= 125311 (count (:lines shape))))
-    (is (= 62541  (count (:polygons shape))))))
+    (is (= 31385  (count (:polygons shape))))))
