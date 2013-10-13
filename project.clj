@@ -17,4 +17,5 @@
   :cljsbuild {
     :builds [{:source-paths ["target/generated"], :id "main", :jar true}]}
   :min-lein-version "2.3.2"
-  :global-vars {*warn-on-reflection* true})
+  :global-vars {*warn-on-reflection* true}
+  :repositories {"sonartype snapshots" "https://oss.sonatype.org/content/repositories/snapshots"})
