@@ -37,7 +37,7 @@ These images are generated from the original patch data files crafted by
 ## Icon A5 Aircraft
 
 These images are imported from [Wavefront .obj](https://en.wikipedia.org/wiki/Wavefront_.obj_file) format
-files. The specific dataset can be obtained here: http://tf3dm.com/3d-model/icon-a5-aircraft-17777.html.
+files. The specific dataset for this aircraft can be obtained here: http://tf3dm.com/3d-model/icon-a5-aircraft-17777.html.
 
 ![Wireframe Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-icon-a5.png)
 
