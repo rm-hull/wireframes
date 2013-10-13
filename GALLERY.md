@@ -1,5 +1,8 @@
 # Wireframes Gallery
 
+All the images below were either created programmatically by extrusion, or loaded from external files,
+and then rendered through the renderers within this project.
+
 ## Tetrahedron
 
 ![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/tetrahedron.png)
