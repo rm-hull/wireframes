@@ -16,3 +16,11 @@
 
 (def parse-csv (partial parse-string #","))
 
+(defn simple-concat
+  "Useful for when (count xs) is small, cons's the xs onto the front of the ys
+   without the overhead of lazy thunking. Disadvantage is that for large xs
+   stack overflow may occur."
+  [xs ys]
+  (if (seq xs)
+    (cons (first xs) (simple-concat (next xs) ys))
+    ys))
