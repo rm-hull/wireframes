@@ -23,7 +23,7 @@
 ## Utah Teapot & Cup
 
 These images are generated from the original patch data files crafted by 
-[Martin Newell](https://en.wikipedia.org/wiki/Martin_Newell_(computer_scientist)) in 1975.
+[Martin Newell](https://en.wikipedia.org/wiki/Martin_Newell_%28computer_scientist%29) in 1975.
 
 ![Wireframe Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-teapot.png)
 
