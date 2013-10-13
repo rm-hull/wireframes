@@ -9,6 +9,10 @@
   (when-not (empty? s)
     (Double/parseDouble s)))
 
+(defn decrement-offset [n]
+  (when-not (nil? n)
+    (dec n)))
+
 (defn parse-string [regex element-converter s]
   (->>
     (str/split s regex)

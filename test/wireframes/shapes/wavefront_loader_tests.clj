@@ -20,6 +20,9 @@
          (face-matcher "43/1/1 42/4/2  52/3/3 51/2/4")))
 
   (is (= {:polygons [[42 41 51 50]]}
+         (face-matcher "43/1/1 42//2  52//3 51/2/")))
+
+  (is (= {:polygons [[42 41 51 50]]}
          (face-matcher "43 42 52  51"))))
 
 (deftest parse-line-test

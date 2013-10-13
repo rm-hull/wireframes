@@ -10,7 +10,7 @@
 
 (defn create-patches [patch-data]
   ; teapot indexes start at 1... decrement for zero-offset indexing
-  (let [f (partial c/parse-csv (comp dec c/parse-int))]
+  (let [f (partial c/parse-csv (comp c/decrement-offset c/parse-int))]
     (mapv f patch-data)))
 
 (defn- calculate-destination-index [source-index [dir offset] i j num-points]
@@ -29,17 +29,6 @@
                   dest (calculate-destination-index src dir i j num-points)]
             :when dest]
         [src dest]))))
-
-;(defn- polygons [divisions]
-;  (vec
-;    (apply concat
-;      (for [j (range divisions)
-;            i (range divisions)
-;            :let [a (+ i (* j (inc divisions)))
-;                  b (inc a)
-;                  c (+ b divisions)
-;                  d (inc c)]]
-;        (t/triangulate [a b d c]))))) ; order of points is important
 
 (defn- polygons [divisions]
   (vec
