@@ -2,25 +2,15 @@
   (:require [clojure.string :as str]
             [wireframes.transform :as t]
             [wireframes.shapes.primitives :as p]
-            [wireframes.bezier :as b]))
-
-(defn- parse-int [s]
-  (Integer/parseInt s))
-
-(defn- parse-double [s]
-  (Double/parseDouble s))
-
-(defn- parse-csv [converter line]
-  (->>
-    (str/split line #",")
-    (map converter)))
+            [wireframes.bezier :as b]
+            [wireframes.common :as c]))
 
 (defn- create-vertices [vertices-data]
-  (mapv (comp vec (partial parse-csv parse-double)) vertices-data))
+  (mapv (partial c/parse-csv c/parse-double) vertices-data))
 
 (defn create-patches [patch-data]
   ; teapot indexes start at 1... decrement for zero-offset indexing
-  (let [f (partial parse-csv (comp dec parse-int))]
+  (let [f (partial c/parse-csv (comp dec c/parse-int))]
     (mapv f patch-data)))
 
 (defn- calculate-destination-index [source-index [dir offset] i j num-points]
@@ -29,7 +19,7 @@
     (and (= dir :south) (= j (dec num-points))) nil
     :else (+ source-index offset)))
 
-(defn face-connectivity [num-points]
+(defn- face-connectivity [num-points]
   (vec
     (distinct
       (for [j (range num-points)
@@ -40,13 +30,12 @@
             :when dest]
         [src dest]))))
 
-(defn polygons [divisions]
+(defn- polygons [divisions]
   (vec
     (apply concat
       (for [j (range divisions)
             i (range divisions)
-            :let [
-                  a (+ i (* j (inc divisions)))
+            :let [a (+ i (* j (inc divisions)))
                   b (inc a)
                   c (+ b divisions)
                   d (inc c)]]
@@ -63,7 +52,6 @@
         patches     (create-patches (subvec raw-data 1 (inc num-patches)))
         vertices    (create-vertices (subvec raw-data (+ num-patches 2)))]
       (->>
-        ;(take 3 (drop 4 patches))
         patches
         (map (partial create-surface divisions vertices))
         (reduce p/augment))))
