@@ -1,7 +1,8 @@
 # Wireframes Gallery
 
-All the images below were either created programmatically by extrusion, or loaded from external files,
-and then rendered through the renderers within this project.
+All the images below were either created programmatically by extrusion, or loaded from external 3D data
+files, and then rendered through the renderers within this project. See the [test/wireframes/examples.clj]
+(https://github.com/rm-hull/wireframes/blob/master/test/wireframes/examples.clj) file for details.
 
 ## Tetrahedron
 
