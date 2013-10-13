@@ -43,6 +43,4 @@ files. The specific dataset for this aircraft can be obtained here: http://tf3dm
 ![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/icon-a5.png)
 ![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/icon-a5.png)
 
-![Solid Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/solid-icon-a5.png)
-
 Note that there is a slight glitch in the wireframe on the propellor.
