@@ -42,5 +42,5 @@
 (deftest load-shape-test
   (let [shape (load-shape "resources/obj_IconA5.obj")]
     (is (= 31734  (count (:points shape))))
-    (is (= 125319 (count (:lines shape))))
+    (is (= 125311 (count (:lines shape))))
     (is (= 62541  (count (:polygons shape))))))
