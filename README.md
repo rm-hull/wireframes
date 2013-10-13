@@ -12,10 +12,10 @@ or SVG).
 
 ### Creating shapes
 
-There are some drawing primitives in the ```wireframes.shape``` namespace to create
+There are some drawing primitives in the ```wireframes.shapes``` namespace to create
 objects such as circles, cuboids, cylinders and torus shapes.
 
-The basic mechanism for building shapes is *extrusion*. For example, to create a cube, 
+The basic mechanism for *building* shapes is **extrusion**. For example, to create a cube, 
 start with a point, and extrude that point into a line along the Z-axis. Then extrude
 that line along the Y-axis to create a square; extrude the square along the X-axis to
 create a cube, as per the following code:
@@ -53,7 +53,9 @@ out to a PNG file:
 ```
 Produces:
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-torus.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/torus.png)
+
+### Loading common 3D shape files
 
 The defacto/clichéd Utah teapot (or any patch/vertex 3D file) can be loaded in with the following
 code sample:
@@ -72,7 +74,7 @@ code sample:
 ```
 which generates:
 
-![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-teapot.png)
+![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/teapot.png)
 
 ## Gallery
 

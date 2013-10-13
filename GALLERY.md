@@ -5,41 +5,43 @@ and then rendered through the renderers within this project.
 
 ## Tetrahedron
 
-![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/tetrahedron.png)
+![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/tetrahedron.png)
 
 ## Icosahedron
 
-![Icosahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/icosahedron.png)
+![Icosahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/icosahedron.png)
 
 ## Sphere
 
-![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-sphere.png)
+![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/sphere.png)
 
 ## Torus
 
-![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-torus.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/torus.png)
 
 ## Wine Glass
 
-![Wine Glass](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-wineglass.png)
+![Wine Glass](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/wineglass.png)
 
 ## Utah Teapot & Cup
 
 These images are generated from the original patch data files crafted by 
 [Martin Newell](https://en.wikipedia.org/wiki/Martin_Newell_%28computer_scientist%29) in 1975.
 
-![Wireframe Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-teapot.png)
-
-![Solid Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/solid-teapot.png)
-
-![Solid Teacup](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/solid-teacup.png)
+![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/teapot.png)
+![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/teapot.png)
+![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/teapot.png)
+![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/teapot.png)
 
 ## Icon A5 Aircraft
 
 These images are imported from [Wavefront .obj](https://en.wikipedia.org/wiki/Wavefront_.obj_file) format
 files. The specific dataset for this aircraft can be obtained here: http://tf3dm.com/3d-model/icon-a5-aircraft-17777.html.
 
-![Wireframe Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/wireframe-icon-a5.png)
+![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/icon-a5.png)
+![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/icon-a5.png)
+![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/icon-a5.png)
+![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/icon-a5.png)
 
 ![Solid Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/solid-icon-a5.png)
 
