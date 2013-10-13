@@ -23,7 +23,7 @@
                        draw-fn filename size style color] :as opts}]
   (let [dir (str "doc/gallery/" (name style) "/")]
     (.mkdir (clojure.java.io/file dir))
-    (println filename)
+    (println style filename)
     (time
       (is
         (b/write-png
