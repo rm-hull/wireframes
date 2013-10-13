@@ -1,7 +1,7 @@
 # Wireframes Gallery
 
 All the images below were either created programmatically by extrusion, or loaded from external 3D data
-files, and then rendered through the renderers within this project. See the [test/wireframes/examples.clj]
+files, and then drawn with the renderers within this project. See the [test/wireframes/examples.clj]
 (https://github.com/rm-hull/wireframes/blob/master/test/wireframes/examples.clj) file for details.
 
 ## Tetrahedron
@@ -24,7 +24,7 @@ files, and then rendered through the renderers within this project. See the [tes
 
 ![Wine Glass](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/wineglass.png)
 
-## Utah Teapot & Cup
+## Utah Teapot
 
 These images are generated from the original patch data files crafted by 
 [Martin Newell](https://en.wikipedia.org/wiki/Martin_Newell_%28computer_scientist%29) in 1975.
