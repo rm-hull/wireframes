@@ -5,13 +5,13 @@
             [wireframes.transform :as t]))
 
 (def vertex-matcher
-  (let [converter (partial c/parse-string #" " c/parse-double)]
+  (let [converter (partial c/parse-string #" +" c/parse-double)]
     (fn [s] {:points (fv/vector (converter s))})))
 
 (def face-matcher
   ; waveform indexes start at one, so decrement as we are indexing from zero
   (let [converter1 (partial c/parse-string #"/" (comp dec c/parse-int))
-        converter2 (partial c/parse-string #" " converter1)]
+        converter2 (partial c/parse-string #" +" converter1)]
     (fn [s]
       (let [vertices (converter2 s)]
         ; discard any polygons with less than two faces
@@ -19,8 +19,8 @@
           {:polygons (->> vertices (mapv first) fv/vector)})))))
 
 (def directives
-  [[#"^v (.*)" vertex-matcher]
-   [#"^f (.*)" face-matcher]])
+  [[#"^v +(.*)" vertex-matcher]
+   [#"^f +(.*)" face-matcher]])
 
 (defn parse-line [directives line]
   (loop [directives directives]

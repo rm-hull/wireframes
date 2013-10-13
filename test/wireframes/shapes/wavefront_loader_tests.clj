@@ -17,17 +17,26 @@
   (is (nil? (face-matcher "43/1/1 42/4/2")))
 
   (is (= {:polygons [[42 41 51 50]]}
-         (face-matcher "43/1/1 42/4/2 52/3/3 51/2/4")))
+         (face-matcher "43/1/1 42/4/2  52/3/3 51/2/4")))
 
   (is (= {:polygons [[42 41 51 50]]}
-         (face-matcher "43 42 52 51"))))
+         (face-matcher "43 42 52  51"))))
 
 (deftest parse-line-test
   (is (= {:polygons [[42 41 51 50]]}
          (parse-line directives "f 43/1/1 42/4/2 52/3/3 51/2/4")))
 
+  (is (= {:polygons [[42 41 51 50]]}
+         (parse-line directives "f   43/1/1  42/4/2   52/3/3   51/2/4")))
+
   (is (= {:points [[1.288484 6.238661 1.455338]]}
          (parse-line directives "v 1.288484 6.238661 1.455338")))
+
+  (is (= {:points [[-4.102479 21.410454 -2.796852]]}
+         (parse-line directives "v  -4.102479 21.410454 -2.796852")))
+
+  (is (= {:points [[-4.102479 21.410454 -2.796852]]}
+         (parse-line directives "v  -4.102479   21.410454     -2.796852")))
 
   ; normals are not supported
   (is (nil? (parse-line directives "vn -0.687989 0.724467 0.042657")))

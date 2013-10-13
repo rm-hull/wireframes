@@ -43,3 +43,11 @@ files. The specific dataset for this aircraft can be obtained here: http://tf3dm
 ![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/icon-a5.png)
 ![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/icon-a5.png)
 
+## Sonic the Hedgehog
+
+Another wavefront file from http://tf3dm.com/3d-model/sonic-3267.html.
+
+![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/sonic.png)
+![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/sonic.png)
+![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/sonic.png)
+![Sonic](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/sonic.png)

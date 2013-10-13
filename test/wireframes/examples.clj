@@ -97,7 +97,8 @@
 (deftest ^:examples complex-solids
   (let [teapot (pl/load-shape "resources/newell-teapot/teapot" 16)
         teacup (pl/load-shape "resources/newell-teapot/teacup" 16)
-        plane (wl/load-shape "resources/obj_IconA5.obj")]
+        plane (wl/load-shape "resources/obj_IconA5.obj")
+        sonic (wl/load-shape "resources/Sonic.obj")]
     (doseq [style [:transparent :translucent :opaque :shaded]]
       (harness {
         :filename "teapot.png"
@@ -128,5 +129,15 @@
                      (t/rotate :y (p/degrees->radians 130))
                      (t/rotate :x (p/degrees->radians -50))
                      (t/translate 3 -5 60))})
-      )))
+
+      (harness {
+        :filename "sonic.png"
+        :style style
+        :shape sonic
+        :focal-length 3.5
+        :transform (t/concat
+                     (t/rotate :x (p/degrees->radians 0))
+                     (t/rotate :y (p/degrees->radians -150))
+                     (t/translate 3 -15 60))}))))
+
 
