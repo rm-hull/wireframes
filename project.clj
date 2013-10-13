@@ -5,6 +5,7 @@
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/clojurescript "0.0-1934"]
+                 [org.clojure/core.rrb-vector "0.0.10-SNAPSHOT"]
                  [prismatic/dommy "0.1.2"]
                  [hiccup "1.0.4"]
                  [jayq "2.4.0"]

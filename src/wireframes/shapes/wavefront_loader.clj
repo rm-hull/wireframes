@@ -1,11 +1,12 @@
 (ns wireframes.shapes.wavefront-loader
   (:require [clojure.string :as str]
+            [clojure.core.rrb-vector :as fv]
             [wireframes.common :as c]
             [wireframes.transform :as t]))
 
 (def vertex-matcher
   (let [converter (partial c/parse-string #" " c/parse-double)]
-    (fn [s] {:points [(converter s)]})))
+    (fn [s] {:points (fv/vector (converter s))})))
 
 (def face-matcher
   ; waveform indexes start at one, so decrement as we are indexing from zero
@@ -16,8 +17,9 @@
         {:lines (->>  ; add 1st element onto the end to form a closed path
                   (conj vertex-indexes (first vertex-indexes))
                   (partition 2 1)
-                  (mapv vec))
-         :polygons (t/triangulate vertex-indexes)}))))
+                  (map vec)
+                  (fv/vec))
+         :polygons (fv/vec (t/triangulate vertex-indexes))}))))
 
 (def directives
   [[#"^v (.*)" vertex-matcher]
@@ -37,13 +39,7 @@
     (slurp file)
     (str/split-lines)
     (map (partial parse-line directives))
-    (reduce (partial merge-with conj) {:points [] :lines [] :polygons []})))
-
-;                               ^ conj ideal but too nested
-;                                 concat slow and stack overflow
-(comment
-
-  (time (load-shape "resources/obj_IconA5.obj"))
-
-
-)
+    (remove nil?)
+    (reduce
+      (partial merge-with fv/catvec)
+      {:points (fv/vector) :lines (fv/vector) :polygons (fv/vector)})))

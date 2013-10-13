@@ -97,7 +97,7 @@ in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
 * Backface removal
 * Compute shape bounds
 * Support loading from .dae files
-* Support loading from Wavefront .obj files
+* ~~Support loading from Wavefront .obj files~~
 * Improve documentation
 * Examples
 

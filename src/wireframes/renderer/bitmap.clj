@@ -3,6 +3,7 @@
   (:require [wireframes.transform :as t]
             [wireframes.shapes.primitives :as p]
             [wireframes.shapes.patch-loader :as pl]
+            [wireframes.shapes.wavefront-loader :as wl]
             [wireframes.shapes.platonic-solids :as ps]
             [wireframes.shapes.curved-solids :as cs])
   (:import [java.awt.image BufferedImage]
@@ -104,16 +105,43 @@
 
 (comment
 
-  (write-png
-    (->img
-      10
-      (t/concat
-        (t/rotate :z (p/degrees->radians 35))
-        (t/rotate :x (p/degrees->radians -120))
-        (t/translate 0 -1 40))
-      (pl/load-shape "resources/newell-teapot/teapot" 16)
-      [1000 900])
-    "doc/gallery/solid-teapot.png")
+  (time
+    (write-png
+      (->img
+        10
+        (t/concat
+          (t/rotate :z (p/degrees->radians 35))
+          (t/rotate :x (p/degrees->radians -120))
+          (t/translate 0 -1 40))
+        (pl/load-shape "resources/newell-teapot/teapot" 16)
+        [1000 900])
+      "doc/gallery/solid-teapot.png"))
+
+  (time
+    (write-png
+      (->img
+        4
+        (t/concat
+          (t/rotate :z (p/degrees->radians 25))
+          (t/rotate :y (p/degrees->radians 130))
+          (t/rotate :x (p/degrees->radians -50))
+          (t/translate 3 -5 60))
+        (wl/load-shape "resources/obj_IconA5.obj")
+        [1000 900])
+      "doc/gallery/wireframe-icon-a5.png"))
+
+  (time
+    (write-png
+      (->img
+        4
+        (t/concat
+          (t/rotate :z (p/degrees->radians 25))
+          (t/rotate :y (p/degrees->radians 130))
+          (t/rotate :x (p/degrees->radians -50))
+          (t/translate 3 -5 60))
+        (wl/load-shape "resources/obj_IconA5.obj")
+        [1000 900])
+      "doc/gallery/solid-icon-a5.png"))
 
   (write-png
     (->img
