@@ -8,8 +8,6 @@ Adapted and extended from a javascript (originally by Kragen Javier Sitaker, see
 into ClojureScript (that will render to SVG or an HTML5 Canvas), and Clojure (that will render to a 
 Graphics2D object or SVG).
 
-## Gallery
-
 A variety of (in-progress) generated wireframe and solid shapes can be found 
 in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
 
