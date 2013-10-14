@@ -13,7 +13,7 @@ in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
 
 ### Pre-requisites
 
-You will need [Leiningen][https://github.com/technomancy/leiningen] 2.3.2 or above installed.
+You will need [Leiningen](https://github.com/technomancy/leiningen) 2.3.2 or above installed.
 
 ### Building
 
@@ -25,7 +25,7 @@ To build and install the library locally, run:
 
 ### Including in your project
 
-There *will be* a version hosted at [Clojars][https://clojars.org/rm-hull/turtle]. For leiningen include a dependency:
+There *will be* a version hosted at [Clojars](https://clojars.org/rm-hull/wireframes). For leiningen include a dependency:
 
 ```clojure
 [rm-hull/wireframes "0.0.1"]
