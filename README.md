@@ -94,7 +94,7 @@ which generates:
 * Colours
 * Gourand shading
 * Texture mapping
-* Backface removal
+* ~~Backface removal~~
 * Compute shape bounds
 * Support loading from .dae files
 * ~~Support loading from Wavefront .obj files~~
