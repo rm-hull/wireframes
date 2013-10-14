@@ -1,5 +1,6 @@
 (ns wireframes.shapes.primitives
-  (:require [wireframes.transform :as t]))
+  (:require [clojure.core.rrb-vector :as fv]
+            [wireframes.transform :as t]))
 
 ;; Shapes are represented as:
 ;;
@@ -29,22 +30,21 @@
 (defn- connect-points [extruded-shape new-part]
   (let [e (count (:points extruded-shape))
         n (count (:points new-part))
-        new-lines (->> (range n e) (mapv #(vector (- % n) %)))]
-    (merge-with (comp vec distinct concat)
+        lines (->> (range n e) (map #(vector (- % n) %)))]
+    (merge-with fv/catvec
       extruded-shape
-      {:lines new-lines})))
+      {:lines (fv/vec lines)})))
 
-(defn- connect-triangles [extruded-shape new-part offset1 offset2]
-  extruded-shape
-;  (let [line (:lines extruded-shape)
-;        triangles (vec
-;                    (apply concat
-;                      (for [i (range (count (:lines new-part)))
-;                            :let [[ol0 ol1] (line (+ i offset1))
-;                                  [nl0 nl1] ((:lines new-part) (+ i offset2))]]
-;                        [[ol0 ol1 nl0] [nl1 nl1 ol1]])))]
-;      (assoc extruded-shape :polygons triangles))
-  )
+(defn- connect-polygons [extruded-shape new-part offset]
+  (let [num-points (count (:points new-part))
+        polygons   (for [a (range offset (+ offset num-points -1))
+                         :let [b (inc a)
+                               d (+ b num-points)
+                               c (dec d)]]
+                     [a b d c])]
+    (merge-with fv/catvec
+      extruded-shape
+      {:polygons (fv/vec polygons)})))
 
 (defn extrude
   "Given a shape, make a more complicated shape by copying it through the
@@ -55,27 +55,40 @@
    (extrude (iterate (transform-shape transform) shape) n))
   ([generator n]
    (loop [i             0
-          line-base     0
+          next-index    0
           extruded-part (first generator)
           generator     (next generator)]
      (if (or (>= i n) (empty? generator))
        extruded-part
        (let [new-part (first generator)
-             new-line-base (count (:lines new-part))]
+             num-points (count (:points new-part))]
          (recur
            (inc i)
-           new-line-base
+           (+ next-index num-points)
            (->
              extruded-part
              (augment new-part)
              (connect-points new-part)
-             (connect-triangles new-part line-base new-line-base))
+             (connect-polygons new-part next-index))
            (next generator)))))))
 
 (defn make-point
   "Create a shape consisting of a single point"
   [x y z]
   {:points [[(double x) (double y) (double z)]]})
+
+(defn make-line
+  "Creates a joined line consisting of the points of the form [x y z]"
+  [& points]
+  (apply merge-with fv/catvec
+    {:lines (->> points (map :points) count range (partition 2 1) (mapv vec))}
+    points))
+
+(defn make-grid [x y w h]
+  (->
+     (make-point x y 0)
+     (extrude (t/translate 1 0 0) w)
+     (extrude (t/translate 0 1 0) h)))
 
 (defn degrees->radians [d]
   (/ (* (double d) Math/PI) 180.0))
