@@ -15,14 +15,23 @@ files, and then drawn with the renderers within this project. See the [test/wire
 ## Sphere
 
 ![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/sphere.png)
+![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/sphere.png)
+![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/sphere.png)
+![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/sphere.png)
 
 ## Torus
 
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/torus.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/torus.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/torus.png)
+![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/torus.png)
 
 ## Wine Glass
 
 ![Wine Glass](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/wineglass.png)
+![Wine Glass](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/wineglass.png)
+![Wine Glass](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/wineglass.png)
+![Wine Glass](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/wineglass.png)
 
 ## Utah Teapot
 
