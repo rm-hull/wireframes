@@ -11,7 +11,37 @@ depending on the runtime environment).
 A variety of (in-progress) generated wireframe and solid shapes can be found 
 in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
 
-## Usage
+### Pre-requisites
+
+You will need [Leiningen][https://github.com/technomancy/leiningen] 2.3.2 or above installed.
+
+### Building
+
+To build and install the library locally, run:
+
+     lein test
+     lein cljsbuild once
+     lein install
+
+### Including in your project
+
+There *will be* a version hosted at [Clojars][https://clojars.org/rm-hull/turtle]. For leiningen include a dependency:
+
+```clojure
+[rm-hull/wireframes "0.0.1"]
+```
+
+For maven-based projects, add the following to your `pom.xml`:
+
+```xml
+<dependency>
+  <groupId>rm-hull</groupId>
+  <artifactId>wireframes</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+
+## Basic Usage
 
 ### Creating shapes
 
@@ -24,11 +54,11 @@ that line along the Y-axis to create a square; extrude the square along the X-ax
 create a cube, as per the following code:
 
 ```clojure
-(->>
+(->
   (make-point 0 0 0)
-  (extrude (translate 0 0 1))
-  (extrude (translate 0 1 0))
-  (extrude (translate 1 0 0)))
+  (extrude (translate 0 0 1) 1)
+  (extrude (translate 0 1 0) 1)
+  (extrude (translate 1 0 0) 1))
 ```
 
 ### Drawing shapes
@@ -43,16 +73,18 @@ For example, in Clojure, to generate a torus angled in the Y- and Z-axles, writt
 out to a PNG file:
 
 ```clojure
-  (write-png
-    (->img
-      3
-      (concat
-        (rotate :z (degrees->radians 65))
-        (rotate :y (degrees->radians -30))
-        (translate 0 0 16))
-      (make-torus 1 3 60 60)
-      [400 400])
-    "torus-65.png")
+(write-png
+  (->img
+    (draw-solid
+      {:focal-length 3
+       :fill-color (Color. 255 255 255 0) ; transparent white
+       :transform (concat
+                    (rotate :z (degrees->radians 65))
+                    (rotate :y (degrees->radians -30))
+                    (translate 0 0 16))
+       :shape (make-torus 1 3 60 60)})
+    [400 400])
+  "torus-65.png")
 ```
 Produces:
 
@@ -65,15 +97,17 @@ code sample:
 
 ```clojure
 (write-png
-(->img
-  10
-  (t/concat
-    (t/rotate :z (sp/degrees->radians 35))
-    (t/rotate :x (sp/degrees->radians -70))
-    (t/translate 0 -1 40))
-  (sl/load-shape "resources/newell-teapot/teapot" 16)
-  [600 600])
-"teapot.png")
+  (->img
+    (draw-solid 
+      {:focal-length 10
+       :fill-color (Color. 255 255 255 128) ; translucent white
+       :transform (t/concat
+                    (t/rotate :z (sp/degrees->radians 35))
+                    (t/rotate :x (sp/degrees->radians -70))
+                    (t/translate 0 -1 40))
+       :shape (sl/load-shape "resources/newell-teapot/teapot")})
+    [1000 900])
+  "teapot.png")
 ```
 which generates:
 
@@ -81,7 +115,7 @@ which generates:
 
 ## TODO
 
-* Efficiently calculate polygons on extruded shapes
+* ~~Efficiently calculate polygons on extruded shapes~~
 * Rewrite/rename wireframes.transform/concat - unroll loops for performance
 * ~~Complete Bezier patch code~~
 * ~~Rectilinear perspective mapping~~
@@ -89,7 +123,6 @@ which generates:
 * SVG renderer
 * Canvas renderer
 * ~~Simple flat shading / lighting~~
-* Improve depth criteria for priority fill/painters algorithm
 * Configurable lighting position(s)
 * Colours
 * Gourand shading
@@ -98,8 +131,14 @@ which generates:
 * Compute shape bounds
 * Support loading from .dae files
 * ~~Support loading from Wavefront .obj files~~
+* Deprecate ```:lines``` - no longer used except in platonic solids
 * Improve documentation
 * Examples
+
+## Known Bugs
+
+* Bug in shader/lighting position - affected by applied transforms?
+* Improve depth criteria for priority fill/painters algorithm
 
 ## References
 
