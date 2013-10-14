@@ -58,6 +58,7 @@
         :style style
         :shape (cs/make-sphere 3 30)
         :focal-length 3
+        :size [400 400]
         :transform (t/concat
                      (t/rotate :x (p/degrees->radians 60))
                      (t/rotate :y (p/degrees->radians -15))
@@ -69,6 +70,7 @@
         :style style
         :shape (cs/make-wineglass 60)
         :focal-length 8
+        :size [400 400]
         :transform (t/concat
                      (t/rotate :z (p/degrees->radians 15))
                      (t/rotate :x (p/degrees->radians -20))
