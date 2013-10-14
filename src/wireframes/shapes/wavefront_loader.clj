@@ -14,7 +14,7 @@
         converter2 (partial c/parse-string #" +" converter1)]
     (fn [s]
       (let [vertices (converter2 s)]
-        ; discard any polygons with less than two faces
+        ; discard any polygons with less than three faces
         (when (> (count vertices) 2)
           {:polygons (->> vertices (mapv first) fv/vector)})))))
 
