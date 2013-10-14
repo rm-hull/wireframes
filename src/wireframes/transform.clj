@@ -39,10 +39,20 @@
 (defn dot-product [a b]
   (reduce + (map * a b)))
 
+;(defn ^double dot-product [[^double a0 ^double a1 ^double a2 ^double a3]
+;                           [^double b0 ^double b1 ^double b2 ^double b3]]
+;  (+
+;    (* a0 b0)
+;    (* a1 b1)
+;    (* a2 b2)
+;    (* a3 b3)))
+
+(def fourth-line [0.0  0.0  0.0  1.0])
+
 (defn concat
   ([a b]
-    (let [a (conj a [0.0  0.0  0.0  1.0])
-          b (conj b [0.0  0.0  0.0  1.0])
+    (let [a (conj a fourth-line)
+          b (conj b fourth-line)
           transposed  (apply mapv vector a)
           row-mult    (fn [x] (mapv (partial dot-product x) transposed))]
       (subvec (mapv row-mult b) 0 3)))
