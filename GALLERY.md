@@ -6,11 +6,11 @@ files, and then drawn with the renderers within this project. See the [test/wire
 
 ## Tetrahedron
 
-![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/tetrahedron.png)
+![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/tetrahedron.png)
 
 ## Icosahedron
 
-![Icosahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/icosahedron.png)
+![Icosahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/icosahedron.png)
 
 ## Sphere
 
