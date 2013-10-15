@@ -6,6 +6,7 @@
             [wireframes.shapes.platonic-solids :as ps]
             [wireframes.shapes.patch-loader :as pl]
             [wireframes.shapes.wavefront-loader :as wl]
+            [wireframes.shapes.stl-loader :as sl]
             [wireframes.renderer.bitmap :as b])
   (:import [java.awt Color]))
 
@@ -41,7 +42,8 @@
         teacup (pl/load-shape "resources/newell-teapot/teacup" 16)
         plane (wl/load-shape "resources/obj_IconA5.obj")
         sonic (wl/load-shape "resources/Sonic.obj")
-        avent (wl/load-shape "resources/Avent.obj")]
+        avent (wl/load-shape "resources/Avent.obj")
+        rpi-case (sl/load-shape  "resources/RichRap_Raspbery_Pi_Case_Bottom.stl")]
     (doseq [style [:transparent :translucent :opaque :shaded]]
 
       (harness {
@@ -132,6 +134,7 @@
                      (t/rotate :x (t/degrees->radians -30))
                      (t/translate 0 0 25))})
 
+
       (harness {
         :filename "icon-a5.png"
         :style style
@@ -193,4 +196,16 @@
                (t/rotate :x (t/degrees->radians 80))
                (t/scale 0.1)
                (t/translate 0 -0.2 5))})
+
+(harness {
+  :filename "rpi-case.png"
+  :style :translucent
+  :shape (sl/load-shape  "resources/RichRap_Raspbery_Pi_Case_Bottom.stl")
+  :focal-length 24
+  :transform (t/combine
+               (t/rotate :z (t/degrees->radians 25))
+               (t/rotate :y (t/degrees->radians 130))
+               (t/rotate :x (t/degrees->radians -50))
+               (t/scale 0.1)
+               (t/translate 3 -5 210))})
 )
