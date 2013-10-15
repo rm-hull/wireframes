@@ -3,15 +3,19 @@
         [wireframes.shapes.primitives])
   (:require [wireframes.transform :as t]))
 
+(defn =points [expected actual]
+  (is (= (mapv #(vec (into-array Double/TYPE %)) expected)
+         (mapv vec (:points actual)))))
+
 (deftest make-point-test
-  (is (= {:points [[1.0 2.0 3.0]]}
-         (make-point 1 2 3))))
+  (is (=points [[1 2 3 1]]
+               (make-point 1 2 3))))
 
 (deftest make-line-test
-  (is (= {:points [[0.0 0.0 0.0] [1.0 1.0 0.0] [2.0 2.0 0.0] [3.0 3.0 0.0] [4.0 4.0 0.0]], :lines [[0 1] [1 2] [2 3] [3 4]]}
-         (apply make-line
-           (for [i (range 5)]
-             (make-point i i 0))))))
+  (is (=points [[0 0 0 1] [1 1 0 1] [2 2 0 1] [3 3 0 1] [4 4 0 1]]
+               (apply make-line
+                 (for [i (range 5)]
+                   (make-point i i 0))))))
 
 (deftest extrude-test
   (let [line (apply make-line

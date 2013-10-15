@@ -9,11 +9,12 @@
 (def -φ (- φ))
 
 (def tetrahedron
-  {:points [[ 1.0  0.0 (/ -1 √2)]
-            [-1.0  0.0 (/ -1 √2)]
-            [ 0.0  1.0 (/  1 √2)]
-            [ 0.0 -1.0 (/  1 √2)]]
+  {:points [(t/point  1  0 (/ -1 √2))
+            (t/point -1  0 (/ -1 √2))
+            (t/point  0  1 (/  1 √2))
+            (t/point  0 -1 (/  1 √2))]
    :polygons [[0 1 2] [0 2 3] [0 1 3] [1 2 3]]})
+
 
 (def cube
   "Start with a point, extrude to a line alone the Z-plane, then extrude that
@@ -34,7 +35,9 @@
   (let [points (vec
                  (apply concat
                    (for [one [-1 1] rho [φ -φ]]
-                     [[0 one rho] [one rho 0] [rho 0 one]])))
+                     [(t/point 0 one rho)
+                      (t/point one rho 0)
+                      (t/point rho 0 one)])))
         polygons (vec
                 (for [a (range (count points))
                       b (range a)
@@ -46,6 +49,3 @@
                   [a b c]))]
   {:points points
    :polygons polygons }))
-
-
-

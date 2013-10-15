@@ -50,9 +50,9 @@
         :shape (cs/make-torus 1 3 60 60)
         :focal-length 3
         :size [400 400]
-        :transform (t/concat
-                     (t/rotate :z (p/degrees->radians 65))
-                     (t/rotate :y (p/degrees->radians -30))
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 65))
+                     (t/rotate :y (t/degrees->radians -30))
                      (t/translate 0 0 16))})
 
       (harness {
@@ -61,22 +61,10 @@
         :shape (cs/make-sphere 3 30)
         :focal-length 3
         :size [400 400]
-        :transform (t/concat
-                     (t/rotate :x (p/degrees->radians 60))
-                     (t/rotate :y (p/degrees->radians -15))
+        :transform (t/combine
+                     (t/rotate :x (t/degrees->radians 60))
+                     (t/rotate :y (t/degrees->radians -15))
                      (t/translate 0 0 16))})
-
-      (harness {
-        :filename "wineglass.png"
-        :color (Color. 0xEAF5FC)
-        :style style
-        :shape (cs/make-wineglass 60)
-        :focal-length 8
-        :size [400 400]
-        :transform (t/concat
-                     (t/rotate :z (p/degrees->radians 15))
-                     (t/rotate :x (p/degrees->radians -20))
-                     (t/translate 0 -0.2 5.5))})
 
       (harness {
         :filename "tetrahedron.png"
@@ -84,10 +72,23 @@
         :shape ps/tetrahedron
         :focal-length 5
         :size [300 300]
-        :transform (t/concat
-                     (t/rotate :z (p/degrees->radians 55))
-                     (t/rotate :y (p/degrees->radians -20))
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 55))
+                     (t/rotate :y (t/degrees->radians -20))
+                     (t/scale 2)
                      (t/translate 0 0 16))})
+
+      (harness {
+        :filename "cube.png"
+        :style style
+        :shape ps/cube
+        :focal-length 5
+        :size [300 300]
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 55))
+                     (t/rotate :y (t/degrees->radians -20))
+                     (t/scale 2)
+                     (t/translate -0.5 -0.5 16))})
 
       (harness {
         :filename "icosahedron.png"
@@ -95,19 +96,32 @@
         :shape ps/icosahedron
         :focal-length 5
         :size [300 300]
-        :transform (t/concat
-                     (t/rotate :z (p/degrees->radians 55))
-                     (t/rotate :y (p/degrees->radians -30))
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 55))
+                     (t/rotate :y (t/degrees->radians -30))
                      (t/translate 0 0 16))})
+      (harness {
+        :filename "wineglass.png"
+        :color (Color. 0xEAF5FC)
+        :style style
+        :shape (cs/make-wineglass 30)
+        :focal-length 20
+        :size [400 400]
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 15))
+                     (t/rotate :x (t/degrees->radians 20))
+                     (t/translate 0 -0.2 25))})
+
+
 
       (harness {
         :filename "teapot.png"
         :style style
         :shape teapot
         :focal-length 10
-        :transform (t/concat
-                     (t/rotate :z (p/degrees->radians 35))
-                     (t/rotate :x (p/degrees->radians -120))
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 35))
+                     (t/rotate :x (t/degrees->radians -120))
                      (t/translate 0 -1 40))})
 
       (harness {
@@ -115,8 +129,8 @@
         :style style
         :shape teacup
         :focal-length 10
-        :transform (t/concat
-                     (t/rotate :x (p/degrees->radians -30))
+        :transform (t/combine
+                     (t/rotate :x (t/degrees->radians -30))
                      (t/translate 0 0 25))})
 
       (harness {
@@ -124,10 +138,10 @@
         :style style
         :shape plane
         :focal-length 4
-        :transform (t/concat
-                     (t/rotate :z (p/degrees->radians 25))
-                     (t/rotate :y (p/degrees->radians 130))
-                     (t/rotate :x (p/degrees->radians -50))
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 25))
+                     (t/rotate :y (t/degrees->radians 130))
+                     (t/rotate :x (t/degrees->radians -50))
                      (t/translate 3 -5 60))})
 
       (harness {
@@ -135,9 +149,9 @@
         :style style
         :shape sonic
         :focal-length 3.5
-        :transform (t/concat
-                     (t/rotate :x (p/degrees->radians 0))
-                     (t/rotate :y (p/degrees->radians -150))
+        :transform (t/combine
+                     (t/rotate :x (t/degrees->radians 0))
+                     (t/rotate :y (t/degrees->radians -150))
                      (t/translate 3 -15 60))})
 
       (harness {
@@ -146,10 +160,10 @@
         :size [1024 550]
         :shape avent
         :focal-length 4
-        :transform (t/concat
-                     (t/rotate :x (p/degrees->radians 20))
-                     (t/rotate :y (p/degrees->radians -120))
-                     (t/rotate :z (p/degrees->radians -20))
+        :transform (t/combine
+                     (t/rotate :x (t/degrees->radians 20))
+                     (t/rotate :y (t/degrees->radians -120))
+                     (t/rotate :z (t/degrees->radians -20))
                      (t/translate -0.6 -0.28 8.85))}))))
 
 
@@ -163,9 +177,9 @@
   :color (Color. 0xeaf5fc)
   :shape (cs/make-wineglass 60)
   :focal-length 8
-  :transform (t/concat
-               (t/rotate :z (p/degrees->radians 15))
-               (t/rotate :x (p/degrees->radians -20))
+  :transform (t/combine
+               (t/rotate :z (t/degrees->radians 15))
+               (t/rotate :x (t/degrees->radians -20))
                (t/translate 0 -0.2 5.5))})
 
 (harness {
@@ -173,9 +187,9 @@
   :style :translucent
   :shape (p/make-grid -2 -2 10 10)
   :focal-length 60
-  :transform (t/concat
-               (t/rotate :z (p/degrees->radians 15))
-               (t/rotate :x (p/degrees->radians 80))
+  :transform (t/combine
+               (t/rotate :z (t/degrees->radians 15))
+               (t/rotate :x (t/degrees->radians 80))
                (t/scale 0.1)
                (t/translate 0 -0.2 5))})
 )

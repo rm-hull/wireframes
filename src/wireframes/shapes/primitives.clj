@@ -12,28 +12,18 @@
   (fn [{:keys [points] :as shape}]
     (assoc shape :points (mapv (partial t/transform-point transform) points))))
 
-(defn- offsets [coll1 coll2]
-  (mapv #(mapv (partial + (count coll1)) %) coll2))
+(defn- offsets [n coll]
+  (mapv #(mapv (partial + n) %) coll))
 
 (defn augment
   "Add two or more shapes together"
   ([shape1 shape2]
-    (let [offsets  (partial offsets (:points shape1))
-          adjusted (assoc shape2
-                     :lines (offsets (:lines shape2))
-                     :polygons (offsets (:polygons shape2)))]
-      (merge-with (comp vec concat) shape1 adjusted)))
+    (let [n (count (:points shape1))
+          adj (assoc shape2 :polygons (offsets n (:polygons shape2)))]
+    (merge-with fv/catvec shape1 adj)))
   ([shape1 shape2 & more]
     (let [initial (augment shape1 shape2)]
       (reduce augment initial more))))
-
-(defn- connect-points [extruded-shape new-part]
-  (let [e (count (:points extruded-shape))
-        n (count (:points new-part))
-        lines (->> (range n e) (map #(vector (- % n) %)))]
-    (merge-with fv/catvec
-      extruded-shape
-      {:lines (fv/vec lines)})))
 
 (defn- connect-polygons [extruded-shape new-part offset]
   (let [num-points (count (:points new-part))
@@ -68,14 +58,13 @@
            (->
              extruded-part
              (augment new-part)
-             (connect-points new-part)
              (connect-polygons new-part next-index))
            (next generator)))))))
 
 (defn make-point
   "Create a shape consisting of a single point"
   [x y z]
-  {:points [[(double x) (double y) (double z)]]})
+  {:points (fv/vector (t/point x y z))})
 
 (defn make-line
   "Creates a joined line consisting of the points of the form [x y z]"
@@ -89,9 +78,6 @@
      (make-point x y 0)
      (extrude (t/translate 1 0 0) w)
      (extrude (t/translate 0 1 0) h)))
-
-(defn degrees->radians [d]
-  (/ (* (double d) Math/PI) 180.0))
 
 (defn compute-bounds
   "Calculates the minimum and maximum bounds for the shape"

@@ -17,10 +17,9 @@
     n))
 
 (defn make-bezier-spline [control-points n]
-  (let [points (b/line-points n control-points)
-        lines (map vec (partition 2 1 (range (count points))))]
-    {:points points
-     :lines  lines}))
+  {:points  (->>
+              (b/line-points n control-points)
+              (mapv (partial apply t/point)))})
 
 (defn make-torus
   "Approximate a torus with major radius r2 and minor radius r1,
@@ -42,7 +41,7 @@
 (defn make-cone [r n h]
   (p/extrude
     (make-circle r n)
-    (t/concat
+    (t/combine
       (t/translate 0 0 1)
       (t/scale 0.9))
     h))
@@ -71,4 +70,3 @@
         (make-bezier-spline control-points 10)))
     (t/rotate :y (intervals->radians n))
     n))
-

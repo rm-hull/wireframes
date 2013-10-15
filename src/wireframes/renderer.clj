@@ -16,18 +16,13 @@
       (calculate-illumination)
       (color-fn))))
 
-(defn priority-fill [points-3d]
+(defn priority-fill [^doubles points-3d]
   (fn [polygon]
-    (->>
-      polygon
-      (mapv (comp peek points-3d))
-      ;(second)
-      (reduce +) ; min/max/+
-      -)))
+      (reduce (fn [s c] (- s (aget ^doubles (points-3d c) 2))) 0.0 polygon)))
 
-(defn get-3d-points [transform shape]
+(defn get-3d-points [matrix shape]
   (mapv
-    (partial t/transform-point transform)
+    (partial t/transform-point matrix)
     (:points shape)))
 
 (defn get-2d-points [focal-length points-3d]

@@ -6,7 +6,7 @@
 
 (def vertex-matcher
   (let [converter (partial c/parse-string #" +" c/parse-double)]
-    (fn [s] {:points (fv/vector (converter s))})))
+    (fn [s] {:points (fv/vector (t/point (converter s)))})))
 
 (def face-matcher
   ; waveform indexes start at one, so decrement as we are indexing from zero

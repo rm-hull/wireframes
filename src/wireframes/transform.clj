@@ -1,19 +1,39 @@
 (ns wireframes.transform
-  (:refer-clojure :exclude [identity concat]))
+  (:refer-clojure :exclude [identity]))
+
+(defn degrees->radians [d]
+  (/ (* (double d) Math/PI) 180.0))
+
+(defn as-2d-vector [matrix]
+  (map vec (vec matrix)))
+
+(defn point
+  ([[x y z]]
+    (double-array [x y z 1]))
+  ([x y z]
+    (double-array [x y z 1])))
+
+(defn matrix [& rows]
+  (into-array
+    (map double-array rows)))
 
 (defn translate
   "A quaternion of sorts"
   [x y z]
-  [[1.0  0.0  0.0  (double x)]
-   [0.0  1.0  0.0  (double y)]
-   [0.0  0.0  1.0  (double z)]])
+  (matrix
+    [1  0  0  x]
+    [0  1  0  y]
+    [0  0  1  z]
+    [0  0  0  1]))
 
 (defn scale
   ([s] (scale s s s))
   ([sx sy sz]
-   [[sx   0.0  0.0  0.0]
-    [0.0  sy   0.0  0.0]
-    [0.0  0.0  sz   0.0]]))
+   (matrix
+     [sx  0   0  0]
+     [0  sy   0  0]
+     [0   0  sz  0]
+     [0   0   0  1])))
 
 (defn rotate
   "Rotate around the given axis by theta radians"
@@ -21,62 +41,64 @@
   (let [s (Math/sin theta)
         c (Math/cos theta)]
     (condp = axis
-      :x [[ 1.0   0.0   0.0   0.0]
-          [ 0.0     c  (- s)  0.0]
-          [ 0.0     s     c   0.0]]
+      :x (matrix
+           [   1     0     0   0]
+           [   0     c  (- s)  0]
+           [   0     s     c   0]
+           [   0     0     0   1] )
 
-      :y [[   c   0.0     s   0.0]
-          [ 0.0   1.0   0.0   0.0]
-          [(- s)  0.0     c   0.0]]
+      :y (matrix
+           [   c     0     s   0]
+           [   0     1     0   0]
+           [(- s)    0     c   0]
+           [   0     0     0   1])
 
-      :z [[   c  (- s)  0.0   0.0]
-          [   s     c   0.0   0.0]
-          [ 0.0   0.0   1.0   0.0]])))
+      :z (matrix
+           [   c  (- s)    0   0]
+           [   s     c     0   0]
+           [   0     0     1   0]
+           [   0     0     0   1]))))
 
 (def identity
-  (translate 0.0  0.0  0.0))
+  (translate 0 0 0))
 
 (defn dot-product [^doubles as ^doubles bs]
-  (reduce + (map * as bs)))
+  (areduce bs i ret 0.0
+    (+ ret (* (aget bs i)
+              (aget as i)))))
 
-;(defn ^double dot-product [[^double a0 ^double a1 ^double a2 ^double a3]
-;                           [^double b0 ^double b1 ^double b2 ^double b3]]
-;  (+
-;    (* a0 b0)
-;    (* a1 b1)
-;    (* a2 b2)
-;    (* a3 b3)))
+(defn transform-point [matrix ^doubles point]
+  (amap point idx ret
+    ^double (dot-product point (aget matrix idx))))
 
-(def fourth-line [0.0  0.0  0.0  1.0])
+(defn transpose [[a b c d :as matrix]]
+  (amap matrix idx ret
+        (double-array [(aget ^doubles a idx)
+                       (aget ^doubles b idx)
+                       (aget ^doubles c idx)
+                       (aget ^doubles d idx)])))
 
-(defn concat
-  ([a b]
-    (let [a (conj a fourth-line)
-          b (conj b fourth-line)
-          transposed  (apply mapv vector a)
-          row-mult    (fn [x] (mapv (partial dot-product x) transposed))]
-      (subvec (mapv row-mult b) 0 3)))
+(defn combine
+  ([ma mb]
+    (amap ma idx ret
+      (transform-point
+        (transpose ma)
+        ^doubles (aget mb idx))))
   ([a b & more]
-    (let [initial (concat a b)]
-      (reduce concat initial more))))
-
-(defn transform-point [a point]
-  (->
-    (partial dot-product (conj point 1.0))
-    (mapv a)))
+    (let [initial (combine a b)]
+      (reduce combine initial more))))
 
 (defn perspective
   "Constructs a perspective function for a given focal-length, which
    can be used to project a 3D point into 2D cartesian co-ordinates."
-  [focal-length]
-  (let [focal-length (double focal-length)]
-    (fn [[x y z]]
-      (let [p (/ focal-length (- focal-length z))]
-        [(* p x) (* p y)]))))
+  [^double focal-length]
+  (fn [^doubles [x y z]]
+    (let [p (/ focal-length (- focal-length z))]
+      (double-array [(* p x) (* p y)]))))
 
 (defn normal
   "Calculate the normal of a triangle"
-  [[ax ay az] [bx by bz] [cx cy cz]]
+  [^doubles [ax ay az] ^doubles [bx by bz] ^doubles [cx cy cz]]
   (let [v10 (- ax bx)
         v11 (- ay by)
         v12 (- az bz)
@@ -87,7 +109,7 @@
         n1  (- (* v12 v20) (* v10 v22))
         n2  (- (* v10 v21) (* v11 v20))
         mag (Math/sqrt (+ (* n0 n0) (* n1 n1) (* n2 n2)))]
-    [ (/ n0 mag) (/ n1 mag) (/ n2 mag)]))
+    (double-array [(/ n0 mag) (/ n1 mag) (/ n2 mag)])))
 
 (defn sqr [x]
   (* x x))
