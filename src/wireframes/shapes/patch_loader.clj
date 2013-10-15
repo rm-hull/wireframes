@@ -1,5 +1,6 @@
 (ns wireframes.shapes.patch-loader
   (:require [clojure.string :as str]
+            [clojure.core.rrb-vector :as fv]
             [wireframes.transform :as t]
             [wireframes.shapes.primitives :as p]
             [wireframes.bezier :as b]
@@ -19,31 +20,25 @@
     (and (= dir :south) (= j (dec num-points))) nil
     :else (+ source-index offset)))
 
-(defn- face-connectivity [num-points]
-  (vec
-    (distinct
-      (for [j (range num-points)
-            i (range num-points)
-            dir { :east 1 :south num-points }
-            :let [src  (+ i (* j num-points))
-                  dest (calculate-destination-index src dir i j num-points)]
-            :when dest]
-        [src dest]))))
+(defn- points [divisions vertices patch]
+  (->>
+     patch
+     (map vertices)
+     (b/surface-points divisions)
+     (map t/point)))
 
 (defn- polygons [divisions]
-  (vec
-    (for [j (range divisions)
-          i (range divisions)
-          :let [a (+ i (* j (inc divisions)))
-                b (inc a)
-                c (+ b divisions)
-                d (inc c)]]
-      [a b d c]))) ; order of points is important
+  (for [j (range divisions)
+        i (range divisions)
+        :let [a (+ i (* j (inc divisions)))
+              b (inc a)
+              c (+ b divisions)
+              d (inc c)]]
+    [a b d c])) ; order of points is important
 
 (defn- create-surface [divisions vertices patch]
-  {:points (b/surface-points divisions (map vertices patch))
-   :lines  (face-connectivity (inc divisions))
-   :polygons (polygons divisions)})
+  {:points   (fv/vec (points divisions vertices patch))
+   :polygons (fv/vec (polygons divisions))})
 
 (defn load-shape [file divisions]
   (let [raw-data    (vec (str/split-lines (slurp file)))

@@ -1,51 +1,110 @@
 (ns wireframes.transform-tests
-  (:refer-clojure :exclude [identity concat])
+  (:refer-clojure :exclude [identity])
   (:use [clojure.test]
         [wireframes.transform]))
 
-(deftest concat-identity-identity
-  (is (= identity
-         (concat
-           identity
-           identity))))
+(def ε 0.000000001)
 
-(deftest concat-identity-vector
-  (is (= (translate 4 6 9)
-         (concat
-           identity
-           (translate 4 6 9)))))
+(defn =approx [^double a ^double b]
+  (> ε (Math/abs (- a b))))
 
-(deftest concat-two-vectors
-  (is (= (translate 8 10 21)
-         (concat
-           (translate 5 3 2)
-           (translate 3 7 19)))))
+(defn eager-and [a b]
+  (if b a false))
 
-(deftest concat-three-vectors
-  (is (= (translate 11 12 19)
-         (concat
-           (translate 3 5 6)
-           (translate 5 4 3)
-           (translate 3 3 10)))))
+(defn =vector [expected actual]
+  (is (reduce eager-and true
+        (map
+          =approx
+          (vec (into-array Double/TYPE expected))
+          (vec actual)))))
 
-; TODO: rotate test --> concat is not associative
+(defn =matrix [expected actual]
+  (is
+    (reduce eager-and true
+      (map
+        =vector
+        expected actual))))
 
-(deftest transform-single-point
-  (is (= [8.0 10.0 13.0]
-         (transform-point
-           (translate 3 5 6)
-           [5 5 7]))))
+(deftest transpose-matrix
+  (=matrix
+    (matrix
+        [ 1  5  9 13]
+        [ 2  6 10 14]
+        [ 3  7 11 15]
+        [ 4  8 12 16])
+    (transpose
+      (matrix
+        [ 1  2  3  4]
+        [ 5  6  7  8]
+        [ 9 10 11 12]
+        [13 14 15 16]))))
+
+(deftest combine-matrices
+  (=matrix
+    identity
+    (combine
+      identity
+      identity))
+
+  (=matrix
+    (translate 4 6 9)
+    (combine
+      identity
+      (translate 4 6 9)))
+
+  (=matrix
+    (translate 8 10 21)
+    (combine
+      (translate 5 3 2)
+      (translate 3 7 19)))
+
+  (=matrix
+    (translate 11 12 19)
+    (combine
+      (translate 3 5 6)
+      (translate 5 4 3)
+      (translate 3 3 10))))
+
+; TODO: rotate test --> combine is not associative
+
+(deftest translate-point
+  (=vector [8 10 13 1]
+           (transform-point
+             (translate 3 5 6)
+             (point 5 5 7))))
+
+(deftest scale-point
+  (=vector [10 15 28 1]
+           (transform-point
+             (scale 2 3 4)
+             (point 5 5 7))))
+
+(deftest rotate-point
+  (=vector [3 -9 6 1]
+           (transform-point
+             (rotate :x (degrees->radians 90))
+             (point 3 6 9)))
+
+  (=vector [9 6 -3 1]
+           (transform-point
+             (rotate :y (degrees->radians 90))
+             (point 3 6 9)))
+
+  (=vector [-6 3 9 1]
+           (transform-point
+             (rotate :z (degrees->radians 90))
+             (point 3 6 9))))
 
 (deftest perspective-point
-  (is (= [22.909090909090907 11.454545454545453]
-         ((perspective 20) [12.6 6.3 9.0]))))
+  (=vector [22.909090909090907 11.454545454545453]
+               ((perspective 20) (point 12.6 6.3 9))))
 
 (deftest normal-3d-triangle
-  (is (= [0.0 -1.0 0.0]
-         (normal
-           [3.0  5.0   6.0]
-           [7.0  5.0  11.0]
-           [3.0  5.0  14.0]))))
+  (=vector [0 -1 0]
+           (normal
+             (point 3 5 6)
+             (point 7 5 11)
+             (point 3 5 14))))
 
 (deftest triangulation
   (is (= [[1 2 3]] (triangulate [1 2 3])))

@@ -20,7 +20,7 @@
   (fn [polygon]
     (->>
       polygon
-      (mapv (comp peek points-3d))
+      (mapv #(nth (points-3d %) 2))
       ;(second)
       (reduce +) ; min/max/+
       -)))
