@@ -9,7 +9,7 @@
             [wireframes.renderer.bitmap :as b])
   (:import [java.awt Color]))
 
-(set! *unchecked-math* true)
+;(set! *unchecked-math* true)
 
 (defn create-color [style & [^Color color]]
   (let [color (or color Color/WHITE)
@@ -104,13 +104,14 @@
         :filename "wineglass.png"
         :color (Color. 0xEAF5FC)
         :style style
-        :shape (cs/make-wineglass 30)
+        :shape (cs/make-wineglass 48)
         :focal-length 20
         :size [400 400]
         :transform (t/combine
                      (t/rotate :z (t/degrees->radians 15))
                      (t/rotate :x (t/degrees->radians 20))
-                     (t/translate 0 -0.2 10))})
+                     (t/scale 1.75)
+                     (t/translate 0.1 -0.4 10))})
 
       (harness {
         :filename "teapot.png"
@@ -171,14 +172,16 @@
 (comment
 (harness {
   :filename "wineglass.png"
-  :style :opaque
+  :style :translucent
   :color (Color. 0xeaf5fc)
   :shape (cs/make-wineglass 60)
   :focal-length 20
+  :size [400 400]
   :transform (t/combine
                (t/rotate :z (t/degrees->radians 15))
                (t/rotate :x (t/degrees->radians 20))
-               (t/translate 0 -0.2 10))})
+               (t/scale 1.75)
+               (t/translate 0.1 -0.4 10))})
 
 (harness {
   :filename "grid.png"
