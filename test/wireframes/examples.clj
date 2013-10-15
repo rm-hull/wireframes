@@ -9,6 +9,8 @@
             [wireframes.renderer.bitmap :as b])
   (:import [java.awt Color]))
 
+(set! *unchecked-math* true)
+
 (defn create-color [style & [^Color color]]
   (let [color (or color Color/WHITE)
         alpha (style {:transparent 0 :translucent 128 :opaque 255})]

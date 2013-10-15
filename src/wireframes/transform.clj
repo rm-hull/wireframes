@@ -36,8 +36,8 @@
 (def identity
   (translate 0.0  0.0  0.0))
 
-(defn dot-product [a b]
-  (reduce + (map * a b)))
+(defn dot-product [^doubles as ^doubles bs]
+  (reduce + (map * as bs)))
 
 ;(defn ^double dot-product [[^double a0 ^double a1 ^double a2 ^double a3]
 ;                           [^double b0 ^double b1 ^double b2 ^double b3]]
