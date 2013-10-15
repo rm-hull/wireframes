@@ -129,7 +129,7 @@ which generates:
 * Texture mapping
 * ~~Backface removal~~
 * Compute shape bounds
-* Support loading from .dae files
+* Support loading from & saving to .stl files
 * ~~Support loading from Wavefront .obj files~~
 * Deprecate ```:lines``` - no longer used except in platonic solids
 * Improve documentation
@@ -150,6 +150,7 @@ which generates:
 * http://www.cs.berkeley.edu/~jrs/mesh/
 * http://www.victoriakirst.com/beziertool/
 * https://en.wikipedia.org/wiki/Wavefront_.obj_file
+* https://en.wikipedia.org/wiki/STL_(file_format)
 
 ## License
 
