@@ -174,4 +174,4 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-![pixel](https://images.destructuring-bind.org/pixel.gif)
+![pixel](http://images.destructuring-bind.org/rm-hull/wireframes/readme.gif)
