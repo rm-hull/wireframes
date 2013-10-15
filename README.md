@@ -139,6 +139,7 @@ which generates:
 
 * Bug in shader/lighting position - affected by applied transforms?
 * Improve depth criteria for priority fill/painters algorithm
+* Cube (multi-dimension) extrusion is generating erroneous polygons
 
 ## References
 
