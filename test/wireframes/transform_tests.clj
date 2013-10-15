@@ -3,15 +3,23 @@
   (:use [clojure.test]
         [wireframes.transform]))
 
-(defn =matrix [expected actual]
-  ; TODO: need to take epsilon into account...
-  (is (= (as-2d-vector expected)
-         (as-2d-vector actual))))
+(def ε 0.000000001)
+
+(defn =approx [^double a ^double b]
+  (> ε (Math/abs (- a b))))
 
 (defn =vector [expected actual]
-  ; TODO: need to take epsilon into account...
-  (is (= (vec (into-array Double/TYPE expected))
-      (vec actual))))
+  (is (reduce (fn [a b] (if b a false)) true
+        (map
+          =approx
+          (vec (into-array Double/TYPE expected))
+          (vec actual)))))
+
+(defn =matrix [expected actual]
+  (is (map every?
+        =vector
+        (as-2d-vector expected)
+        (as-2d-vector actual))))
 
 (deftest transpose-matrix
   (=matrix
