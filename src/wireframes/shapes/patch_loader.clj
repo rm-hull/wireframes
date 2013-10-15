@@ -22,7 +22,7 @@
 
 (defn- points [divisions vertices patch]
   (->>
-     patches
+     patch
      (map vertices)
      (b/surface-points divisions)
      (map t/point)))
