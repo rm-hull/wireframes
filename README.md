@@ -129,6 +129,7 @@ which generates:
 * Texture mapping
 * ~~Backface removal~~
 * Compute shape bounds
+* gcode generation for 3D printers
 * Support loading from & saving to .stl files
 * ~~Support loading from Wavefront .obj files~~
 * Deprecate ```:lines``` - no longer used except in platonic solids
