@@ -231,7 +231,11 @@
 (sl/save-shape
   (cs/make-torus 1 3 60 60)
   "Torus, created with https://github/rm-hull/wireframes [October 16 2013]"
-  "torus.stl")
+  "doc/gallery/torus.stl")
 
-  (count (t/reduce-polygons (:polygons shape))
-))
+(sl/save-shape
+  (cs/make-wineglass 60)
+  "Wineglass, created with https://github/rm-hull/wireframes [October 16 2013]"
+  "doc/gallery/wineglass.stl")
+
+  )
