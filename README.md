@@ -151,26 +151,26 @@ can then be viewed using the GitHub 3D viewer.
 
 ## TODO
 
-- [x] Efficiently calculate polygons on extruded shapes
-- [ ] Rewrite/rename wireframes.transform/concat - unroll loops for performance
-- [x] Complete Bezier patch code
-- [x] Rectilinear perspective mapping
-- [x] Stitch adjacent surface panels together
-- [ ] SVG renderer
-- [ ] Canvas renderer
-- [x] Simple flat shading / lighting
-- [ ] Configurable lighting position(s)
-- [ ] Colours
-- [ ] Gourand shading
-- [ ] Texture mapping
-- [x] Backface removal
-- [ ] Compute shape bounds
-- [ ] gcode generation for 3D printers
-- [x] Support loading from & saving to .stl files
-- [x] Support loading from Wavefront .obj files
-- [x] Deprecate ```:lines``` - no longer used except in platonic solids
-- [ ] Improve documentation
-- [ ] More Examples
+* ~~Efficiently calculate polygons on extruded shapes~~
+* Rewrite/rename wireframes.transform/concat - unroll loops for performance
+* ~~Complete Bezier patch code~~
+* ~~Rectilinear perspective mapping~~
+* ~~Stitch adjacent surface panels together~~
+* SVG renderer
+* Canvas renderer
+* ~~Simple flat shading / lighting~~
+* Configurable lighting position(s)
+* Colours
+* Gourand shading
+* Texture mapping
+* ~~Backface removal~~
+* Compute shape bounds
+* gcode generation for 3D printers
+* ~~Support loading from & saving to .stl files~~
+* ~~Support loading from Wavefront .obj files~~
+* ~~Deprecate ```:lines``` - no longer used except in platonic solids~~
+* Improve documentation
+* Examples
 
 ## Known Bugs
 
