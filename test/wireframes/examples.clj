@@ -242,10 +242,10 @@
   :filename "knurled-cylinder.png"
   :style :translucent
   :shape (p/extrude
-           (cs/make-star 1 1.1 40)
+           (cs/make-star 1 1.2 50)
            (t/combine
              (t/rotate :z (t/degrees->radians 3))
-             (t/scale 0.99)
+             (t/scale 0.95)
              (t/rotate :y (t/degrees->radians 2))
              (t/translate 0 0 0.2))
            50)
@@ -273,11 +273,11 @@
   "doc/gallery/teapot.stl")
 
  (sl/save-shape
-    (p/extrude
-           (cs/make-star 1 1.1 40)
+(p/extrude
+           (cs/make-star 1 1.1 36)
            (t/combine
              (t/rotate :z (t/degrees->radians 3))
-             (t/scale 0.99)
+             (t/scale 0.95)
              (t/rotate :y (t/degrees->radians 2))
              (t/translate 0 0 0.2))
            50)
