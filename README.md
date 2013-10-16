@@ -77,6 +77,10 @@ For example, in Clojure, to generate a torus angled in the Y- and Z-axles, writt
 out to a PNG file:
 
 ```clojure
+(use 'wireframes.shapes.curved-solids)
+(use 'wireframes.transforms)
+(use 'wireframes.renderer.bitmap)
+
 (write-png
   (->img
     (draw-solid
@@ -100,6 +104,9 @@ The defacto/clichéd Utah teapot (or any patch/vertex 3D file) can be loaded in 
 code sample:
 
 ```clojure
+(use 'wireframes.shapes.patch-loader)
+(use 'wireframes.renderer.bitmap)
+
 (write-png
   (->img
     (draw-solid 
@@ -109,13 +116,35 @@ code sample:
                     (t/rotate :z (sp/degrees->radians 35))
                     (t/rotate :x (sp/degrees->radians -70))
                     (t/translate 0 -1 40))
-       :shape (sl/load-shape "resources/newell-teapot/teapot")})
+       :shape (load-shape "resources/newell-teapot/teapot")})
     [1000 900])
   "teapot.png")
 ```
 which generates:
 
 ![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/teapot.png)
+
+The following file formats support loading:
+
+* Patch files in the ```wireframes.shapes.patch-loader``` namespace,
+* Wavefront .obj files in the ```wireframes.shapes.wavefront-loader``` namespace,
+* Stereoithography .stl files in the ```wireframes.shapes.stl-loader``` namespace
+
+### Saving 3D shapes to STL-format files
+
+Once generated or loaded by whatever means, a shape may be persisted in STL format with the following code sample:
+
+```clojure
+(use 'wireframes.shapes.stl-loader)
+(use 'wireframes.shapes.curved-solids)
+
+(save-shape
+  (make-torus 1 3 60 60)
+  "a description which will get truncated to 80 chars"
+  "doc/gallery/torus.stl")
+  
+This specific file can then be viewed using the 
+[GitHub 3D viewer](https://github.com/rm-hull/wireframes/blob/stl-shape-loader/doc/gallery/torus.stl)
 
 ## TODO
 
@@ -134,9 +163,9 @@ which generates:
 * ~~Backface removal~~
 * Compute shape bounds
 * gcode generation for 3D printers
-* Support loading from & saving to .stl files
+* ~~Support loading from & saving to .stl files~~
 * ~~Support loading from Wavefront .obj files~~
-* Deprecate ```:lines``` - no longer used except in platonic solids
+* ~~Deprecate ```:lines``` - no longer used except in platonic solids~~
 * Improve documentation
 * Examples
 
