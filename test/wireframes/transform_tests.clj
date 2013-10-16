@@ -109,6 +109,12 @@
 (deftest triangulation
   (is (= [[1 2 3]] (triangulate [1 2 3])))
   (is (= [[1 2 3] [1 3 4] [1 4 5]] (triangulate [1 2 3 4 5])))
-  (is (nil? (triangulate [])))
-  (is (nil? (triangulate [1])))
-  (is (nil? (triangulate [1 2]))))
+  (is (= [nil]   (triangulate nil)))
+  (is (= [[]]    (triangulate [])))
+  (is (= [[1]]   (triangulate [1])))
+  (is (= [[1 2]] (triangulate [1 2]))))
+
+
+(deftest reduce-polys
+  (is (= [[1 2 3] [1 3 4] [2 3 5] [2 5 6] [2 6 7]]
+         (reduce-polygons [[1 2 3 4] [2 3 5 6 7]]))))
