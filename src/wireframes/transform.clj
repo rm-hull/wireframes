@@ -145,6 +145,3 @@
       (recur
         (fv/catvec acc (triangulate p))
         ps))))
-
-
-(fv/catvec [1 2 3] [4 5 6])
