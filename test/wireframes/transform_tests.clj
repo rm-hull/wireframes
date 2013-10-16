@@ -1,5 +1,5 @@
 (ns wireframes.transform-tests
-  (:refer-clojure :exclude [identity])
+  (:refer-clojure :exclude [identity vec])
   (:use [clojure.test]
         [wireframes.transform]))
 
@@ -15,8 +15,8 @@
   (is (reduce eager-and true
         (map
           =approx
-          (vec (into-array Double/TYPE expected))
-          (vec actual)))))
+          (clojure.core/vec (into-array Double/TYPE expected))
+          (clojure.core/vec actual)))))
 
 (defn =matrix [expected actual]
   (is

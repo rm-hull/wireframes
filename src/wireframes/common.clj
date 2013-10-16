@@ -28,3 +28,8 @@
   (if (seq xs)
     (cons (first xs) (simple-concat (next xs) ys))
     ys))
+
+(defn pad [s n]
+  (->
+    (apply str s (repeat n \space))
+    (subs 0 n)))

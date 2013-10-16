@@ -225,4 +225,13 @@
                (t/rotate :x (t/degrees->radians 20))
                (t/scale 0.1)
                (t/translate 3 -5 210))})
-)
+
+
+
+(sl/save-shape
+  (cs/make-torus 1 3 60 60)
+  "Torus, created with https://github/rm-hull/wireframes [October 16 2013]"
+  "torus.stl")
+
+  (count (t/reduce-polygons (:polygons shape))
+))

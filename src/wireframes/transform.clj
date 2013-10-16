@@ -1,14 +1,23 @@
 (ns wireframes.transform
-  (:refer-clojure :exclude [identity]))
+  (:refer-clojure :exclude [identity vec])
+  (:require [wireframes.common :as c]))
 
 (defn degrees->radians [d]
   (/ (* (double d) Math/PI) 180.0))
 
 (defn point
+  "Constuctor for making points"
   ([[x y z]] (point x y z))
   ([x y z]   (mapv double [x y z 1])))
 
-(defn matrix [& rows]
+(defn vec
+  "Convert a point back into a clojure vector"
+  [point]
+  (subvec point 0 3))
+
+(defn matrix
+  "Matrix builder"
+  [& rows]
   (mapv #(mapv double %) rows))
 
 (defn translate
@@ -116,3 +125,17 @@
         (recur
           (conj acc [a b c])
           (cons a (cons c more)))))))
+
+(defn reduce-polygons
+  "Alter a sequence of polygons such that the output contains polygons
+   with no more than 3 sides: hence polygons with 4 or more sides are
+   split into triangles."
+  [polygons]
+  (loop [acc []
+         polygons polygons]
+    (if (empty? polygons)
+      acc
+      (let [[p & ps] (triangulate (first polygons))]
+        (recur
+          (conj acc p)
+          (c/simple-concat ps (next polygons)))))))
