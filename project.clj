@@ -18,6 +18,8 @@
   :source-path "src"
   :cljsbuild {
     :builds [{:source-paths ["target/generated"], :id "main", :jar true}]}
+  :test-selectors {:default (complement :examples)
+                   :examples :examples }
   :min-lein-version "2.3.2"
   :global-vars {*warn-on-reflection* true}
   :repositories {"sonartype snapshots" "https://oss.sonatype.org/content/repositories/snapshots"})

@@ -19,9 +19,13 @@ You will need [Leiningen](https://github.com/technomancy/leiningen) 2.3.2 or abo
 
 To build and install the library locally, run:
 
-     lein test
-     lein cljsbuild once
-     lein install
+    $ lein test
+    $ lein cljsbuild once
+    $ lein install
+
+To re-generate the examples in the ```doc/gallery``` directory, run:
+
+    $ lein test :examples
 
 ### Including in your project
 
