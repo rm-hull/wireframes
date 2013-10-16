@@ -102,6 +102,7 @@
                      (t/rotate :z (t/degrees->radians 55))
                      (t/rotate :y (t/degrees->radians -30))
                      (t/translate 0 0 16))})
+
       (harness {
         :filename "wineglass.png"
         :color (Color. 0xEAF5FC)
@@ -166,7 +167,23 @@
                      (t/rotate :x (t/degrees->radians 20))
                      (t/rotate :y (t/degrees->radians -120))
                      (t/rotate :z (t/degrees->radians -20))
-                     (t/translate -0.6 -0.28 8.85))}))))
+                     (t/translate -0.6 -0.28 8.85))})
+
+
+    (harness {
+        :filename "rpi-case.png"
+        :style style
+        :shape (sl/load-shape  "resources/RichRap_Raspbery_Pi_Case_Bottom.stl")
+        :focal-length 24
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 25))
+                     (t/rotate :y (t/degrees->radians 160))
+                     (t/rotate :x (t/degrees->radians 20))
+                     (t/scale 0.1)
+                     (t/translate 3 -5 210))})
+
+
+)))
 
 
 
@@ -204,8 +221,8 @@
   :focal-length 24
   :transform (t/combine
                (t/rotate :z (t/degrees->radians 25))
-               (t/rotate :y (t/degrees->radians 130))
-               (t/rotate :x (t/degrees->radians -50))
+               (t/rotate :y (t/degrees->radians 160))
+               (t/rotate :x (t/degrees->radians 20))
                (t/scale 0.1)
                (t/translate 3 -5 210))})
 )
