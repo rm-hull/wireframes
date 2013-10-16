@@ -5,8 +5,18 @@ A lightweight 3D rendering engine in Clojure & ClojureScript.
 ![Aventador](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/aventador.png)
 
 Adapted and extended from a javascript demo (originally by Kragen Javier Sitaker, see references below) 
-into a ClojureScript/Clojure library (that will render to SVG, an HTML5 Canvas or a Graphics2D object 
+into a Clojure/ClojureScript library (that will render to SVG, an HTML5 Canvas or a Graphics2D object 
 depending on the runtime environment).
+
+This started out as a experiment to plot Lorenz attractors in 3D space, but it turns out to be a really
+*simple* way to programmatically generate three dimensional geometric shapes - basically a programmable 
+CAD system - I'm pretty sure that AutoCAD could already do this (and much quicker too), but where I 
+would really like to go with this is:
+
+* Build up a robust and idiomatic Clojure API for generating shapes
+* A wide variety of output renderers - potentially even a GLSL cross-compiler and 
+  certainly a gcode output formatter suitable for 3D printers
+* 100% compatibility with ClojureScript 
 
 A variety of (in-progress) generated wireframe and solid shapes can be found 
 in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
@@ -189,6 +199,7 @@ can then be viewed using the GitHub 3D viewer.
 * http://www.victoriakirst.com/beziertool/
 * https://en.wikipedia.org/wiki/Wavefront_.obj_file
 * https://en.wikipedia.org/wiki/STL_(file_format)
+* https://github.com/colah/ImplicitCAD
 
 ## License
 
