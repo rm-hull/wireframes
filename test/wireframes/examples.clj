@@ -236,6 +236,11 @@
 (sl/save-shape
   (cs/make-wineglass 60)
   "Wineglass, created with https://github/rm-hull/wireframes [October 16 2013]"
-  "doc/gallery/wineglass.stl")
+  "wineglass.stl")
+
+(sl/save-shape
+  (pl/load-shape "resources/newell-teapot/teapot" 16)
+  "Utah Teapot, created with https://github/rm-hull/wireframes [October 16 2013]"
+  "doc/gallery/teapot.stl")
 
   )
