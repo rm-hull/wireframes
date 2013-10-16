@@ -142,7 +142,8 @@ Once generated or loaded by whatever means, a shape may be persisted in STL form
   (make-torus 1 3 60 60)
   "a description which will get truncated to 80 chars"
   "doc/gallery/torus.stl")
-  
+```
+
 This specific file can then be viewed using the 
 [GitHub 3D viewer](https://github.com/rm-hull/wireframes/blob/stl-shape-loader/doc/gallery/torus.stl)
 
