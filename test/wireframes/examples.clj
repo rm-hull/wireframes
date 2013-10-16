@@ -90,7 +90,7 @@
                      (t/rotate :z (t/degrees->radians 55))
                      (t/rotate :y (t/degrees->radians -20))
                      (t/scale 2)
-                     (t/translate -0.5 -0.5 16))})
+                     (t/translate 0.5 -1.5 16))})
 
       (harness {
         :filename "icosahedron.png"
@@ -226,6 +226,35 @@
                (t/scale 0.1)
                (t/translate 3 -5 210))})
 
+(harness {
+  :filename "cube.png"
+  :style :translucent
+  :shape ps/cube
+  :focal-length 5
+  :size [300 300]
+  :transform (t/combine
+               (t/rotate :z (t/degrees->radians 55))
+               (t/rotate :y (t/degrees->radians -20))
+               (t/scale 2)
+               (t/translate 0.5 -1.5 16))})
+
+(harness {
+  :filename "knurled-cylinder.png"
+  :style :translucent
+  :shape (p/extrude
+           (cs/make-star 1 1.1 40)
+           (t/combine
+             (t/rotate :z (t/degrees->radians 3))
+             (t/scale 0.99)
+             (t/rotate :y (t/degrees->radians 2))
+             (t/translate 0 0 0.2))
+           50)
+  :focal-length 5
+  :size [900 900]
+  :transform (t/combine
+               (t/rotate :x (t/degrees->radians 15))
+               (t/rotate :y (t/degrees->radians -20))
+               (t/translate 0.5 -0.0 16))})
 
 
 (sl/save-shape
@@ -236,11 +265,25 @@
 (sl/save-shape
   (cs/make-wineglass 60)
   "Wineglass, created with https://github/rm-hull/wireframes [October 16 2013]"
-  "wineglass.stl")
+  "doc/gallery/wineglass.stl")
 
 (sl/save-shape
   (pl/load-shape "resources/newell-teapot/teapot" 16)
   "Utah Teapot, created with https://github/rm-hull/wireframes [October 16 2013]"
   "doc/gallery/teapot.stl")
+
+ (sl/save-shape
+    (p/extrude
+           (cs/make-star 1 1.1 40)
+           (t/combine
+             (t/rotate :z (t/degrees->radians 3))
+             (t/scale 0.99)
+             (t/rotate :y (t/degrees->radians 2))
+             (t/translate 0 0 0.2))
+           50)
+  "Weird swirly thing, created with https://github/rm-hull/wireframes [October 16 2013]"
+  "doc/gallery/weird-swirly-thing.stl")
+
+
 
   )

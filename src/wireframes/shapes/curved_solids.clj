@@ -46,6 +46,14 @@
       (t/scale 0.9))
     h))
 
+(defn make-star [r1 r2 n]
+  (let [angle (intervals->radians (* n 2))]
+    (p/extrude
+      (map #(p/make-point (* %2 (Math/cos %1)) (* %2 (Math/sin %1)) 0)
+           (iterate (partial + angle) 0)
+           (cycle [r1 r2]))
+      (* n 2))))
+
 (defn make-sphere
   "Approximate a sphere at the origin wth radius r and n points"
   [r n]

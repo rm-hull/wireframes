@@ -17,14 +17,15 @@
 
 
 (def cube
-  "Start with a point, extrude to a line alone the Z-plane, then extrude that
-   line in the Y-axis to make a square... extrude again along the X-axis to
-   complete the square. "
+  "Start with a square polygon, and extrude to a line alone the Z-plane."
   (->
-    (p/make-point 0 0 0)
-    (p/extrude (t/translate 0 0 1) 1)
-    (p/extrude (t/translate 0 1 0) 1)
-    (p/extrude (t/translate 1 0 0) 1)))
+    (p/make-polygon
+      (p/make-point 0 0 0)
+      (p/make-point 0 1 0)
+      (p/make-point 1 1 0)
+      (p/make-point 1 0 0))
+    (p/extrude
+      (t/translate 0 0 1) 1)))
 
 (def octahedron nil)
 
