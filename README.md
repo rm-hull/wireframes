@@ -144,8 +144,9 @@ Once generated or loaded by whatever means, a shape may be persisted in STL form
   "doc/gallery/torus.stl")
 ```
 
-This specific file can then be viewed using the 
-[GitHub 3D viewer](https://github.com/rm-hull/wireframes/blob/stl-shape-loader/doc/gallery/torus.stl)
+This specific [torus](https://github.com/rm-hull/wireframes/blob/stl-shape-loader/doc/gallery/torus.stl) and a
+[wineglass](https://github.com/rm-hull/wireframes/blob/stl-shape-loader/doc/gallery/wineglass.stl)
+can then be viewed using the GitHub 3D viewer.
 
 ## TODO
 
