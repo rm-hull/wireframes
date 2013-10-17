@@ -161,8 +161,9 @@ can then be viewed using the GitHub 3D viewer.
 
 ## TODO
 
+* Investigate using primitive arrays (see [array](https://github.com/rm-hull/wireframes/tree/array) branch)
 * ~~Efficiently calculate polygons on extruded shapes~~
-* Rewrite/rename wireframes.transform/concat - unroll loops for performance
+* ~~Rewrite/rename wireframes.transform/concat - unroll loops for performance~~
 * ~~Complete Bezier patch code~~
 * ~~Rectilinear perspective mapping~~
 * ~~Stitch adjacent surface panels together~~
