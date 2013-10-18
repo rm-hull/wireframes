@@ -10,7 +10,7 @@
 
 (defn transform-shape [transform]
   (fn [{:keys [points] :as shape}]
-    (assoc shape :points (mapv (partial t/transform-point transform) points))))
+    (assoc shape :points (mapv (t/transform-point transform) points))))
 
 (defn- offsets [n coll]
   (mapv #(mapv (partial + n) %) coll))

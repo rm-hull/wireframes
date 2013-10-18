@@ -1,6 +1,7 @@
 (ns wireframes.examples
   (:use [clojure.test])
-  (:require [wireframes.transform :as t]
+  (:require [taoensso.timbre.profiling :as profiling :refer (p profile)]
+            [wireframes.transform :as t]
             [wireframes.shapes.primitives :as p]
             [wireframes.shapes.curved-solids :as cs]
             [wireframes.shapes.platonic-solids :as ps]
@@ -26,16 +27,20 @@
                        draw-fn filename size style color] :as opts}]
   (let [dir (str "doc/gallery/" (name style) "/")]
     (.mkdir (clojure.java.io/file dir))
-    (println style filename)
-    (time
-      (is
-        (b/write-png
-          (b/->img
-            (partial
-              (or draw-fn b/draw-solid)
-              (assoc opts :fill-color (create-color style color)))
-            (or size [1000 900]))
-          (str dir filename))))))
+    (printf "%-14s %-20s" style filename)
+    (flush)
+    (is
+      (b/write-png
+        (let [start-time (System/nanoTime)
+              img (b/->img
+                    (partial
+                      b/draw-solid
+                    (assoc opts :fill-color (create-color style color)))
+                       (or size [1000 900]))]
+          (printf "--> %10.4f msecs\n" (/ (- (System/nanoTime) start-time) 1000000.0))
+          (flush)
+          img)
+        (str dir filename)))))
 
 (deftest ^:examples complex-solids
   (let [teapot (pl/load-shape "resources/newell-teapot/teapot" 16)
@@ -180,14 +185,7 @@
                      (t/rotate :y (t/degrees->radians 160))
                      (t/rotate :x (t/degrees->radians 20))
                      (t/scale 0.1)
-                     (t/translate 3 -5 210))})
-
-
-)))
-
-
-
-
+                     (t/translate 3 -5 210))}))))
 
 (comment
 (harness {
@@ -286,4 +284,4 @@
 
 
 
-  )
+)

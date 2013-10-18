@@ -69,31 +69,21 @@
 
 (deftest translate-point
   (=vector [8 10 13 1]
-           (transform-point
-             (translate 3 5 6)
-             (point 5 5 7))))
+           ((transform-point (translate 3 5 6)) (point 5 5 7))))
 
 (deftest scale-point
   (=vector [10 15 28 1]
-           (transform-point
-             (scale 2 3 4)
-             (point 5 5 7))))
+           ((transform-point (scale 2 3 4)) (point 5 5 7))))
 
 (deftest rotate-point
   (=vector [3 -9 6 1]
-           (transform-point
-             (rotate :x (degrees->radians 90))
-             (point 3 6 9)))
+           ((transform-point (rotate :x (degrees->radians 90))) (point 3 6 9)))
 
   (=vector [9 6 -3 1]
-           (transform-point
-             (rotate :y (degrees->radians 90))
-             (point 3 6 9)))
+           ((transform-point (rotate :y (degrees->radians 90))) (point 3 6 9)))
 
   (=vector [-6 3 9 1]
-           (transform-point
-             (rotate :z (degrees->radians 90))
-             (point 3 6 9))))
+           ((transform-point (rotate :z (degrees->radians 90))) (point 3 6 9))))
 
 (deftest perspective-point
   (=vector [22.909090909090907 11.454545454545453]

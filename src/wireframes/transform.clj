@@ -66,13 +66,14 @@
 (def identity
   (translate 0 0 0))
 
-(defn dot-product [as bs]
+(defn dot-product [^doubles as ^doubles bs]
   (reduce + (mapv * as bs)))
 
-(defn transform-point [matrix point]
-  (mapv
-    (partial dot-product point)
-    matrix))
+(defn transform-point [matrix]
+  (fn [[^double ax ^double ay ^double az ^double aw]]
+    (mapv
+      (fn [[^double bx ^double by ^double bz ^double bw]] (+ (* ax bx) (* ay by) (* az bz) (* aw bw)))
+      matrix)))
 
 (defn transpose [matrix]
   (apply mapv vector matrix))
@@ -80,7 +81,7 @@
 (defn combine
   ([a b]
     (let [transposed (transpose a)]
-      (mapv #(transform-point transposed %) b)))
+      (mapv (transform-point transposed) b)))
   ([a b & more]
     (let [initial (combine a b)]
       (reduce combine initial more))))
@@ -138,10 +139,11 @@
    with no more than 3 sides: hence polygons with 4 or more sides are
    split into triangles."
   [polygons]
-  (loop [acc      []
-         [p & ps] polygons]
-    (if (empty? p)
-      acc
-      (recur
-        (fv/catvec acc (triangulate p))
-        ps))))
+  (loop [acc      (transient [])
+         polygons polygons]
+    (if (empty? polygons)
+      (persistent! acc)
+      (let [[p & ps] (triangulate (first polygons))]
+        (recur
+          (conj! acc p)
+          (c/simple-concat ps (next polygons)))))))

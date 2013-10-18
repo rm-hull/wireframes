@@ -1,5 +1,7 @@
 (ns wireframes.renderer
-  (:require [wireframes.transform :as t]))
+  (:require [wireframes.transform :as t]
+            [potemkin :refer [fast-memoize]]
+            [taoensso.timbre.profiling :as profiling :refer [p profile]]))
 
 (def √3 (Math/sqrt 3))
 
@@ -17,17 +19,19 @@
       (color-fn))))
 
 (defn priority-fill [points-3d]
-  (fn [polygon]
-    (->>
-      polygon
-      (mapv #(nth (points-3d %) 2))
-      ;(second)
-      (reduce +) ; min/max/+
-      -)))
+  (fast-memoize
+    (fn [polygon]
+      (loop [acc    0.0
+             points polygon]
+        (if-let [[_ _ ^double z] (get points-3d (first points))]
+          (recur
+            (- acc z)
+            (rest points))
+          acc)))))
 
 (defn get-3d-points [transform shape]
   (mapv
-    (partial t/transform-point transform)
+    (t/transform-point transform)
     (:points shape)))
 
 (defn get-2d-points [focal-length points-3d]
