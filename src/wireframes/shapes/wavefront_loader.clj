@@ -42,4 +42,4 @@
     (remove nil?)
     (reduce
       (partial merge-with fv/catvec)
-      {:points (fv/vector) :lines (fv/vector) :polygons (fv/vector)})))
+      {:points (fv/vector) :polygons (fv/vector)})))

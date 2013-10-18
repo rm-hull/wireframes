@@ -70,7 +70,12 @@
   "Creates a joined line consisting of the points of the form [x y z]"
   [& points]
   (apply merge-with fv/catvec
-    {:lines (->> points (map :points) count range (partition 2 1) (mapv vec))}
+    {:polygons (->> points (map :points) count range (partition 2 1) (mapv vec))}
+    points))
+
+(defn make-polygon [& points]
+  (apply merge-with fv/catvec
+    {:polygons (->> points (map :points) count range vec vector)}
     points))
 
 (defn make-grid [x y w h]

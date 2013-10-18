@@ -1,17 +1,22 @@
 (ns wireframes.transform
-  (:refer-clojure :exclude [identity]))
+  (:refer-clojure :exclude [identity vec])
+  (:require [wireframes.common :as c]
+            [clojure.core.rrb-vector :as fv]))
 
 (defn degrees->radians [d]
   (/ (* (double d) Math/PI) 180.0))
-
-(defn as-2d-vector [matrix]
-  (map vec (vec matrix)))
 
 (defn point
   ([[x y z]]
     (double-array [x y z 1]))
   ([x y z]
     (double-array [x y z 1])))
+
+(defn vec
+  "Convert a point back into a clojure vector"
+  [point]
+  (subvec (vec point) 0 3))
+
 
 (defn matrix [& rows]
   (into-array
@@ -79,11 +84,11 @@
                        (aget ^doubles d idx)])))
 
 (defn combine
-  ([ma mb]
-    (amap ma idx ret
+  ([a b]
+    (amap a idx ret
       (transform-point
-        (transpose ma)
-        ^doubles (aget mb idx))))
+        (transpose a)
+        ^doubles (aget b idx))))
   ([a b & more]
     (let [initial (combine a b)]
       (reduce combine initial more))))
@@ -119,8 +124,14 @@
   [a b]
   (Math/sqrt (reduce + (map (comp sqr -) a b))))
 
-(defn triangulate [points]
-  (when (>= (count points) 3)
+(defn triangulate
+  "Attempts to break down the polygon (defined by the points) into an array
+   of triangles which represent the same surface area. NOTE: If the polygon
+   is already triangular (or less) in nature, then that polygon is returned
+   wrapped in an array."
+  [points]
+  (if (<= (count points) 3)
+    [points]
     (loop [acc []
            [a b c & more] points]
       (if (empty? more)
@@ -128,3 +139,16 @@
         (recur
           (conj acc [a b c])
           (cons a (cons c more)))))))
+
+(defn reduce-polygons
+  "Alter a sequence of polygons such that the output contains polygons
+   with no more than 3 sides: hence polygons with 4 or more sides are
+   split into triangles."
+  [polygons]
+  (loop [acc      []
+         [p & ps] polygons]
+    (if (empty? p)
+      acc
+      (recur
+        (fv/catvec acc (triangulate p))
+        ps))))

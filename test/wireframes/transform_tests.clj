@@ -1,5 +1,5 @@
 (ns wireframes.transform-tests
-  (:refer-clojure :exclude [identity])
+  (:refer-clojure :exclude [identity vec])
   (:use [clojure.test]
         [wireframes.transform]))
 
@@ -8,18 +8,22 @@
 (defn =approx [^double a ^double b]
   (> ε (Math/abs (- a b))))
 
+(defn eager-and [a b]
+  (if b a false))
+
 (defn =vector [expected actual]
-  (is (reduce (fn [a b] (if b a false)) true
+  (is (reduce eager-and true
         (map
           =approx
-          (vec (into-array Double/TYPE expected))
-          (vec actual)))))
+          (clojure.core/vec (into-array Double/TYPE expected))
+          (clojure.core/vec actual)))))
 
 (defn =matrix [expected actual]
-  (is (map every?
+  (is
+    (reduce eager-and true
+      (map
         =vector
-        (as-2d-vector expected)
-        (as-2d-vector actual))))
+        expected actual))))
 
 (deftest transpose-matrix
   (=matrix
@@ -105,6 +109,12 @@
 (deftest triangulation
   (is (= [[1 2 3]] (triangulate [1 2 3])))
   (is (= [[1 2 3] [1 3 4] [1 4 5]] (triangulate [1 2 3 4 5])))
-  (is (nil? (triangulate [])))
-  (is (nil? (triangulate [1])))
-  (is (nil? (triangulate [1 2]))))
+  (is (= [nil]   (triangulate nil)))
+  (is (= [[]]    (triangulate [])))
+  (is (= [[1]]   (triangulate [1])))
+  (is (= [[1 2]] (triangulate [1 2]))))
+
+
+(deftest reduce-polys
+  (is (= [[1 2 3] [1 3 4] [2 3 5] [2 5 6] [2 6 7]]
+         (reduce-polygons [[1 2 3 4] [2 3 5 6 7]]))))

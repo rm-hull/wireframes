@@ -5,8 +5,18 @@ A lightweight 3D rendering engine in Clojure & ClojureScript.
 ![Aventador](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/aventador.png)
 
 Adapted and extended from a javascript demo (originally by Kragen Javier Sitaker, see references below) 
-into a ClojureScript/Clojure library (that will render to SVG, an HTML5 Canvas or a Graphics2D object 
+into a Clojure/ClojureScript library (that will render to SVG, an HTML5 Canvas or a Graphics2D object 
 depending on the runtime environment).
+
+This started out as a experiment to plot Lorenz attractors in 3D space, but it turns out to be a really
+*simple* way to programmatically generate three dimensional geometric shapes - basically a programmable 
+CAD system - I'm pretty sure that AutoCAD could already do this (and much quicker too), but where I 
+would really like to go with this is:
+
+* Build up a robust and idiomatic Clojure API for generating shapes
+* A wide variety of output renderers - potentially even a GLSL cross-compiler and 
+  certainly a gcode output formatter suitable for 3D printers
+* 100% compatibility with ClojureScript 
 
 A variety of (in-progress) generated wireframe and solid shapes can be found 
 in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
@@ -19,9 +29,13 @@ You will need [Leiningen](https://github.com/technomancy/leiningen) 2.3.2 or abo
 
 To build and install the library locally, run:
 
-     lein test
-     lein cljsbuild once
-     lein install
+    $ lein test
+    $ lein cljsbuild once
+    $ lein install
+
+To re-generate the examples in the ```doc/gallery``` directory, run:
+
+    $ lein test :examples
 
 ### Including in your project
 
@@ -73,6 +87,10 @@ For example, in Clojure, to generate a torus angled in the Y- and Z-axles, writt
 out to a PNG file:
 
 ```clojure
+(use 'wireframes.shapes.curved-solids)
+(use 'wireframes.transforms)
+(use 'wireframes.renderer.bitmap)
+
 (write-png
   (->img
     (draw-solid
@@ -96,6 +114,9 @@ The defacto/clichéd Utah teapot (or any patch/vertex 3D file) can be loaded in 
 code sample:
 
 ```clojure
+(use 'wireframes.shapes.patch-loader)
+(use 'wireframes.renderer.bitmap)
+
 (write-png
   (->img
     (draw-solid 
@@ -105,7 +126,7 @@ code sample:
                     (t/rotate :z (sp/degrees->radians 35))
                     (t/rotate :x (sp/degrees->radians -70))
                     (t/translate 0 -1 40))
-       :shape (sl/load-shape "resources/newell-teapot/teapot")})
+       :shape (load-shape "resources/newell-teapot/teapot")})
     [1000 900])
   "teapot.png")
 ```
@@ -113,10 +134,36 @@ which generates:
 
 ![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/teapot.png)
 
+The following file formats support loading:
+
+* Patch files in the ```wireframes.shapes.patch-loader``` namespace,
+* Wavefront .obj files in the ```wireframes.shapes.wavefront-loader``` namespace,
+* Stereoithography .stl files in the ```wireframes.shapes.stl-loader``` namespace
+
+### Saving 3D shapes to STL-format files
+
+Once generated or loaded by whatever means, a shape may be persisted in STL format with the following code sample:
+
+```clojure
+(use 'wireframes.shapes.stl-loader)
+(use 'wireframes.shapes.curved-solids)
+
+(save-shape
+  (make-torus 1 3 60 60)
+  "a description which will get truncated to 80 chars"
+  "doc/gallery/torus.stl")
+```
+
+This specific [torus](https://github.com/rm-hull/wireframes/blob/master/doc/gallery/torus.stl), the
+[teapot](https://github.com/rm-hull/wireframes/blob/master/doc/gallery/teapot.stl) and a
+[wineglass](https://github.com/rm-hull/wireframes/blob/master/doc/gallery/wineglass.stl)
+can then be viewed using the GitHub 3D viewer.
+
 ## TODO
 
+* Investigate using primitive arrays (see [array](https://github.com/rm-hull/wireframes/tree/array) branch)
 * ~~Efficiently calculate polygons on extruded shapes~~
-* Rewrite/rename wireframes.transform/concat - unroll loops for performance
+* ~~Rewrite/rename wireframes.transform/concat - unroll loops for performance~~
 * ~~Complete Bezier patch code~~
 * ~~Rectilinear perspective mapping~~
 * ~~Stitch adjacent surface panels together~~
@@ -129,9 +176,10 @@ which generates:
 * Texture mapping
 * ~~Backface removal~~
 * Compute shape bounds
-* Support loading from & saving to .stl files
+* gcode generation for 3D printers
+* ~~Support loading from & saving to .stl files~~
 * ~~Support loading from Wavefront .obj files~~
-* Deprecate ```:lines``` - no longer used except in platonic solids
+* ~~Deprecate ```:lines``` - no longer used except in platonic solids~~
 * Improve documentation
 * Examples
 
@@ -139,6 +187,7 @@ which generates:
 
 * Bug in shader/lighting position - affected by applied transforms?
 * Improve depth criteria for priority fill/painters algorithm
+* Cube (multi-dimension) extrusion is generating erroneous polygons
 
 ## References
 
@@ -151,6 +200,7 @@ which generates:
 * http://www.victoriakirst.com/beziertool/
 * https://en.wikipedia.org/wiki/Wavefront_.obj_file
 * https://en.wikipedia.org/wiki/STL_(file_format)
+* https://github.com/colah/ImplicitCAD
 
 ## License
 

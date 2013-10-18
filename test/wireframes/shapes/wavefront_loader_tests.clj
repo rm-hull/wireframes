@@ -38,10 +38,12 @@
                (parse-line directives "v 1.288484 6.238661 1.455338")))
 
   (is (=points [[-4.102479 21.410454 -2.796852 1]]
-               (parse-line directives "v  -4.102479 21.410454 -2.796852")))
+               (parse-line directives "v  -4.102479 21.410454 -2.796852
+")))
 
   (is (=points [[-4.102479 21.410454 -2.796852 1]]
-               (parse-line directives "v  -4.102479   21.410454     -2.796852")))
+               (parse-line directives "v  -4.102479   21.410454     -2.796852
+")))
 
   ; vertex positions (parameter space vertices) are not supported
   (is (nil? (parse-line directives "vp 0.310000 3.210000 2.100000")))
