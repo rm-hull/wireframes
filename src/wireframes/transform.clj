@@ -70,9 +70,14 @@
   (reduce + (mapv * as bs)))
 
 (defn transform-point [matrix]
-  (fn [[^double ax ^double ay ^double az ^double aw]]
+  (fn [[ax ay az aw]]
     (mapv
-      (fn [[^double bx ^double by ^double bz ^double bw]] (+ (* ax bx) (* ay by) (* az bz) (* aw bw)))
+      (fn [[bx by bz bw]] 
+        (+ 
+          (* (double ax) (double bx))
+          (* (double ay) (double by))
+          (* (double az) (double bz))
+          (* (double aw) (double bw))))
       matrix)))
 
 (defn transpose [matrix]
