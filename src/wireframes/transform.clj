@@ -67,7 +67,7 @@
   (translate 0 0 0))
 
 (defn dot-product [as bs]
-  (reduce + (map * as bs)))
+  (reduce + (mapv * as bs)))
 
 (defn transform-point [matrix point]
   (mapv
