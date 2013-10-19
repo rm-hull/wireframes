@@ -202,6 +202,7 @@ can then be viewed using the GitHub 3D viewer.
 * https://en.wikipedia.org/wiki/STL_(file_format)
 * https://github.com/colah/ImplicitCAD
 * http://www.opengl.org/wiki/Calculating_a_Surface_Normal
+* http://www.cs.utah.edu/~xchen/columbia/session1/lec24/html/
 
 ## License
 
