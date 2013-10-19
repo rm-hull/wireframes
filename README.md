@@ -201,6 +201,7 @@ can then be viewed using the GitHub 3D viewer.
 * https://en.wikipedia.org/wiki/Wavefront_.obj_file
 * https://en.wikipedia.org/wiki/STL_(file_format)
 * https://github.com/colah/ImplicitCAD
+* http://www.opengl.org/wiki/Calculating_a_Surface_Normal
 
 ## License
 
