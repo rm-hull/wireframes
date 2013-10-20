@@ -90,7 +90,7 @@
                ((perspective 20) (point 12.6 6.3 9))))
 
 (deftest normal-3d-triangle
-  (=vector [0 -1 0]
+  (=vector [0 -32 0]
            (normal
              (point 3 5 6)
              (point 7 5 11)
