@@ -72,8 +72,8 @@
 (defn transform-point [matrix]
   (fn [[ax ay az aw]]
     (mapv
-      (fn [[bx by bz bw]] 
-        (+ 
+      (fn [[bx by bz bw]]
+        (+
           (* (double ax) (double bx))
           (* (double ay) (double by))
           (* (double az) (double bz))
@@ -100,20 +100,34 @@
       (let [p (/ focal-length (- focal-length z))]
         [(* p x) (* p y)]))))
 
+;(defn normal
+;  "Calculate the normal of a triangle"
+;  [[ax ay az] [bx by bz] [cx cy cz]]
+;  (let [v10 (- ax bx)
+;        v11 (- ay by)
+;        v12 (- az bz)
+;        v20 (- bx cx)
+;        v21 (- by cy)
+;        v22 (- bz cz)
+;        n0  (- (* v11 v22) (* v12 v21))
+;        n1  (- (* v12 v20) (* v10 v22))
+;        n2  (- (* v10 v21) (* v11 v20))
+;        mag (Math/sqrt (+ (* n0 n0) (* n1 n1) (* n2 n2)))]
+;    [ (/ n0 mag) (/ n1 mag) (/ n2 mag)]))
+
 (defn normal
   "Calculate the normal of a triangle"
   [[ax ay az] [bx by bz] [cx cy cz]]
-  (let [v10 (- ax bx)
-        v11 (- ay by)
-        v12 (- az bz)
-        v20 (- bx cx)
-        v21 (- by cy)
-        v22 (- bz cz)
-        n0  (- (* v11 v22) (* v12 v21))
-        n1  (- (* v12 v20) (* v10 v22))
-        n2  (- (* v10 v21) (* v11 v20))
-        mag (Math/sqrt (+ (* n0 n0) (* n1 n1) (* n2 n2)))]
-    [ (/ n0 mag) (/ n1 mag) (/ n2 mag)]))
+  (let [ux (double (- bx ax)) ; Vector U
+        uy (double (- by ay))
+        uz (double (- bz az))
+        vx (double (- cx ax)) ; Vector V
+        vy (double (- cy ay))
+        vz (double (- cz az))]
+    [(- (* uy vz) (* uz vy))
+      (- (* uz vx) (* ux vz))
+      (- (* ux vy) (* uy vx))]))
+
 
 (defn sqr [x]
   (* x x))

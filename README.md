@@ -181,7 +181,7 @@ can then be viewed using the GitHub 3D viewer.
   - WebGL
   - OpenGL
 * ~~Simple flat shading / lighting~~
-* Configurable lighting position(s)
+* ~~Configurable lighting position(s)~~
 * Colours
 * Gourand shading
 * Texture mapping

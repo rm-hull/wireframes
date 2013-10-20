@@ -23,7 +23,7 @@
         (.getBlue color)
         (int alpha)))))
 
-(defn harness [{:keys [shape focal-length transform
+(defn harness [{:keys [shape focal-length lighting-position transform
                        draw-fn filename size style color] :as opts}]
   (let [dir (str "doc/gallery/" (name style) "/")]
     (.mkdir (clojure.java.io/file dir))
@@ -190,11 +190,11 @@
 (comment
 (harness {
   :filename "wineglass.png"
-  :style :translucent
+  :style :shaded
   :color (Color. 0xeaf5fc)
   :shape (cs/make-wineglass 60)
   :focal-length 20
-  :size [400 400]
+  :size [900 900]
   :transform (t/combine
                (t/rotate :z (t/degrees->radians 15))
                (t/rotate :x (t/degrees->radians 20))

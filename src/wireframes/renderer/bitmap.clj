@@ -1,6 +1,5 @@
 (ns wireframes.renderer.bitmap
-  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill
-                                    calculate-illumination shader]])
+  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader]])
   (:require [wireframes.transform :as t]
             [potemkin :refer [fast-memoize]])
   (:import [java.awt.image BufferedImage]
@@ -8,11 +7,23 @@
            [java.awt Color Graphics2D RenderingHints BasicStroke GraphicsEnvironment]
            [javax.imageio ImageIO]))
 
-(def create-color
-  (fast-memoize
-    (fn [^long brightness]
-      (let [brightness (Math/max 20 (Math/min brightness 235))]
-        (Color. brightness brightness brightness)))))
+(defn create-color
+  ([]
+    (create-color Color/LIGHT_GRAY Color/BLACK))
+  ([^Color material-color ^Color shadow-color]
+    (let [r (double (.getRed material-color))
+          g (double (.getGreen material-color))
+          b (double (.getBlue  material-color))
+          a (int (.getAlpha material-color))]
+      (fast-memoize
+        (fn [intensity]
+          (if intensity
+              (Color.
+                (int (* r intensity))
+                (int (* g intensity))
+                (int (* b intensity))
+                a)
+            shadow-color))))))
 
 (defn transparent? [^Color color]
   (and color (zero? (.getAlpha color))))
@@ -50,7 +61,7 @@
         (.fill path)
         (.draw path)))))
 
-(defn draw-solid [{:keys [focal-length transform shape fill-color]} ^Graphics2D g2d]
+(defn draw-solid [{:keys [focal-length transform shape fill-color lighting-position]} ^Graphics2D g2d]
   (let [points-3d (get-3d-points transform shape)
         points-2d (get-2d-points focal-length points-3d)
         polygons  (cond
@@ -59,7 +70,7 @@
                     :else                     (sort-by (priority-fill points-3d) (t/reduce-polygons (:polygons shape))))
         draw-fn   (if (or (transparent? fill-color) (solid? fill-color))
                     (wireframe-draw-fn g2d points-2d fill-color Color/BLACK)
-                    (shader-draw-fn g2d points-2d (shader points-3d create-color)))]
+                    (shader-draw-fn g2d points-2d (shader points-3d (create-color) lighting-position)))]
     (doseq [polygon polygons]
       (draw-fn polygon))))
 
