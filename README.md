@@ -13,10 +13,13 @@ This started out as a experiment to plot Lorenz attractors in 3D space, but it t
 CAD system - I'm pretty sure that AutoCAD could already do this (and much quicker too), but where I 
 would really like to go with this is:
 
-* Build up a robust and idiomatic Clojure API for generating shapes
-* A wide variety of output renderers - potentially even a GLSL cross-compiler and 
+* build up a robust and idiomatic Clojure API for generating shapes
+* implement a wide variety of output renderers - potentially even a GLSL cross-compiler and 
   certainly a gcode output formatter suitable for 3D printers
-* 100% compatibility with ClojureScript 
+* maintain 100% compatibility with ClojureScript 
+
+As this is a *software* renderer, please don't expect OpenGL levels of performance (or until WebGL 
+and OpenGL renderers have been written).
 
 A variety of (in-progress) generated wireframe and solid shapes can be found 
 in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
@@ -39,7 +42,8 @@ To re-generate the examples in the ```doc/gallery``` directory, run:
 
 ### Including in your project
 
-There *will be* a version hosted at [Clojars](https://clojars.org/rm-hull/wireframes). For leiningen include a dependency:
+There *will be* a version hosted at [Clojars](https://clojars.org/rm-hull/wireframes) at some point soon.
+For leiningen include a dependency:
 
 ```clojure
 [rm-hull/wireframes "0.0.1"]
@@ -60,19 +64,22 @@ For maven-based projects, add the following to your `pom.xml`:
 ### Creating shapes
 
 There are some drawing primitives in the ```wireframes.shapes``` namespace to create
-objects such as circles, cuboids, cylinders and torus shapes.
+objects such as lines, bezier curves, polygons, circles, cuboids, cylinders and torus shapes.
 
 The basic mechanism for *building* shapes is **extrusion**. For example, to create a cube, 
-start with a point, and extrude that point into a line along the Z-axis. Then extrude
-that line along the Y-axis to create a square; extrude the square along the X-axis to
-create a cube, as per the following code:
+start with a square polygon in the X-Y plane, and extrude that shape into a line along the 
+Z-axis, as per the following code:
 
 ```clojure
+(use 'wireframes.shapes.primitives)
+
 (->
-  (make-point 0 0 0)
-  (extrude (translate 0 0 1) 1)
-  (extrude (translate 0 1 0) 1)
-  (extrude (translate 1 0 0) 1))
+  (make-polygon
+    (make-point 0 0 0)
+    (make-point 0 1 0)
+    (make-point 1 1 0)
+    (make-point 1 0 1))
+  (extrude (translate 0 0 1) 1))
 ```
 
 ### Drawing shapes
@@ -88,7 +95,7 @@ out to a PNG file:
 
 ```clojure
 (use 'wireframes.shapes.curved-solids)
-(use 'wireframes.transforms)
+(use 'wireframes.transform)
 (use 'wireframes.renderer.bitmap)
 
 (write-png
@@ -96,7 +103,7 @@ out to a PNG file:
     (draw-solid
       {:focal-length 3
        :fill-color (Color. 255 255 255 0) ; transparent white
-       :transform (concat
+       :transform (combine
                     (rotate :z (degrees->radians 65))
                     (rotate :y (degrees->radians -30))
                     (translate 0 0 16))
@@ -116,16 +123,17 @@ code sample:
 ```clojure
 (use 'wireframes.shapes.patch-loader)
 (use 'wireframes.renderer.bitmap)
+(use 'wireframes.transform)
 
 (write-png
   (->img
     (draw-solid 
       {:focal-length 10
        :fill-color (Color. 255 255 255 128) ; translucent white
-       :transform (t/concat
-                    (t/rotate :z (sp/degrees->radians 35))
-                    (t/rotate :x (sp/degrees->radians -70))
-                    (t/translate 0 -1 40))
+       :transform (combine
+                    (rotate :z (degrees->radians 35))
+                    (rotate :x (degrees->radians -70))
+                    (translate 0 -1 40))
        :shape (load-shape "resources/newell-teapot/teapot")})
     [1000 900])
   "teapot.png")
@@ -167,14 +175,18 @@ can then be viewed using the GitHub 3D viewer.
 * ~~Complete Bezier patch code~~
 * ~~Rectilinear perspective mapping~~
 * ~~Stitch adjacent surface panels together~~
-* SVG renderer
-* Canvas renderer
+* Renderer implementations:
+  - SVG
+  - Canvas
+  - WebGL
+  - OpenGL
 * ~~Simple flat shading / lighting~~
 * Configurable lighting position(s)
 * Colours
 * Gourand shading
 * Texture mapping
 * ~~Backface removal~~
+* Z-buffer
 * Compute shape bounds
 * gcode generation for 3D printers
 * ~~Support loading from & saving to .stl files~~
