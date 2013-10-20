@@ -47,7 +47,6 @@ These images are generated from the original patch data files crafted by
 
 These images are imported from [Wavefront .obj](https://en.wikipedia.org/wiki/Wavefront_.obj_file) format
 files. The specific dataset for this aircraft can be obtained here: http://tf3dm.com/3d-model/icon-a5-aircraft-17777.html.
-Notice the glitches on the the cockpit glass!
 
 ![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/icon-a5.png)
 ![Aircraft](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/icon-a5.png)

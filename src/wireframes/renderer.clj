@@ -22,12 +22,14 @@
   (fast-memoize
     (fn [polygon]
       (loop [acc    0.0
-             points polygon]
-        (if-let [[_ _ ^double z] (get points-3d (first points))]
-          (recur
-            (- acc z)
-            (rest points))
-          acc)))))
+	     count  0
+	     points polygon]
+	(if-let [[_ _ ^double z] (get points-3d (first points))]
+	  (recur
+	    (- acc z)
+	    (inc count)
+	    (rest points))
+	  (/ acc count))))))
 
 (defn get-3d-points [transform shape]
   (mapv
