@@ -78,7 +78,7 @@ Z-axis, as per the following code:
     (make-point 0 0 0)
     (make-point 0 1 0)
     (make-point 1 1 0)
-    (make-point 1 0 1))
+    (make-point 1 0 0))
   (extrude (translate 0 0 1) 1))
 ```
 
