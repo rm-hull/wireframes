@@ -7,10 +7,12 @@ files, and then drawn with the renderers within this project. See the [test/wire
 ## Tetrahedron
 
 ![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/tetrahedron.png)
+![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/tetrahedron.png)
 
 ## Icosahedron
 
 ![Icosahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/icosahedron.png)
+![Icosahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/icosahedron.png)
 
 ## Sphere
 
@@ -42,6 +44,12 @@ These images are generated from the original patch data files crafted by
 ![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/teapot.png)
 ![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/teapot.png)
 ![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/teapot.png)
+
+![Teacup](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/teacup.png)
+![Teacup](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/teacup.png)
+![Teacup](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/teacup.png)
+![Teacup](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/teacup.png)
+
 
 ## Icon A5 Aircraft
 
