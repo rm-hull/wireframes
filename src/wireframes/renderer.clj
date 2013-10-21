@@ -1,7 +1,5 @@
 (ns wireframes.renderer
-  (:require [wireframes.transform :as t]
-            [potemkin :refer [fast-memoize]]
-            [taoensso.timbre.profiling :as profiling :refer [p profile]]))
+  (:require [wireframes.transform :as t]))
 
 (defn compute-lighting [lighting-position]
   (let [lx (double (get lighting-position 0))
@@ -37,18 +35,19 @@
         (lighting-fn)
         (color-fn)))))
 
-(defn priority-fill [points-3d]
-  (fast-memoize
-    (fn [polygon]
-      (loop [acc    0.0
-             count  0
-             points polygon]
-        (if-let [[_ _ ^double z] (get points-3d (first points))]
-          (recur
-            (- acc z)
-            (inc count)
-            (rest points))
-          (/ acc count))))))
+(defn priority-fill [cache-fn]
+  (fn [points-3d]
+    (cache-fn
+      (fn [polygon]
+        (loop [acc    0.0
+               count  0
+               points polygon]
+          (if-let [[_ _ ^double z] (get points-3d (first points))]
+            (recur
+              (- acc z)
+              (inc count)
+              (rest points))
+            (/ acc count)))))))
 
 (defn get-3d-points [transform shape]
   (mapv

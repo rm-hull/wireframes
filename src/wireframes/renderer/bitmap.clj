@@ -66,7 +66,8 @@
         (.draw path)))))
 
 (defn draw-solid [{:keys [focal-length transform shape fill-color lighting-position style]} ^Graphics2D g2d]
-  (let [fill-color (adjust-color style fill-color)
+  (let [priority-fill (priority-fill fast-memoize)
+        fill-color (adjust-color style fill-color)
         points-3d (get-3d-points transform shape)
         points-2d (get-2d-points focal-length points-3d)
         polygons  (cond
