@@ -14,12 +14,19 @@
                  [hiccup "1.0.4"]
                  [jayq "2.4.0"]
                  [rm-hull/monet "0.1.9"]]
-  :plugins [[lein-cljsbuild "0.3.3"]
+  :plugins [[lein-cljsbuild "0.3.4"]
             [com.birdseye-sw/lein-dalap "0.1.0"]]
   :hooks [leiningen.dalap]
   :source-path "src"
   :cljsbuild {
-    :builds [{:source-paths ["target/generated"], :id "main", :jar true}]}
+
+    :builds [{:source-paths ["target/generated"]
+              :output-to "wireframes.js"
+              :source-map "wireframes.map"
+              :id "wireframes"
+              :static-fns true
+              :externs ["resources/private/externs/jquery.js"]
+              :jar true}]}
   :test-selectors {:default (complement :examples)
                    :examples :examples }
   :min-lein-version "2.3.2"

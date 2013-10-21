@@ -1,7 +1,6 @@
 (ns wireframes.transform
   (:refer-clojure :exclude [identity vec])
-  (:require [wireframes.common :as c]
-            [clojure.core.rrb-vector :as fv]))
+  (:require [wireframes.common :as c]))
 
 (defn degrees->radians [d]
   (/ (* (double d) Math/PI) 180.0))

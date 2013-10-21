@@ -203,6 +203,7 @@ can then be viewed using the GitHub 3D viewer.
 * Bug in shader/lighting position - affected by applied transforms?
 * ~~Improve depth criteria for priority fill/painters algorithm~~
 * Cube (multi-dimension) extrusion is generating erroneous polygons
+* RRB-Vector implementation does not bundle .cljs files!
 
 ## References
 

@@ -1,5 +1,5 @@
 (ns wireframes.renderer.bitmap
-  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader]])
+  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader compute-scale]])
   (:require [wireframes.transform :as t]
             [potemkin :refer [fast-memoize]])
   (:import [java.awt.image BufferedImage]
@@ -100,13 +100,13 @@
 (defn ->img [draw-fn [w h]]
   (let [img (create-image w h)
         g2d (create-graphics img)
-        scale (double (min (/ w 2) (/ h 2)))]
+        s   (compute-scale w h)]
     (doto g2d
       (.setBackground Color/WHITE)
       (.clearRect 0 0 w h)
       (.setColor Color/BLACK)
       (.translate (double (/ w 2)) (double (/ h 2)))
-      (.scale scale scale)
+      (.scale s s)
       (.setStroke (BasicStroke. (/ 0.5 w))))
     (draw-fn g2d)
     (.dispose g2d)

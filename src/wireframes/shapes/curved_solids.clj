@@ -17,9 +17,9 @@
     n))
 
 (defn make-bezier-spline [control-points n]
-  {:points  (->>
-              (b/line-points n control-points)
-              (mapv (partial apply t/point)))})
+  {:points (->>
+             (b/line-points n control-points)
+             (mapv (partial apply t/point)))})
 
 (defn make-torus
   "Approximate a torus with major radius r2 and minor radius r1,
