@@ -13,18 +13,8 @@
 
 ;(set! *unchecked-math* true)
 
-(defn create-color [style & [^Color color]]
-  (let [color (or color Color/WHITE)
-        alpha (style {:transparent 0 :translucent 128 :opaque 255})]
-    (when alpha
-      (Color.
-        (.getRed color)
-        (.getGreen color)
-        (.getBlue color)
-        (int alpha)))))
-
 (defn harness [{:keys [shape focal-length lighting-position transform
-                       draw-fn filename size style color] :as opts}]
+                       draw-fn filename size style fill-color] :as opts}]
   (let [dir (str "doc/gallery/" (name style) "/")]
     (.mkdir (clojure.java.io/file dir))
     (printf "%-14s %-20s" style filename)
@@ -33,10 +23,8 @@
       (b/write-png
         (let [start-time (System/nanoTime)
               img (b/->img
-                    (partial
-                      b/draw-solid
-                    (assoc opts :fill-color (create-color style color)))
-                       (or size [1000 900]))]
+                    (partial b/draw-solid opts)
+                    (or size [1000 900]))]
           (printf "--> %10.4f msecs\n" (/ (- (System/nanoTime) start-time) 1000000.0))
           (flush)
           img)
@@ -110,7 +98,7 @@
 
       (harness {
         :filename "wineglass.png"
-        :color (Color. 0xEAF5FC)
+        :fill-color (Color. 0xEAF5FC)
         :style style
         :shape (cs/make-wineglass 48)
         :focal-length 20
@@ -191,7 +179,7 @@
 (harness {
   :filename "wineglass.png"
   :style :shaded
-  :color (Color. 0xeaf5fc)
+  :fill-color (Color. 0xeaf5fc)
   :shape (cs/make-wineglass 60)
   :focal-length 20
   :size [900 900]

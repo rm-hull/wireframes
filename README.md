@@ -102,7 +102,8 @@ out to a PNG file:
   (->img
     (draw-solid
       {:focal-length 3
-       :fill-color (Color. 255 255 255 0) ; transparent white
+       :fill-color Color/WHITE
+       :style :transparent
        :transform (combine
                     (rotate :z (degrees->radians 65))
                     (rotate :y (degrees->radians -30))
@@ -129,7 +130,8 @@ code sample:
   (->img
     (draw-solid 
       {:focal-length 10
-       :fill-color (Color. 255 255 255 128) ; translucent white
+       :fill-color Color/WHITE
+       :style :translucent
        :transform (combine
                     (rotate :z (degrees->radians 35))
                     (rotate :x (degrees->radians -70))
@@ -183,7 +185,7 @@ can then be viewed using the GitHub 3D viewer.
   - OpenGL
 * ~~Simple flat shading / lighting~~
 * ~~Configurable lighting position(s)~~
-* Colours
+* ~~Colours~~
 * Gourand shading
 * Texture mapping
 * ~~Backface removal~~
