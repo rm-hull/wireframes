@@ -17,7 +17,7 @@
   :plugins [[lein-cljsbuild "0.3.4"]
             [com.birdseye-sw/lein-dalap "0.1.0"]]
   :hooks [leiningen.dalap]
-  :source-paths ["src" "generated-src"]
+  :source-paths ["src" "target/generated-src"]
   :cljsbuild {
     :repl-listen-port 9000
     :repl-launch-commands
@@ -25,7 +25,7 @@
        "firefox-demo" ["firefox" "doc/gallery/cljs-demo/gallery.html"]}
     :builds {
       :main {
-        :source-paths ["target/generated"]
+        :source-paths ["target/generated-src"]
         :jar true
         :compiler {
           :output-to "target/wireframes.js"
