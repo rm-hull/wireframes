@@ -221,6 +221,7 @@ can then be viewed using the GitHub 3D viewer.
 * https://github.com/colah/ImplicitCAD
 * http://www.opengl.org/wiki/Calculating_a_Surface_Normal
 * http://www.cs.utah.edu/~xchen/columbia/session1/lec24/html/
+* http://www.3dcadbrowser.com/3dmodels.aspx?word=star%20wars
 
 ## License
 
