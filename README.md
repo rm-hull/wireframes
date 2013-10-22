@@ -23,7 +23,7 @@ and OpenGL renderers have been written).
 
 A variety of (in-progress) Clojure-generated wireframe and solid shapes can be found 
 in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md), and a ClojureScript demo of an
-[animated torus tumbling in 3D space](https://programming-enchiladas.destructuring-bind.org/rm-hull/7098992).
+[animated torus tumbling in 3D space](http://programming-enchiladas.destructuring-bind.org/rm-hull/7098992).
 
 ### Pre-requisites
 
