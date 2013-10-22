@@ -42,12 +42,13 @@
         (loop [acc    0.0
                count  0
                points polygon]
-          (if-let [[_ _ ^double z] (get points-3d (first points))]
-            (recur
-              (- acc z)
-              (inc count)
-              (rest points))
-            (/ acc count)))))))
+          (if (empty? points)
+            (/ acc count)
+            (let [[_ _ ^double z] (get points-3d (first points))]
+              (recur
+                (- acc z)
+                (inc count)
+                (rest points)))))))))
 
 (defn get-3d-points [transform shape]
   (mapv
