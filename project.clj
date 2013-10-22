@@ -17,7 +17,7 @@
   :plugins [[lein-cljsbuild "0.3.4"]
             [com.birdseye-sw/lein-dalap "0.1.0"]]
   :hooks [leiningen.dalap]
-  :source-path "src"
+  :source-paths ["src" "generated-src"]
   :cljsbuild {
     :repl-listen-port 9000
     :repl-launch-commands
@@ -31,8 +31,8 @@
           :output-to "target/wireframes.js"
           :source-map "target/wireframes.map"
           :static-fns true
-          ;:optimizations :none
-          :pretty-print true
+          :optimizations :advanced
+          :pretty-print false
           :externs ["resources/private/externs/jquery.js"] }}}}
   :test-selectors {:default (complement :examples)
                    :examples :examples }

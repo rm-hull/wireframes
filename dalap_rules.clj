@@ -12,6 +12,6 @@
   ["src/wireframes/renderer/vector.clj" "target/generated/wireframes/renderer/vector.cljs"] []
   ["src/wireframes/renderer/canvas.cljs" "target/generated/wireframes/renderer/canvas.cljs"] []
   ["src/wireframes/renderer/color.cljs" "target/generated/wireframes/renderer/color.cljs"] []
-  ["test/wireframes/demo.cljs" "target/generated/wireframes/demo.cljs"] []
+;  ["test/wireframes/demo.cljs" "target/generated/wireframes/demo.cljs"] []
 }
 

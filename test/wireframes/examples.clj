@@ -31,12 +31,12 @@
         (str dir filename)))))
 
 (deftest ^:examples complex-solids
-  (let [teapot (pl/load-shape "resources/newell-teapot/teapot" 16)
-        teacup (pl/load-shape "resources/newell-teapot/teacup" 16)
-        plane (wl/load-shape "resources/obj_IconA5.obj")
-        sonic (wl/load-shape "resources/Sonic.obj")
-        avent (wl/load-shape "resources/Avent.obj")
-        rpi-case (sl/load-shape  "resources/RichRap_Raspbery_Pi_Case_Bottom.stl")]
+  (let [teapot (pl/load-shape "data-files/newell-teapot/teapot" 16)
+        teacup (pl/load-shape "data-files/newell-teapot/teacup" 16)
+        plane (wl/load-shape "data-files/obj_IconA5.obj")
+        sonic (wl/load-shape "data-files/Sonic.obj")
+        avent (wl/load-shape "data-files/Avent.obj")
+        rpi-case (sl/load-shape  "data-files/RichRap_Raspbery_Pi_Case_Bottom.stl")]
     (doseq [style [:transparent :translucent :opaque :shaded]]
 
       (harness {
@@ -166,7 +166,7 @@
     (harness {
         :filename "rpi-case.png"
         :style style
-        :shape (sl/load-shape  "resources/RichRap_Raspbery_Pi_Case_Bottom.stl")
+        :shape (sl/load-shape  "data-files/RichRap_Raspbery_Pi_Case_Bottom.stl")
         :focal-length 24
         :transform (t/combine
                      (t/rotate :z (t/degrees->radians 25))
@@ -203,7 +203,7 @@
 (harness {
   :filename "rpi-case.png"
   :style :translucent
-  :shape (sl/load-shape  "resources/RichRap_Raspbery_Pi_Case_Bottom.stl")
+  :shape (sl/load-shape  "data-files/RichRap_Raspbery_Pi_Case_Bottom.stl")
   :focal-length 24
   :transform (t/combine
                (t/rotate :z (t/degrees->radians 25))
@@ -254,7 +254,7 @@
   "doc/gallery/wineglass.stl")
 
 (sl/save-shape
-  (pl/load-shape "resources/newell-teapot/teapot" 16)
+  (pl/load-shape "data-files/newell-teapot/teapot" 16)
   "Utah Teapot, created with https://github/rm-hull/wireframes [October 16 2013]"
   "doc/gallery/teapot.stl")
 
