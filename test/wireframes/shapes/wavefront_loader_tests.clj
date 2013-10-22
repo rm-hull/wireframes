@@ -62,6 +62,6 @@
   (is (nil? (parse-line directives ""))))
 
 (deftest load-shape-test
-  (let [shape (load-shape "resources/obj_IconA5.obj")]
+  (let [shape (load-shape "data-files/obj_IconA5.obj")]
     (is (= 31734  (count (:points shape))))
     (is (= 31385  (count (:polygons shape))))))

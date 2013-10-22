@@ -58,3 +58,7 @@
   (mapv
     (t/perspective focal-length)
     points-3d))
+
+(defn compute-scale [w h]
+  (double (min (/ w 2) (/ h 2))))
+

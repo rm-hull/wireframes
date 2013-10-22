@@ -21,8 +21,9 @@ would really like to go with this is:
 As this is a *software* renderer, please don't expect OpenGL levels of performance (or until WebGL 
 and OpenGL renderers have been written).
 
-A variety of (in-progress) generated wireframe and solid shapes can be found 
-in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md).
+A variety of (in-progress) Clojure-generated wireframe and solid shapes can be found 
+in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md), and a ClojureScript demo of an
+[animated torus tumbling in 3D space](http://programming-enchiladas.destructuring-bind.org/rm-hull/7098992).
 
 ### Pre-requisites
 
@@ -42,11 +43,11 @@ To re-generate the examples in the ```doc/gallery``` directory, run:
 
 ### Including in your project
 
-There *will be* a version hosted at [Clojars](https://clojars.org/rm-hull/wireframes) at some point soon.
+There is an 'alpha-quality' version hosted at [Clojars](https://clojars.org/rm-hull/wireframes).
 For leiningen include a dependency:
 
 ```clojure
-[rm-hull/wireframes "0.0.1"]
+[rm-hull/wireframes "0.0.1-SNAPSHOT"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -55,7 +56,7 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>rm-hull</groupId>
   <artifactId>wireframes</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -203,6 +204,7 @@ can then be viewed using the GitHub 3D viewer.
 * Bug in shader/lighting position - affected by applied transforms?
 * ~~Improve depth criteria for priority fill/painters algorithm~~
 * Cube (multi-dimension) extrusion is generating erroneous polygons
+* RRB-Vector implementation does not bundle .cljs files!
 
 ## References
 

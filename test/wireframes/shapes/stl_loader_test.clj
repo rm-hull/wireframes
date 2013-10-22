@@ -21,6 +21,6 @@
                 :attributes 12}))))
 
 (deftest loader-test
-  (let [shape (load-shape "resources/RichRap_Raspbery_Pi_Case_Bottom.stl")]
+  (let [shape (load-shape "data-files/RichRap_Raspbery_Pi_Case_Bottom.stl")]
     (is (= 7644 (count (:points shape))))
     (is (= 2548 (count (:polygons shape))))))

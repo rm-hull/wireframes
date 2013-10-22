@@ -2,17 +2,17 @@
   (:require [wireframes.shapes.primitives :as p]
             [wireframes.transform :as t]))
 
-(def √2 (Math/sqrt 2))
-(def √5 (Math/sqrt 5))
+(def sqrt-2 (Math/sqrt 2))
+(def sqrt-5 (Math/sqrt 5))
 
-(def φ (/ (inc √5) 2))
-(def -φ (- φ))
+(def rho (/ (inc sqrt-5) 2))
+(def -rho (- rho))
 
 (def tetrahedron
-  {:points [(t/point  1  0 (/ -1 √2))
-            (t/point -1  0 (/ -1 √2))
-            (t/point  0  1 (/  1 √2))
-            (t/point  0 -1 (/  1 √2))]
+  {:points [(t/point  1  0 (/ -1 sqrt-2))
+            (t/point -1  0 (/ -1 sqrt-2))
+            (t/point  0  1 (/  1 sqrt-2))
+            (t/point  0 -1 (/  1 sqrt-2))]
    :polygons [[0 1 2] [0 2 3] [0 1 3] [1 2 3]]})
 
 
@@ -35,10 +35,11 @@
   "A 20-sided polyhedron"
   (let [points (vec
                  (apply concat
-                   (for [one [-1 1] rho [φ -φ]]
-                     [(t/point 0 one rho)
-                      (t/point one rho 0)
-                      (t/point rho 0 one)])))
+                   (for [x [-1 1]
+                         y [rho -rho]]
+                     [(t/point 0 x y)
+                      (t/point x y 0)
+                      (t/point y 0 x)])))
         polygons (vec
                 (for [a (range (count points))
                       b (range a)

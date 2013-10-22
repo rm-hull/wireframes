@@ -1,5 +1,6 @@
 (ns wireframes.shapes.primitives
-  (:require [clojure.core.rrb-vector :as fv]
+  (:require ^{:cljs [cljs.core.rrb-vector :as fv]}
+            [clojure.core.rrb-vector :as fv]
             [wireframes.transform :as t]))
 
 ;; Shapes are represented as:
@@ -34,7 +35,7 @@
                      [a b d c])]
     (merge-with fv/catvec
       extruded-shape
-      {:polygons (fv/vec polygons)})))
+      {:polygons (vec polygons)})))
 
 (defn extrude
   "Given a shape, make a more complicated shape by copying it through the
@@ -64,7 +65,7 @@
 (defn make-point
   "Create a shape consisting of a single point"
   [x y z]
-  {:points (fv/vector (t/point x y z))})
+  {:points [(t/point x y z)]})
 
 (defn make-line
   "Creates a joined line consisting of the points of the form [x y z]"
@@ -87,4 +88,4 @@
 (defn compute-bounds
   "Calculates the minimum and maximum bounds for the shape"
   [shape]
-  (throw (Exception. "Not yet implemented")))
+  (throw (^{:cljs js/Exception.} Exception. "Not yet implemented")))
