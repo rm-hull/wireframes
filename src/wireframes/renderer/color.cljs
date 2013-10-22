@@ -48,10 +48,11 @@
   (alpha [[_ _ _ a]] a))
 
 (defn rgba [r g b a]
+
   (str "rgba(" r "," g "," b "," a ")"))
 
 (defn adjust-color [style & [color]]
-  (let [color (or color "#ffffff")
+  (let [color (or color "rgb(255,255,255)")
         alpha (style {:transparent 0.0 :translucent 0.5 :opaque 1.0 :shaded 1.0})]
     (when alpha
       (rgba
@@ -61,9 +62,9 @@
         alpha))))
 
 (defn create-color
-  ([material-color] (create-color material-color "#000000"))
+  ([material-color] (create-color material-color "rgb(0,0,0)"))
   ([material-color shadow-color]
-    (let [material-color (or material-color "#C0C0C0")
+    (let [material-color (or material-color "rgb(192,192,192)")
         r (double (red   material-color))
         g (double (green material-color))
         b (double (blue  material-color))

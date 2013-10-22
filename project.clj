@@ -1,4 +1,4 @@
-(defproject rm-hull/wireframes "0.0.1"
+(defproject rm-hull/wireframes "0.0.1-SNAPSHOT"
   :description "A lightweight 3D wireframe renderer for both Clojure and ClojureScript"
   :url "https://github.com/rm_hull/wireframes"
   :license {:name "The MIT License (MIT)"
@@ -19,14 +19,21 @@
   :hooks [leiningen.dalap]
   :source-path "src"
   :cljsbuild {
-
-    :builds [{:source-paths ["target/generated"]
-              :output-to "wireframes.js"
-              :source-map "wireframes.map"
-              :id "wireframes"
-              :static-fns true
-              :externs ["resources/private/externs/jquery.js"]
-              :jar true}]}
+    :repl-listen-port 9000
+    :repl-launch-commands
+      {"firefox" ["firefox"]
+       "firefox-demo" ["firefox" "doc/gallery/cljs-demo/gallery.html"]}
+    :builds {
+      :main {
+        :source-paths ["target/generated"]
+        :jar true
+        :compiler {
+          :output-to "target/wireframes.js"
+          :source-map "target/wireframes.map"
+          :static-fns true
+          ;:optimizations :none
+          :pretty-print true
+          :externs ["resources/private/externs/jquery.js"] }}}}
   :test-selectors {:default (complement :examples)
                    :examples :examples }
   :min-lein-version "2.3.2"
