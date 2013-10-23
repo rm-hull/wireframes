@@ -9,6 +9,11 @@ files, and then drawn with the renderers within this project. See the [test/wire
 ![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/tetrahedron.png)
 ![Tetrahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/tetrahedron.png)
 
+## Octahedron
+
+![Octahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/octahedron.png)
+![Octahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/octahedron.png)
+
 ## Icosahedron
 
 ![Icosahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/icosahedron.png)

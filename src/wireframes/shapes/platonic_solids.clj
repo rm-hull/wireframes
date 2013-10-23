@@ -2,6 +2,11 @@
   (:require [wireframes.shapes.primitives :as p]
             [wireframes.transform :as t]))
 
+(def epsilon 0.0000001)
+
+(defn- =approx [^double x ^double y]
+  (< (Math/abs (- x y)) epsilon))
+
 (def sqrt-2 (Math/sqrt 2))
 (def sqrt-5 (Math/sqrt 5))
 
@@ -28,7 +33,25 @@
       (t/translate 0 0 1) 1)
     (p/center-at-origin)))
 
-(def octahedron nil)
+(def octahedron
+  "A regular octahedron composed of eight equilateral triangles"
+  (let [points (vec
+                 (apply concat
+                   (for [a [-1 1]]
+                     [(t/point a 0 0)
+                      (t/point 0 a 0)
+                      (t/point 0 0 a)])))
+        polygons (vec
+                (for [a (range (count points))
+                      b (range a)
+                      c (range b)
+                      :when (and
+                              (=approx (t/distance (points a) (points b)) sqrt-2)
+                              (=approx (t/distance (points a) (points c)) sqrt-2)
+                              (=approx (t/distance (points b) (points c)) sqrt-2))]
+                  [a b c]))]
+  {:points points
+   :polygons polygons }))
 
 (def dodecahedron nil)
 
@@ -46,9 +69,9 @@
                       b (range a)
                       c (range b)
                       :when (and
-                              (= (t/distance (points a) (points b)) 2.0)
-                              (= (t/distance (points a) (points c)) 2.0)
-                              (= (t/distance (points b) (points c)) 2.0))]
+                              (=approx (t/distance (points a) (points b)) 2)
+                              (=approx (t/distance (points a) (points c)) 2)
+                              (=approx (t/distance (points b) (points c)) 2))]
                   [a b c]))]
   {:points points
    :polygons polygons }))

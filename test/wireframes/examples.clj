@@ -86,6 +86,18 @@
                      (t/translate 0 0 16))})
 
       (harness {
+        :filename "octahedron.png"
+        :style style
+        :shape ps/octahedron
+        :focal-length 5
+        :size [300 300]
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 55))
+                     (t/rotate :y (t/degrees->radians -20))
+                     (t/scale 2)
+                     (t/translate 0 0 16))})
+
+      (harness {
         :filename "icosahedron.png"
         :style style
         :shape ps/icosahedron
@@ -225,6 +237,18 @@
                (t/translate 0 0 16))})
 
 (harness {
+  :filename "octahedron.png"
+  :style :translucent
+  :shape ps/octahedron
+  :focal-length 5
+  :size [300 300]
+  :transform (t/combine
+               (t/rotate :z (t/degrees->radians 55))
+               (t/rotate :y (t/degrees->radians -20))
+               (t/scale 2)
+               (t/translate 0 0 16))})
+
+  (harness {
   :filename "knurled-cylinder.png"
   :style :translucent
   :shape (p/extrude
