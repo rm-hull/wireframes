@@ -13,7 +13,7 @@
       (move-to ax ay))
     (loop [ps (next polygon)]
       (if (nil? ps)
-        (-> ctx close-path fill stroke)
+        (-> ctx close-path)
         (let [[bx by] (get points-2d (first ps))]
           (line-to ctx bx by)
           (recur (next ps)))))))
@@ -24,12 +24,22 @@
     (stroke-style edge-color)
     (fill-style fill-color))
   (fn [polygon]
-    (walk-polygon ctx points-2d polygon)))
+    (->
+      ctx
+      (walk-polygon points-2d polygon)
+      (fill)
+      (stroke))))
 
 (defn shader-draw-fn [ctx points-2d shader]
   (fn [polygon]
-    ;; TODO
-    ))
+    (let [color (shader polygon)]
+      (->
+        ctx
+        (walk-polygon points-2d polygon)
+        (fill-style color)
+        (stroke-style color)
+        (fill)
+        (stroke)))))
 
 (defn draw-solid [{:keys [focal-length transform shape fill-color lighting-position style]} ctx]
   (let [priority-fill (priority-fill memoize)

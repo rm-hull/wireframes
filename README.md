@@ -181,7 +181,7 @@ can then be viewed using the GitHub 3D viewer.
 * Renderer implementations:
   - ~~Graphics2D~~
   - SVG
-  - Canvas
+  - ~~Canvas~~
   - WebGL
   - OpenGL
 * ~~Simple flat shading / lighting~~
