@@ -88,4 +88,23 @@
 (defn compute-bounds
   "Calculates the minimum and maximum bounds for the shape"
   [shape]
-  (throw (^{:cljs js/Exception.} Exception. "Not yet implemented")))
+  (->>
+    (:points shape)
+    (apply map (juxt min max))
+    (apply map (comp t/point vector))))
+
+(defn center-at-origin
+  "Determines the bounds of the shape, then shifts it to be centered at the origin.
+   Note only the bounds are used to determine the central point, rather than the
+   averaged centroids"
+  [shape]
+  (let [[[min-x min-y min-z] [max-x max-y max-z]] (compute-bounds shape)
+        width  (- max-x min-x)
+        height (- max-y min-y)
+        depth  (- max-z min-z)
+        transform (transform-shape
+                    (t/translate
+                      (- (- min-x) (/ width 2))
+                      (- (- min-y) (/ height 2))
+                      (- (- min-z) (/ depth 2))))]
+    (transform shape)))

@@ -25,7 +25,8 @@
       (p/make-point 1 1 0)
       (p/make-point 1 0 0))
     (p/extrude
-      (t/translate 0 0 1) 1)))
+      (t/translate 0 0 1) 1)
+    (p/center-at-origin)))
 
 (def octahedron nil)
 

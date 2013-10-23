@@ -191,8 +191,8 @@ can then be viewed using the GitHub 3D viewer.
 * Texture mapping
 * ~~Backface removal~~
 * Z-buffer
-* Compute shape bounds
-* Center shape at origin function
+* ~~Compute shape bounds~~
+* ~~Center shape at origin function~~
 * gcode generation for 3D printers
 * ~~Support loading from & saving to .stl files~~
 * ~~Support loading from Wavefront .obj files~~

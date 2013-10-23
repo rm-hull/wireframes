@@ -83,7 +83,7 @@
                      (t/rotate :z (t/degrees->radians 55))
                      (t/rotate :y (t/degrees->radians -20))
                      (t/scale 2)
-                     (t/translate 0.5 -1.5 16))})
+                     (t/translate 0 0 16))})
 
       (harness {
         :filename "icosahedron.png"
@@ -107,7 +107,7 @@
                      (t/rotate :z (t/degrees->radians 15))
                      (t/rotate :x (t/degrees->radians 20))
                      (t/scale 1.75)
-                     (t/translate 0.1 -0.4 10))})
+                     (t/translate 0 0 10))})
 
       (harness {
         :filename "teapot.png"
@@ -187,7 +187,7 @@
                (t/rotate :z (t/degrees->radians 15))
                (t/rotate :x (t/degrees->radians 20))
                (t/scale 1.75)
-               (t/translate 0.1 -0.4 10))})
+               (t/translate 0 0 10))})
 
 (harness {
   :filename "grid.png"
@@ -222,7 +222,7 @@
                (t/rotate :z (t/degrees->radians 55))
                (t/rotate :y (t/degrees->radians -20))
                (t/scale 2)
-               (t/translate 0.5 -1.5 16))})
+               (t/translate 0 0 16))})
 
 (harness {
   :filename "knurled-cylinder.png"
