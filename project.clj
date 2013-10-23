@@ -1,6 +1,6 @@
 (defproject rm-hull/wireframes "0.0.1-SNAPSHOT"
   :description "A lightweight 3D wireframe renderer for both Clojure and ClojureScript"
-  :url "https://github.com/rm_hull/wireframes"
+  :url "https://github.com/rm-hull/wireframes"
   :license {:name "The MIT License (MIT)"
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.5.1"]
