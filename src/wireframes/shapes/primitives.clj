@@ -6,7 +6,6 @@
 ;; Shapes are represented as:
 ;;
 ;;    {:points [pt1 pt2 ...]
-;;     :lines [l1 l2 ...]          l_n = 2 indices into points array
 ;;     :polygons [pg1 pg2 ...]}    pg_n = 3 indices into points array
 
 (defn transform-shape [transform]

@@ -149,7 +149,7 @@ The following file formats support loading:
 
 * Patch files in the ```wireframes.shapes.patch-loader``` namespace,
 * Wavefront .obj files in the ```wireframes.shapes.wavefront-loader``` namespace,
-* Stereoithography .stl files in the ```wireframes.shapes.stl-loader``` namespace
+* Stereolithography .stl files in the ```wireframes.shapes.stl-loader``` namespace
 
 ### Saving 3D shapes to STL-format files
 
