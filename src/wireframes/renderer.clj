@@ -63,3 +63,8 @@
 (defn compute-scale [w h]
   (double (min (/ w 2) (/ h 2))))
 
+(defn order-polygons [style keyfn shape]
+  (cond
+    (= style :transparent) (:polygons shape)
+    (= style :shaded)      (sort-by keyfn (t/reduce-polygons (:polygons shape)))
+    :else                  (sort-by keyfn (:polygons shape))))

@@ -1,39 +1,14 @@
+;; Graphics2D renderer
+
 (ns wireframes.renderer.bitmap
-  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader compute-scale]])
+  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader compute-scale order-polygons]]
+        [wireframes.renderer.color :only [create-color adjust-color]])
   (:require [wireframes.transform :as t]
             [potemkin :refer [fast-memoize]])
   (:import [java.awt.image BufferedImage]
            [java.awt.geom AffineTransform GeneralPath Ellipse2D$Double]
            [java.awt Color Graphics2D RenderingHints BasicStroke GraphicsEnvironment]
            [javax.imageio ImageIO]))
-
-(defn adjust-color [style & [^Color color]]
-  (let [color (or color Color/WHITE)
-        alpha (style {:transparent 0 :translucent 128 :opaque 255 :shaded 255})]
-    (when alpha
-      (Color.
-        (.getRed color)
-        (.getGreen color)
-        (.getBlue color)
-        (int alpha)))))
-
-(defn create-color
-  ([^Color material-color]
-    (create-color material-color Color/BLACK))
-  ([^Color material-color ^Color shadow-color]
-    (let [material-color (or material-color Color/LIGHT_GRAY)
-          r (double (.getRed material-color))
-          g (double (.getGreen material-color))
-          b (double (.getBlue  material-color))
-          a (int (.getAlpha material-color))]
-        (fn [intensity]
-          (if intensity
-              (Color.
-                (int (* r intensity))
-                (int (* g intensity))
-                (int (* b intensity))
-                a)
-            shadow-color)))))
 
 (defn walk-polygon [^GeneralPath path points-2d polygon]
   (let [[^double ax ^double ay] (get points-2d (first polygon))]
@@ -66,18 +41,14 @@
         (.draw path)))))
 
 (defn draw-solid [{:keys [focal-length transform shape fill-color lighting-position style]} ^Graphics2D g2d]
-  (let [priority-fill (priority-fill fast-memoize)
-        fill-color (adjust-color style fill-color)
+  (let [fill-color (adjust-color style fill-color)
         points-3d (get-3d-points transform shape)
         points-2d (get-2d-points focal-length points-3d)
-        polygons  (cond
-                    (= style :transparent) (:polygons shape)
-                    (= style :shaded)      (sort-by (priority-fill points-3d) (t/reduce-polygons (:polygons shape)))
-                    :else                  (sort-by (priority-fill points-3d) (:polygons shape)))
+        key-fn ((priority-fill fast-memoize) points-3d)
         draw-fn   (if (= style :shaded)
                     (shader-draw-fn g2d points-2d (shader points-3d (create-color fill-color) lighting-position))
                     (wireframe-draw-fn g2d points-2d fill-color Color/BLACK))]
-    (doseq [polygon polygons]
+    (doseq [polygon (order-polygons style key-fn shape)]
       (draw-fn polygon))))
 
 (defn ^BufferedImage create-image [w h]

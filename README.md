@@ -180,7 +180,7 @@ can then be viewed using the GitHub 3D viewer.
 * ~~Stitch adjacent surface panels together~~
 * Renderer implementations:
   - ~~Graphics2D~~
-  - SVG
+  - ~~SVG~~
   - ~~Canvas~~
   - WebGL
   - OpenGL

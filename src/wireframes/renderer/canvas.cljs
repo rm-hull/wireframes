@@ -1,6 +1,8 @@
+;; HTML5 canvas renderer
+
 (ns wireframes.renderer.canvas
   (:require [wireframes.transform :as t])
-  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader compute-scale]]
+  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader compute-scale order-polygons]]
         [wireframes.renderer.color :only [adjust-color create-color]]
         [monet.canvas :only [save restore stroke-width stroke-cap stroke-style fill fill-style
                              begin-path line-to move-to stroke close-path scale translate]]))
@@ -42,18 +44,14 @@
         (stroke)))))
 
 (defn draw-solid [{:keys [focal-length transform shape fill-color lighting-position style]} ctx]
-  (let [priority-fill (priority-fill memoize)
-        fill-color (adjust-color style fill-color)
+  (let [fill-color (adjust-color style fill-color)
         points-3d (get-3d-points transform shape)
         points-2d (get-2d-points focal-length points-3d)
-        polygons  (cond
-                    (= style :transparent) (:polygons shape)
-                    (= style :shaded)      (sort-by (priority-fill points-3d) (t/reduce-polygons (:polygons shape)))
-                    :else                  (sort-by (priority-fill points-3d) (:polygons shape)))
+        key-fn    ((priority-fill memoize) points-3d)
         draw-fn   (if (= style :shaded)
                     (shader-draw-fn ctx points-2d (shader points-3d (create-color fill-color) lighting-position))
                     (wireframe-draw-fn ctx points-2d fill-color "rgb(0,0,0)"))]
-  (doseq [polygon polygons]
+  (doseq [polygon (order-polygons style key-fn shape)]
     (draw-fn polygon)))
   ctx)
 

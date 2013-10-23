@@ -294,6 +294,18 @@
   "Weird swirly thing, created with https://github/rm-hull/wireframes [October 16 2013]"
   "doc/gallery/weird-swirly-thing.stl")
 
-
+(spit "wineglass.svg"
+(wireframes.renderer.vector/->svg
+  (partial wireframes.renderer.vector/draw-solid  {
+  :style :translucent
+  :fill-color (Color. 0xeaf5fc)
+  :shape (cs/make-wineglass 60)
+  :focal-length 20
+  :transform (t/combine
+               (t/rotate :z (t/degrees->radians 15))
+               (t/rotate :x (t/degrees->radians 20))
+               (t/scale 1.75)
+               (t/translate 0 0 10))})
+ [800 600]))
 
 )

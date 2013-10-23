@@ -2,12 +2,14 @@
   (:use [wireframes.renderer.canvas :only [draw-solid ->canvas]]
         [wireframes.transform :only [combine rotate translate degrees->radians]]
         [wireframes.shapes.curved-solids :only [make-torus]]
+        [wireframes.shapes.platonic-solids :only [icosahedron]]
         [monet.canvas :only [get-context fill-rect fill-style]]
         [monet.core :only [animation-frame]]
         [jayq.core :only [$]]))
 
 (def canvas ($ :canvas#demo))
 (def ctx (get-context (.get canvas 0) "2d"))
+(set! *print-fn* #(.log js/console %))
 
 (def torus (make-torus 1 3 30 30))
 
@@ -17,9 +19,9 @@
     (fill-rect { :x 0 :y 0 :w 800 :h 600}))
   ((->canvas ctx)
     (partial draw-solid
-      {:style :transparent
+      {:style :shaded
        :focal-length 3
-       :shape torus
+       :shape icosahedron
        :transform (combine
                     (rotate :x (degrees->radians x))
                     (rotate :y (degrees->radians y))
