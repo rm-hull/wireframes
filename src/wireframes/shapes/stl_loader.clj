@@ -8,61 +8,31 @@
         [gloss.io :only [decode encode]]
         [byte-streams :only [to-byte-buffer print-bytes transfer]]))
 
-;(defcodec point-spec
-;  {:x :float32-le
-;   :y :float32-le
-;   :z :float32-le})
-;
-;(defcodec triangle-spec
-;  {:normal point-spec
-;   :points [point-spec point-spec point-spec]
-;   :attributes :uint16-le})
-;
-;(defcodec stl-spec
-;  {:header (string :ascii :length 80)
-;   :triangles (repeated triangle-spec :prefix :uint32-le)})
+(defcodec point-spec
+  (ordered-map
+    :x :float32-le
+    :y :float32-le
+    :z :float32-le))
 
-(def point-spec
-  [:float32-le :float32-le :float32-le])
-
-(def triangle-spec
-  (concat
-    point-spec      ; normal
-    point-spec      ; vertex 1
-    point-spec      ; vertex 2
-    point-spec      ; vertex 3
-    [:uint16-le]))  ; attributes
+(defcodec triangle-spec
+  (ordered-map
+    :normal point-spec
+    :points [point-spec point-spec point-spec]
+    :attributes :uint16-le))
 
 (defcodec stl-spec
-  {:header (string :ascii :length 80)
-   :triangles (repeated triangle-spec :prefix :uint32-le)})
+  (ordered-map
+    :header (string :ascii :length 80)
+    :triangles (repeated triangle-spec :prefix :uint32-le)))
 
 (defn convert [points]
   (fv/vec
-    (for [[x y z] points]
+    (for [{:keys [x y z]} points]
       (t/point x y z))))
-
-(defn unpack
-  "Unpacks thirteen data points, comprising 3xNormal, 9xVertices, 1xAttribute into a map
-   structure - this in theory should be unnecessary if not for gloss codecs working as
-   expected."
-  [[norm-x norm-y norm-z
-    point1-x point1-y point1-z
-    point2-x point2-y point2-z
-    point3-x point3-y point3-z
-    attributes]]
-  {:normal [norm-x norm-y norm-z]
-   :points [[point1-x point1-y point1-z]
-            [point2-x point2-y point2-z]
-            [point3-x point3-y point3-z]]
-   :attributes attributes})
-
-(defn pack [{:keys [normal points attributes]}]
-  (flatten (concat normal points [attributes])))
 
 (defn load-shape [file]
   (let [data (->> file io/file to-byte-buffer (decode stl-spec))
-        points (->> (:triangles data) (mapcat (comp convert :points unpack)) fv/vec)
+        points (->> (:triangles data) (mapcat (comp convert :points)) fv/vec)
         polygons (->>  (count points) range (partition 3) (mapv vec))]
     {:points  points
      :polygons polygons}))
@@ -80,5 +50,5 @@
     (transfer
       (encode stl-spec
         {:header (c/pad description 80)
-         :triangles (map (comp pack build-triangle) polygons)})
+         :triangles (map build-triangle polygons)})
       (io/file file))))

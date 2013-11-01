@@ -6,19 +6,7 @@
 
 (deftest convert-points
   (is (= [(t/point 1 2 3) (t/point 4 5 6) (t/point 7 8 9)]
-         (convert [[1 2 3] [4 5 6] [7 8 9]]))))
-
-(deftest unpack-test
-  (is (= {:normal [0 1 2]
-          :points [[3 4 5] [6 7 8] [9 10 11]]
-          :attributes 12}
-         (unpack (range 13)))))
-
-(deftest pack-test
-  (is (= (range 13)
-         (pack {:normal [0 1 2]
-                :points [[3 4 5] [6 7 8] [9 10 11]]
-                :attributes 12}))))
+         (convert [{:x 1 :y 2 :z 3 } {:x 4 :y 5 :z 6} {:x 7 :y 8 :z 9}]))))
 
 (deftest loader-test
   (let [shape (load-shape "data-files/RichRap_Raspbery_Pi_Case_Bottom.stl")]
