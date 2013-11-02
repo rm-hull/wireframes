@@ -173,6 +173,8 @@ can then be viewed using the GitHub 3D viewer.
 ## TODO
 
 * Investigate using primitive arrays (see [array](https://github.com/rm-hull/wireframes/tree/array) branch)
+* Use/implement a vector library
+* Geometric extension with Minkowski addition (see http://projecteuler.net/problem=228)
 * ~~Efficiently calculate polygons on extruded shapes~~
 * ~~Rewrite/rename wireframes.transform/concat - unroll loops for performance~~
 * ~~Complete Bezier patch code~~
