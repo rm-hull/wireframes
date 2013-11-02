@@ -225,6 +225,7 @@ can then be viewed using the GitHub 3D viewer.
 * http://www.cs.utah.edu/~xchen/columbia/session1/lec24/html/
 * http://www.3dcadbrowser.com/3dmodels.aspx?word=star%20wars
 * http://derek.troywest.com/articles/by-example-gloss/
+* http://doc.cgal.org/latest/Manual/packages.html
 
 ## License
 
