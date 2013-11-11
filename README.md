@@ -193,6 +193,7 @@ can then be viewed using the GitHub 3D viewer.
 * Texture mapping
 * ~~Backface removal~~
 * Z-buffer
+* Polygon inflation
 * ~~Compute shape bounds~~
 * ~~Center shape at origin function~~
 * gcode generation for 3D printers
