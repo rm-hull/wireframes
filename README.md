@@ -226,6 +226,8 @@ can then be viewed using the GitHub 3D viewer.
 * http://www.3dcadbrowser.com/3dmodels.aspx?word=star%20wars
 * http://derek.troywest.com/articles/by-example-gloss/
 * http://doc.cgal.org/latest/Manual/packages.html
+* http://stackoverflow.com/questions/3749678/expand-fill-of-convex-polygon
+* http://stackoverflow.com/questions/1109536/an-algorithm-for-inflating-deflating-offsetting-buffering-polygons
 
 ## License
 
