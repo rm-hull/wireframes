@@ -5,8 +5,8 @@ A lightweight 3D rendering engine in Clojure & ClojureScript.
 ![Aventador](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/aventador.png)
 
 Adapted and extended from a javascript demo (originally by Kragen Javier Sitaker, see references below) 
-into a Clojure/ClojureScript library (that will render to SVG, an HTML5 Canvas or a Graphics2D object 
-depending on the runtime environment).
+into a Clojure/ClojureScript library (that renders to SVG, an HTML5 Canvas or a Graphics2D object -
+depending on the runtime environment, obviously).
 
 This started out as a experiment to plot Lorenz attractors in 3D space, but it turns out to be a really
 *simple* way to programmatically generate three dimensional geometric shapes - basically a programmable 
@@ -173,6 +173,8 @@ can then be viewed using the GitHub 3D viewer.
 ## TODO
 
 * Investigate using primitive arrays (see [array](https://github.com/rm-hull/wireframes/tree/array) branch)
+* Use/implement a vector library
+* Geometric extension with Minkowski addition (see http://projecteuler.net/problem=228)
 * ~~Efficiently calculate polygons on extruded shapes~~
 * ~~Rewrite/rename wireframes.transform/concat - unroll loops for performance~~
 * ~~Complete Bezier patch code~~
@@ -191,6 +193,7 @@ can then be viewed using the GitHub 3D viewer.
 * Texture mapping
 * ~~Backface removal~~
 * Z-buffer
+* Polygon inflation
 * ~~Compute shape bounds~~
 * ~~Center shape at origin function~~
 * gcode generation for 3D printers
@@ -223,6 +226,9 @@ can then be viewed using the GitHub 3D viewer.
 * http://www.cs.utah.edu/~xchen/columbia/session1/lec24/html/
 * http://www.3dcadbrowser.com/3dmodels.aspx?word=star%20wars
 * http://derek.troywest.com/articles/by-example-gloss/
+* http://doc.cgal.org/latest/Manual/packages.html
+* http://stackoverflow.com/questions/3749678/expand-fill-of-convex-polygon
+* http://stackoverflow.com/questions/1109536/an-algorithm-for-inflating-deflating-offsetting-buffering-polygons
 
 ## License
 
