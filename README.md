@@ -229,6 +229,7 @@ can then be viewed using the GitHub 3D viewer.
 * http://doc.cgal.org/latest/Manual/packages.html
 * http://stackoverflow.com/questions/3749678/expand-fill-of-convex-polygon
 * http://stackoverflow.com/questions/1109536/an-algorithm-for-inflating-deflating-offsetting-buffering-polygons
+* https://github.com/tsaastam/cljs-webgl-example
 
 ## License
 
