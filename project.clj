@@ -4,7 +4,7 @@
   :license {:name "The MIT License (MIT)"
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/clojurescript "0.0-2030"]
+                 [org.clojure/clojurescript "0.0-2120"]
                  [org.clojure/core.rrb-vector "0.0.10-SNAPSHOT"]
                  [gloss "0.2.2"]
                  [potemkin "0.3.4"]
