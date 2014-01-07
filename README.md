@@ -229,6 +229,7 @@ can then be viewed using the GitHub 3D viewer.
 * http://doc.cgal.org/latest/Manual/packages.html
 * http://stackoverflow.com/questions/3749678/expand-fill-of-convex-polygon
 * http://stackoverflow.com/questions/1109536/an-algorithm-for-inflating-deflating-offsetting-buffering-polygons
+* https://github.com/tsaastam/cljs-webgl-example
 
 ## License
 
@@ -252,3 +253,7 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rm-hull/wireframes/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
