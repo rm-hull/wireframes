@@ -202,6 +202,9 @@ can then be viewed using the GitHub 3D viewer.
 * ~~Deprecate ```:lines``` - no longer used except in platonic solids~~
 * Improve documentation
 * Examples
+* MATLAB style surface functions
+* Integrate [Inkspot](https://github.com/rm-hull/inkspot) & custom vertex/fragment shader
+* Costructive Solid Geometry (CSG) boolean operators
 
 ## Known Bugs
 
@@ -222,6 +225,7 @@ can then be viewed using the GitHub 3D viewer.
 * https://en.wikipedia.org/wiki/Wavefront_.obj_file
 * https://en.wikipedia.org/wiki/STL_(file_format)
 * https://github.com/colah/ImplicitCAD
+* http://evanw.github.io/csg.js/
 * http://www.opengl.org/wiki/Calculating_a_Surface_Normal
 * http://www.cs.utah.edu/~xchen/columbia/session1/lec24/html/
 * http://www.3dcadbrowser.com/3dmodels.aspx?word=star%20wars
@@ -256,4 +260,3 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rm-hull/wireframes/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
