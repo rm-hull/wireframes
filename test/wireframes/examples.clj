@@ -188,6 +188,34 @@
                      (t/translate 3 -5 210))}))))
 
 (comment
+
+(defn sqr [x]
+  (* x x))
+
+(defn sinc
+  "Unnormalized/cardinal sine function"
+  [x] (if (zero? x)
+        1.0
+        (/ (Math/sin x) x)))
+
+(defn hat [x y]
+  (* 15 (sinc (Math/sqrt (+ (sqr x) (sqr y ))))))
+
+(harness {
+  :filename "sinc3D.png"
+  :style :opaque
+  :shape (p/make-surface
+           (range -22 22 0.25)
+           (range -22 22 0.25)
+           hat)
+  :focal-length 30
+  :size [600 600]
+  :transform (t/combine
+               (t/rotate :z (t/degrees->radians 15))
+               (t/rotate :x (t/degrees->radians 135))
+               (t/scale 0.05)
+               (t/translate 0 0 10))})
+
 (harness {
   :filename "wineglass.png"
   :style :shaded

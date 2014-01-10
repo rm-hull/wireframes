@@ -1,6 +1,5 @@
 (ns wireframes.shapes.primitives
-  (:require ^{:cljs [cljs.core.rrb-vector :as fv]}
-            [clojure.core.rrb-vector :as fv]
+  (:require [clojure.core.rrb-vector :as fv]
             [wireframes.transform :as t]))
 
 ;; Shapes are represented as:
@@ -83,6 +82,26 @@
      (make-point x y 0)
      (extrude (t/translate 1 0 0) w)
      (extrude (t/translate 0 1 0) h)))
+
+(defn- polygons [x-divisions y-divisions]
+  (for [j (range y-divisions)
+        i (range x-divisions)
+        :let [a (+ i (* j (inc x-divisions)))
+              b (inc a)
+              c (+ b y-divisions)
+              d (inc c)]]
+    [a b d c])) ; order of points is important
+
+
+(defn make-surface [x-range y-range z-fn]
+  {:points (vec
+             (for [x x-range
+                   y y-range]
+               (t/point x y (z-fn x y))))
+   :polygons (vec
+               (polygons
+                 (dec (count x-range))
+                 (dec (count y-range))))})
 
 (defn compute-bounds
   "Calculates the minimum and maximum bounds for the shape"

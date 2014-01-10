@@ -117,6 +117,49 @@ Produces:
 
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/torus.png)
 
+### Surfaces and other primitives
+
+MATLAB-style function plots can be generated thus:
+
+```clojure
+(use 'wireframes.shapes.primitives)
+(use 'wireframes.transform)
+(use 'wireframes.renderer.bitmap)
+
+(defn sqr [x] 
+  (* x x))
+
+(defn sinc 
+  "Unnormalized/cardinal sine function"
+  [x] (if (zero? x)
+        1.0
+        (/ (Math/sin x) x)))
+
+(defn hat [x y]
+  (* 15 (sinc (Math/sqrt (+ (sqr x) (sqr y ))))))
+
+(write-png
+  (->img
+    (draw-solid
+      {:focal-length 30
+       :style :opaque
+       :transform (combine
+                    (rotate :z (degrees->radians 15))
+                    (rotate :x (degrees->radians 135))
+                    (scale 0.05)
+                    (translate 0 0 10))
+       :shape (make-surface
+                (range -22 22 0.25)
+                (range -22 22 0.25)
+                hat)})
+    [600 600])
+  "sinc3D.png")
+```
+
+Results in:
+
+![Hat](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/sinc3D.png)
+
 ### Loading common 3D shape files
 
 The defacto/clichéd Utah teapot (or any patch/vertex 3D file) can be loaded in with the following
@@ -202,7 +245,7 @@ can then be viewed using the GitHub 3D viewer.
 * ~~Deprecate ```:lines``` - no longer used except in platonic solids~~
 * Improve documentation
 * Examples
-* MATLAB style surface functions
+* ~~MATLAB style surface functions~~
 * Integrate [Inkspot](https://github.com/rm-hull/inkspot) & custom vertex/fragment shader
 * Costructive Solid Geometry (CSG) boolean operators
 
@@ -211,7 +254,8 @@ can then be viewed using the GitHub 3D viewer.
 * Bug in shader/lighting position - affected by applied transforms?
 * ~~Improve depth criteria for priority fill/painters algorithm~~
 * Cube (multi-dimension) extrusion is generating erroneous polygons
-* RRB-Vector implementation does not bundle .cljs files! See http://dev.clojure.org/jira/browse/CRRBV-1
+* ~~RRB-Vector implementation does not bundle .cljs files! See http://dev.clojure.org/jira/browse/CRRBV-1~~
+* Priority fill fails with TimSort exception _“Comparison method violates its general contract!”_ if any point is NaN.
 
 ## References
 
