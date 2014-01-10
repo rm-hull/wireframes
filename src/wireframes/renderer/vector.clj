@@ -18,9 +18,9 @@
 
 (defn- transform [w h]
   (let [scale (compute-scale w h)]
-  (format "translate(%f,%f) scale(%f,%f)"
-          (double (/ w 2)) (double (/ h 2))
-          scale scale)))
+    (str
+      "translate(" (double (/ w 2)) "," (double (/ h 2)) ") "
+      "scale(" scale "," scale ")")))
 
 (defn walk-polygon [points-2d polygon]
   (letfn [(directive [cmd p]
@@ -32,7 +32,10 @@
         "Z")))
 
 (defn- style [fill-color edge-color sw]
-  (format "stroke-width:%f;stroke:%s;fill:%s" sw (rgba edge-color) (rgba fill-color)))
+  (str
+    "stroke-width:" sw ";"
+    "stroke:" (rgba edge-color) ";"
+    "fill:" (rgba fill-color) ";"))
 
 (defn wireframe-draw-fn [points-2d fill-color edge-color sw]
   (let [style (style fill-color edge-color sw)]
