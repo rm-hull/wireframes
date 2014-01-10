@@ -247,7 +247,7 @@ can then be viewed using the GitHub 3D viewer.
 * Examples
 * ~~MATLAB style surface functions~~
 * Integrate [Inkspot](https://github.com/rm-hull/inkspot) & custom vertex/fragment shader
-* Costructive Solid Geometry (CSG) boolean operators
+* Constructive Solid Geometry (CSG) boolean operators
 
 ## Known Bugs
 
