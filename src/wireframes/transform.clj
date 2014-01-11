@@ -124,8 +124,8 @@
         vy (double (- cy ay))
         vz (double (- cz az))]
     [(- (* uy vz) (* uz vy))
-      (- (* uz vx) (* ux vz))
-      (- (* ux vy) (* uy vx))]))
+     (- (* uz vx) (* ux vz))
+     (- (* ux vy) (* uy vx))]))
 
 
 (defn sqr [x]
