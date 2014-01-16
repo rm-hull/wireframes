@@ -18,20 +18,20 @@
   ; discard any polygons with less than two faces
   (is (nil? (face-matcher "43/1/1 42/4/2")))
 
-  (is (= {:polygons [[42 41 51 50]]}
+  (is (= {:polygons [{:vertices [42 41 51 50]}]}
          (face-matcher "43/1/1 42/4/2  52/3/3 51/2/4")))
 
-  (is (= {:polygons [[42 41 51 50]]}
+  (is (= {:polygons [{:vertices [42 41 51 50]}]}
          (face-matcher "43/1/1 42//2  52//3 51/2/")))
 
-  (is (= {:polygons [[42 41 51 50]]}
+  (is (= {:polygons [{:vertices [42 41 51 50]}]}
          (face-matcher "43 42 52  51"))))
 
 (deftest parse-line-test
-  (is (= {:polygons [[42 41 51 50]]}
+  (is (= {:polygons [{:vertices [42 41 51 50]}]}
          (parse-line directives "f 43/1/1 42/4/2 52/3/3 51/2/4")))
 
-  (is (= {:polygons [[42 41 51 50]]}
+  (is (= {:polygons [{:vertices [42 41 51 50]}]}
          (parse-line directives "f   43/1/1  42/4/2   52/3/3   51/2/4")))
 
   (is (=points [[1.288484 6.238661 1.455338 1]]

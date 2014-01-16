@@ -5,20 +5,26 @@
 ;; Shapes are represented as:
 ;;
 ;;    {:points [pt1 pt2 ...]
-;;     :polygons [pg1 pg2 ...]}    pg_n = 3 indices into points array
+;;     :polygons [{:vertices pg1}
+;;                {:vertices pg2} ...]}    pg_n = 3 indices into points array
 
 (defn transform-shape [transform]
   (fn [{:keys [points] :as shape}]
     (assoc shape :points (mapv (t/transform-point transform) points))))
 
-(defn- offsets [n coll]
-  (mapv #(mapv (partial + n) %) coll))
+(defn- update-vertex-indices
+  "Shifts the vertex indexes by the given offset, preserving any existing
+   key/value pairs in the shape's polygons"
+  [shape offset]
+  (let [vec-updater (fn [xs] (mapv (partial + offset) xs))
+        map-updater (fn [m] (update-in m [:vertices] vec-updater))]
+    (update-in shape [:polygons] (partial mapv map-updater))))
 
 (defn augment
   "Add two or more shapes together"
   ([shape1 shape2]
     (let [n (count (:points shape1))
-          adj (assoc shape2 :polygons (offsets n (:polygons shape2)))]
+          adj (update-vertex-indices shape2 n)]
     (merge-with fv/catvec shape1 adj)))
   ([shape1 shape2 & more]
     (let [initial (augment shape1 shape2)]
@@ -33,7 +39,7 @@
                      [a b d c])]
     (merge-with fv/catvec
       extruded-shape
-      {:polygons (vec polygons)})))
+      {:polygons (mapv #(hash-map :vertices %) polygons)})))
 
 (defn extrude
   "Given a shape, make a more complicated shape by copying it through the
@@ -69,12 +75,12 @@
   "Creates a joined line consisting of the points of the form [x y z]"
   [& points]
   (apply merge-with fv/catvec
-    {:polygons (->> points (map :points) count range (partition 2 1) (mapv vec))}
+    {:polygons (->> points (map :points) count range (partition 2 1) (mapv #(hash-map :vertices (vec %))))}
     points))
 
 (defn make-polygon [& points]
   (apply merge-with fv/catvec
-    {:polygons (->> points (map :points) count range vec vector)}
+    {:polygons (->> points (map :points) count range vec (hash-map :vertices) vector)}
     points))
 
 (defn make-grid [x y w h]
@@ -83,15 +89,14 @@
      (extrude (t/translate 1 0 0) w)
      (extrude (t/translate 0 1 0) h)))
 
-(defn- polygons [x-divisions y-divisions]
+(defn mesh [x-divisions y-divisions]
   (for [j (range y-divisions)
         i (range x-divisions)
         :let [a (+ i (* j (inc x-divisions)))
               b (inc a)
               c (+ b y-divisions)
               d (inc c)]]
-    [a b d c])) ; order of points is important
-
+    {:vertices [a b d c]})) ; order of points is important
 
 (defn make-surface [x-range y-range z-fn]
   {:points (vec
@@ -99,7 +104,7 @@
                    y y-range]
                (t/point x y (z-fn x y))))
    :polygons (vec
-               (polygons
+               (mesh
                  (dec (count x-range))
                  (dec (count y-range))))})
 

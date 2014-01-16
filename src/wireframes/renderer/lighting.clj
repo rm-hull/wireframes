@@ -34,7 +34,7 @@
   (let [lighting-fn (compute-lighting lighting-position)]
     (fn [points-3d transformed-points polygon]
       (let [intensity (->>
-                        polygon
+                        (:vertices polygon)
                         (map transformed-points)
                         (apply normal)
                         (lighting-fn))]

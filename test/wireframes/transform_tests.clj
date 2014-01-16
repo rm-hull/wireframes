@@ -97,14 +97,21 @@
              (point 3 5 14))))
 
 (deftest triangulation
-  (is (= [[1 2 3]] (triangulate [1 2 3])))
-  (is (= [[1 2 3] [1 3 4] [1 4 5]] (triangulate [1 2 3 4 5])))
-  (is (= [nil]   (triangulate nil)))
-  (is (= [[]]    (triangulate [])))
-  (is (= [[1]]   (triangulate [1])))
-  (is (= [[1 2]] (triangulate [1 2]))))
-
+  (is (= [{:vertices [1 2 3] :color :red}] (triangulate {:vertices [1 2 3] :color :red})))
+  (is (= [{:vertices [1 2 3] :color :green}
+          {:vertices [1 3 4] :color :green}
+          {:vertices [1 4 5] :color :green}]
+         (triangulate {:vertices [1 2 3 4 5] :color :green})))
+  (is (= [{:vertices nil}]   (triangulate {:vertices nil})))
+  (is (= [{:vertices []}]    (triangulate {:vertices []})))
+  (is (= [{:vertices [1]}]   (triangulate {:vertices [1]})))
+  (is (= [{:vertices [1 2]}] (triangulate {:vertices [1 2]}))))
 
 (deftest reduce-polys
-  (is (= [[1 2 3] [1 3 4] [2 3 5] [2 5 6] [2 6 7]]
-         (reduce-polygons [[1 2 3 4] [2 3 5 6 7]]))))
+  (is (= [{:vertices [1 2 3] :color :yellow}
+          {:vertices [1 3 4] :color :yellow}
+          {:vertices [2 3 5] :color :grey}
+          {:vertices [2 5 6] :color :grey}
+          {:vertices [2 6 7] :color :grey}]
+         (reduce-polygons [{:vertices [1 2 3 4] :color :yellow}
+                           {:vertices [2 3 5 6 7] :color :grey}]))))

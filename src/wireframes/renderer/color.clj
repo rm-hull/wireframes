@@ -35,12 +35,14 @@
       (blue color)
       alpha])))
 
-
 (defn flat-color [color & [opacity]]
   "Creates a fragment shader function which colors polygons"
   (let [adjusted-color (adjust-color color opacity)]
      (fn [points-3d transformed-points polygon]
         adjusted-color)))
+
+(defn get-z [[_ _ z _]]
+  z)
 
 (defn spectral-z [low high]
   "Creates a fragment shader function which colors polygons using
@@ -49,9 +51,8 @@
   (let [colors (color-mapper (reverse (spectrum 100)) low high)]
     (fn [points-3d transformed-points polygon]
       (->>
-       polygon
-       (map points-3d)
-       (map #(get % 2))
+       (:vertices polygon)
+       (map (comp get-z points-3d))
        (reduce +)
        (* 0.33)
        colors))))

@@ -27,18 +27,9 @@
      (b/surface-points divisions)
      (map t/point)))
 
-(defn- polygons [divisions]
-  (for [j (range divisions)
-        i (range divisions)
-        :let [a (+ i (* j (inc divisions)))
-              b (inc a)
-              c (+ b divisions)
-              d (inc c)]]
-    [a b d c])) ; order of points is important
-
 (defn- create-surface [divisions vertices patch]
   {:points   (fv/vec (points divisions vertices patch))
-   :polygons (fv/vec (polygons divisions))})
+   :polygons (fv/vec (p/mesh divisions divisions))})
 
 (defn load-shape [file divisions]
   (let [raw-data    (vec (str/split-lines (slurp file)))

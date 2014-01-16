@@ -16,7 +16,7 @@
       (let [vertices (converter2 s)]
         ; discard any polygons with less than three faces
         (when (> (count vertices) 2)
-          {:polygons (->> vertices (mapv first) fv/vector)})))))
+          {:polygons (->> vertices (mapv first) (hash-map :vertices) fv/vector)})))))
 
 (def directives
   [[#"^v +(.*)" vertex-matcher]

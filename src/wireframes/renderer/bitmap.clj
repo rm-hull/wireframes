@@ -10,11 +10,12 @@
            [javax.imageio ImageIO]))
 
 (defn walk-polygon [^GeneralPath path points-2d polygon]
-  (let [[^double ax ^double ay] (get points-2d (first polygon))]
+  (let [vertices (:vertices polygon)
+        [^double ax ^double ay] (get points-2d (first vertices))]
     (doto path
       (.reset)
       (.moveTo ax ay))
-    (loop [ps (next polygon)]
+    (loop [ps (next vertices)]
       (when-let [[^double bx ^double by] (get points-2d (first ps))]
         (.lineTo path bx by)
         (recur (next ps))))

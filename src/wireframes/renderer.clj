@@ -11,7 +11,7 @@
       (fn [polygon]
         (loop [acc    0.0
                count  0
-               points polygon]
+               points (:vertices polygon)]
           (if (empty? points)
             (/ acc count)
             (let [[_ _ ^double z] (get points-3d (first points))]
@@ -34,7 +34,8 @@
   (double (min (/ w 2) (/ h 2))))
 
 (defn order-polygons [style keyfn shape]
-  (cond
-    (= style :transparent) (:polygons shape)
-    (= style :shaded)      (sort-by keyfn (t/reduce-polygons (:polygons shape)))
-    :else                  (sort-by keyfn (:polygons shape))))
+  (let [polygons (:polygons shape)]
+    (condp = style
+      :transparent polygons
+      :shaded      (sort-by keyfn (t/reduce-polygons polygons))
+                   (sort-by keyfn polygons))))

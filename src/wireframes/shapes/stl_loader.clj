@@ -33,13 +33,13 @@
 (defn load-shape [file]
   (let [data (->> file io/file to-byte-buffer (decode stl-spec))
         points (->> (:triangles data) (mapcat (comp convert :points)) fv/vec)
-        polygons (->>  (count points) range (partition 3) (mapv vec))]
+        polygons (->> (count points) range (partition 3) (mapv #(hash-map :vertices (vec %))))]
     {:points  points
      :polygons polygons}))
 
 (defn build-triangle [polygon]
-  {:normal (apply t/normal polygon)
-   :points (map t/vec polygon)
+  {:normal (apply t/normal (:vertices polygon))
+   :points (map t/vec (:vertices polygon))
    :attributes 0})
 
 (defn save-shape [shape description file]

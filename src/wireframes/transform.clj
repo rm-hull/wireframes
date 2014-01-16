@@ -136,22 +136,24 @@
   [a b]
   (Math/sqrt (reduce + (map (comp sqr -) a b))))
 
+;; TODO - doesnt belong in this namespace
 (defn triangulate
   "Attempts to break down the polygon (defined by the points) into an array
    of triangles which represent the same surface area. NOTE: If the polygon
    is already triangular (or less) in nature, then that polygon is returned
    wrapped in an array."
-  [points]
-  (if (<= (count points) 3)
-    [points]
+  [polygon]
+  (if (<= (count (:vertices polygon)) 3)
+    [polygon]
     (loop [acc []
-           [a b c & more] points]
+           [a b c & more] (:vertices polygon)]
       (if (empty? more)
-        (conj acc [a b c])
+        (conj acc (assoc polygon :vertices [a b c]))
         (recur
-          (conj acc [a b c])
+          (conj acc (assoc polygon :vertices [a b c]))
           (cons a (cons c more)))))))
 
+;; TODO - doesnt belong in this namespace
 (defn reduce-polygons
   "Alter a sequence of polygons such that the output contains polygons
    with no more than 3 sides: hence polygons with 4 or more sides are

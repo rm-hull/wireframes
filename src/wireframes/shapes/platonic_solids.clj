@@ -18,7 +18,10 @@
             (t/point -1  0 (/ -1 sqrt-2))
             (t/point  0  1 (/  1 sqrt-2))
             (t/point  0 -1 (/  1 sqrt-2))]
-   :polygons [[0 1 2] [0 2 3] [0 1 3] [1 2 3]]})
+   :polygons [{:vertices [0 1 2]}
+              {:vertices [0 2 3]}
+              {:vertices [0 1 3]}
+              {:vertices [1 2 3]}]})
 
 
 (def cube
@@ -42,16 +45,15 @@
                       (t/point 0 a 0)
                       (t/point 0 0 a)])))
         polygons (vec
-                (for [a (range (count points))
-                      b (range a)
-                      c (range b)
-                      :when (and
-                              (=approx (t/distance (points a) (points b)) sqrt-2)
-                              (=approx (t/distance (points a) (points c)) sqrt-2)
-                              (=approx (t/distance (points b) (points c)) sqrt-2))]
-                  [a b c]))]
-  {:points points
-   :polygons polygons }))
+                   (for [a (range (count points))
+                         b (range a)
+                         c (range b)
+                         :when (and
+                                 (=approx (t/distance (points a) (points b)) sqrt-2)
+                                 (=approx (t/distance (points a) (points c)) sqrt-2)
+                                 (=approx (t/distance (points b) (points c)) sqrt-2))]
+                     {:vertices [a b c]}))]
+  {:points points :polygons polygons }))
 
 (def dodecahedron nil)
 
@@ -65,13 +67,12 @@
                       (t/point x y 0)
                       (t/point y 0 x)])))
         polygons (vec
-                (for [a (range (count points))
-                      b (range a)
-                      c (range b)
-                      :when (and
-                              (=approx (t/distance (points a) (points b)) 2)
-                              (=approx (t/distance (points a) (points c)) 2)
-                              (=approx (t/distance (points b) (points c)) 2))]
-                  [a b c]))]
-  {:points points
-   :polygons polygons }))
+                   (for [a (range (count points))
+                         b (range a)
+                         c (range b)
+                         :when (and
+                                 (=approx (t/distance (points a) (points b)) 2)
+                                 (=approx (t/distance (points a) (points c)) 2)
+                                 (=approx (t/distance (points b) (points c)) 2))]
+                     {:vertices [a b c]}))]
+  {:points points :polygons polygons }))
