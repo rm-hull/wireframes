@@ -1,100 +1,76 @@
 (ns wireframes.renderer.color
-  (:require [clojure.string :as string])
-  (:use [wireframes.common :only [parse-int parse-double]])
-  ^:clj
-  (:import [java.awt Color]))
+  (:require [wireframes.renderer.lighting :refer [default-position positional-lighting-decorator]]
+            [inkspot.color :refer [coerce red green blue alpha]]
+            [inkspot.color-chart :refer [spectrum color-mapper]]))
 
-(defprotocol IColor
-  (red [c])
-  (green [c])
-  (blue [c])
-  (alpha [c]))
 
-(defn rgb [xs]
-  (map (comp parse-int string/trim) xs))
+(defn tee [f]
+  (fn [x]
+    (f x)
+    x))
 
-(defn color-vec [[_ & xs]]
-  (vec
-    (case (count xs)
-      1 (->> xs first seq (partition 2) (map (comp #(parse-int % 16) (partial apply str))) vec)
-      3 (rgb xs)
-      4 (concat (rgb (take 3 xs))
-          [(-> (last xs) string/trim parse-double)]))))
+(defn dup [x]
+  [x x])
 
-(defn string->color [s]
-  (condp re-matches s
-    #"#(.*)" :>> color-vec
-    #"rgb\((.*),(.*),(.*)\)" :>> color-vec
-    #"rgba\((.*),(.*),(.*),(.*)\)" :>> color-vec))
+(def black-edge
+  (let [black (coerce :black)]
+    (fn [x] [x black])))
 
-(extend-type ^{:cljs  cljs.core.PersistentVector} clojure.lang.PersistentVector
-  IColor
-  (red   [[r _ _ _]] r)
-  (green [[_ g _ _]] g)
-  (blue  [[_ _ b _]] b)
-  (alpha [[_ _ _ a]] (or a 1.0)))
+(defn adjust-color
+  "Adjusts the opacity of the given color, which can be one of the following
+   keywords:
 
-(extend-type java.lang.String
-  IColor
-  (red   [s] (red (string->color s)))
-  (green [s] (green (string->color s)))
-  (blue  [s] (blue (string->color s)))
-  (alpha [s] (alpha (string->color s))))
+      :transparent (0% opacity),
+      :translucent (60% opacity),
+      :opaque (100% opacity)
 
-^:clj
-(extend-type java.awt.Color
-  IColor
-  (red   [c] (.getRed c))
-  (green [c] (.getGreen c))
-  (blue  [c] (.getBlue c))
-  (alpha [c] (/ (.getAlpha c) 255.0)))
+  Alternatively it can be specified as a float in the range 0.0 to 1.0"
+  [color opacity]
+  (let [alpha (if (and (float? opacity) (>= opacity 0.0) (<= 1.0))
+                opacity
+                (get {:transparent 0.0 :translucent 0.6 :opaque 1.0} opacity 1.0))]
+    (coerce
+     [(red color)
+      (green color)
+      (blue color)
+      alpha])))
 
-#_({:cljs
-(extend-type array
-  IColor
-  (red   [[r _ _ _]] r)
-  (green [[_ g _ _]] g)
-  (blue  [[_ _ b _]] b)
-  (alpha [[_ _ _ a]] a))})
 
-(defn rgba
-  ([color] (rgba (red color) (green color) (blue color) (alpha color)))
-  ([r g b a] (str "rgba(" r "," g "," b "," a ")")))
+(defn flat-color [color & [opacity]]
+  "Creates a fragment shader function which colors polygons"
+  (let [adjusted-color (adjust-color color opacity)]
+     (fn [points-3d transformed-points polygon]
+        adjusted-color)))
 
-(defn to-color
-  "Converts to a color. rgb values should be an integer in the 0-255 range,
-   whilst alpha channel is a double in the range 0.0 - 1.0"
-  [r g b a]
-  ^{:cljs '(rgba r g b a)}
-  (Color.
-    (int r)
-    (int g)
-    (int b)
-    (int (* a 255))))
+(defn spectral-z [low high]
+  "Creates a fragment shader function which colors polygons using
+   a spectrum of colors where the original 3D points Z co-ordinate
+   is mapped to a specific color (blue low .. red high)."
+  (let [colors (color-mapper (reverse (spectrum 100)) low high)]
+    (fn [points-3d transformed-points polygon]
+      (->>
+       polygon
+       (map points-3d)
+       (map #(get % 2))
+       (reduce +)
+       (* 0.33)
+       colors))))
 
-(defn adjust-color [style & [color]]
-  (let [color (or color "rgb(255,255,255)")
-        alpha (style {:transparent 0.0 :translucent 0.6 :opaque 1.0 :shaded 1.0})]
-    (when alpha
-      (to-color
-        (red color)
-        (green color)
-        (blue color)
-        alpha))))
+(defn wireframe
+  "Creates a [fill edge] fragment shader function which colors polygons
+   with a flat color fill with a black outline."
+  [& [color opacity]]
+  (comp
+    black-edge
+    (flat-color (or color :white) opacity)))
 
-(defn create-color
-  ([material-color] (create-color material-color "rgb(0,0,0)"))
-  ([material-color shadow-color]
-    (let [material-color (or material-color "rgb(192,192,192)")
-        r (double (red   material-color))
-        g (double (green material-color))
-        b (double (blue  material-color))
-        a (double (alpha material-color))]
-      (fn [intensity]
-        (if intensity
-            (to-color
-              (int (* r intensity))
-              (int (* g intensity))
-              (int (* b intensity))
-              a)
-          shadow-color)))))
+(defn solid
+  "Creates a [fill edge] fragment shader function which colors polygons
+   with a shaded color and no perceptible outline (i.e. the same color as
+   the fill), with a light source at the given position."
+  [& [color lighting-position]]
+  (comp
+    dup
+    (positional-lighting-decorator
+      (or lighting-position default-position)
+      (flat-color (or color :white)))))

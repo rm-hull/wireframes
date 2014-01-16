@@ -1,8 +1,7 @@
 ;; Graphics2D renderer
 
 (ns wireframes.renderer.bitmap
-  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader compute-scale order-polygons]]
-        [wireframes.renderer.color :only [create-color adjust-color]])
+  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader compute-scale order-polygons]])
   (:require [wireframes.transform :as t]
             [potemkin :refer [fast-memoize]])
   (:import [java.awt.image BufferedImage]
@@ -21,35 +20,27 @@
         (recur (next ps))))
     (.closePath path)))
 
-(defn wireframe-draw-fn [^Graphics2D g2d points-2d ^Color fill-color ^Color edge-color]
+(defn create-polygon-renderer [^Graphics2D g2d points-2d fragment-shader-fn]
   (let [path (GeneralPath.)]
     (fn [polygon]
-      (walk-polygon path points-2d polygon)
-      (doto g2d
-        (.setColor fill-color)
-        (.fill path)
-        (.setColor edge-color)
-        (.draw path)))))
+      (let [[fill-color edge-color] (fragment-shader-fn polygon)]
+        (walk-polygon path points-2d polygon)
+        (doto g2d
+          (.setColor fill-color)
+          (.fill path)
+          (.setColor edge-color)
+          (.draw path))))))
 
-(defn shader-draw-fn [^Graphics2D g2d points-2d shader]
-  (let [path (GeneralPath.)]
-    (fn [polygon]
-      (walk-polygon path points-2d polygon)
-      (doto g2d
-        (.setColor (shader polygon))
-        (.fill path)
-        (.draw path)))))
-
-(defn draw-solid [{:keys [focal-length transform shape fill-color lighting-position style]} ^Graphics2D g2d]
-  (let [fill-color (adjust-color style fill-color)
-        points-3d (get-3d-points transform shape)
+(defn draw-solid [{:keys [focal-length transform shape color-fn style]} ^Graphics2D g2d]
+  (let [points-3d (get-3d-points transform shape)
         points-2d (get-2d-points focal-length points-3d)
-        key-fn ((priority-fill fast-memoize) points-3d)
-        draw-fn   (if (= style :shaded)
-                    (shader-draw-fn g2d points-2d (shader points-3d (create-color fill-color) lighting-position))
-                    (wireframe-draw-fn g2d points-2d fill-color Color/BLACK))]
+        key-fn    ((priority-fill fast-memoize) points-3d)
+        render-fn (create-polygon-renderer
+                    g2d
+                    points-2d
+                    (shader (:points shape) points-3d color-fn))]
     (doseq [polygon (order-polygons style key-fn shape)]
-      (draw-fn polygon))))
+      (render-fn polygon))))
 
 (defn ^BufferedImage create-image [w h]
   (if (GraphicsEnvironment/isHeadless)

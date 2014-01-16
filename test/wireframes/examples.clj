@@ -8,14 +8,23 @@
             [wireframes.shapes.patch-loader :as pl]
             [wireframes.shapes.wavefront-loader :as wl]
             [wireframes.shapes.stl-loader :as sl]
-            [wireframes.renderer.bitmap :as b])
+            [wireframes.renderer.bitmap :as b]
+            [wireframes.renderer.color :as c]
+            [wireframes.renderer.lighting :as l]
+            [inkspot.color :as color]
+            [inkspot.color-chart :as cc])
   (:import [java.awt Color]))
 
 ;(set! *unchecked-math* true)
 
 (defn harness [{:keys [shape focal-length lighting-position transform
-                       draw-fn filename size style fill-color] :as opts}]
-  (let [dir (str "doc/gallery/" (name style) "/")]
+                       draw-fn filename size style fill-color color-fn] :as opts}]
+  (let [dir (str "doc/gallery/" (name style) "/")
+        color-fn (cond
+                   color-fn          color-fn
+                   (= style :shaded) (c/solid fill-color)
+                   :else             (c/wireframe fill-color style))
+        opts (assoc opts :color-fn color-fn)]
     (.mkdir (clojure.java.io/file dir))
     (printf "%-14s %-20s" style filename)
     (flush)
@@ -110,7 +119,7 @@
 
       (harness {
         :filename "wineglass.png"
-        :fill-color (Color. 0xEAF5FC)
+        :fill-color 0xEAF5FC
         :style style
         :shape (cs/make-wineglass 48)
         :focal-length 20
@@ -187,8 +196,6 @@
                      (t/scale 0.1)
                      (t/translate 3 -5 210))}))))
 
-(comment
-
 (defn sqr [x]
   (* x x))
 
@@ -201,12 +208,19 @@
 (defn hat [x y]
   (* 15 (sinc (Math/sqrt (+ (sqr x) (sqr y ))))))
 
+
 (harness {
   :filename "sinc3D.png"
-  :style :opaque
+  :style :shaded
+  :color-fn (comp
+              ;(c/tee println)
+              c/black-edge
+              (l/positional-lighting-decorator
+                l/default-position
+                (c/spectral-z -6.5 15)))
   :shape (p/make-surface
-           (range -22 22 0.25)
-           (range -22 22 0.25)
+           (range -22 22 0.4)
+           (range -22 22 0.4)
            hat)
   :focal-length 30
   :size [600 600]
@@ -216,10 +230,16 @@
                (t/scale 0.05)
                (t/translate 0 0 10))})
 
+(comment
+
 (harness {
   :filename "wineglass.png"
   :style :shaded
-  :fill-color (Color. 0xeaf5fc)
+  :color-fn (comp
+              c/black-edge
+              (l/positional-lighting-decorator
+                l/default-position
+                (c/flat-color 0xeaf5fc)))
   :shape (cs/make-wineglass 60)
   :focal-length 20
   :size [900 900]
@@ -232,6 +252,9 @@
 (harness {
   :filename "grid.png"
   :style :translucent
+  :color-fn (comp
+              c/black-edge
+              (c/flat-color :white :translucent))
   :shape (p/make-grid -2 -2 10 10)
   :focal-length 60
   :transform (t/combine
@@ -242,7 +265,7 @@
 
 (harness {
   :filename "rpi-case.png"
-  :style :translucent
+  :style :shaded
   :shape (sl/load-shape  "data-files/RichRap_Raspbery_Pi_Case_Bottom.stl")
   :focal-length 24
   :transform (t/combine
@@ -263,6 +286,7 @@
                (t/rotate :y (t/degrees->radians -20))
                (t/scale 2)
                (t/translate 0 0 16))})
+
 
 (harness {
   :filename "octahedron.png"
@@ -310,8 +334,8 @@
   "Utah Teapot, created with https://github/rm-hull/wireframes [October 16 2013]"
   "doc/gallery/teapot.stl")
 
- (sl/save-shape
-(p/extrude
+(sl/save-shape
+ (p/extrude
            (cs/make-star 1 1.1 36)
            (t/combine
              (t/rotate :z (t/degrees->radians 3))
@@ -326,7 +350,7 @@
 (wireframes.renderer.vector/->svg
   (partial wireframes.renderer.vector/draw-solid  {
   :style :translucent
-  :fill-color (Color. 0xeaf5fc)
+  :fill-color 0xeaf5fc
   :shape (cs/make-wineglass 60)
   :focal-length 20
   :transform (t/combine

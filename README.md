@@ -4,24 +4,24 @@ A lightweight 3D rendering engine in Clojure & ClojureScript.
 
 ![Aventador](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/aventador.png)
 
-Adapted and extended from a javascript demo (originally by Kragen Javier Sitaker, see references below) 
+Adapted and extended from a javascript demo (originally by Kragen Javier Sitaker, see references below)
 into a Clojure/ClojureScript library (that renders to SVG, an HTML5 Canvas or a Graphics2D object -
 depending on the runtime environment, obviously).
 
 This started out as a experiment to plot Lorenz attractors in 3D space, but it turns out to be a really
-*simple* way to programmatically generate three dimensional geometric shapes - basically a programmable 
-CAD system - I'm pretty sure that AutoCAD could already do this (and much quicker too), but where I 
+*simple* way to programmatically generate three dimensional geometric shapes - basically a programmable
+CAD system - I'm pretty sure that AutoCAD could already do this (and much quicker too), but where I
 would really like to go with this is:
 
 * build up a robust and idiomatic Clojure API for generating shapes
-* implement a wide variety of output renderers - potentially even a GLSL cross-compiler and 
+* implement a wide variety of output renderers - potentially even a GLSL cross-compiler and
   certainly a gcode output formatter suitable for 3D printers
-* maintain 100% compatibility with ClojureScript 
+* maintain 100% compatibility with ClojureScript
 
-As this is a *software* renderer, please don't expect OpenGL levels of performance (or until WebGL 
+As this is a *software* renderer, please don't expect OpenGL levels of performance (or until WebGL
 and OpenGL renderers have been written).
 
-A variety of (in-progress) Clojure-generated wireframe and solid shapes can be found 
+A variety of (in-progress) Clojure-generated wireframe and solid shapes can be found
 in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md), and a ClojureScript demo of an
 [animated torus tumbling in 3D space](http://programming-enchiladas.destructuring-bind.org/rm-hull/7098992).
 
@@ -67,8 +67,8 @@ For maven-based projects, add the following to your `pom.xml`:
 There are some drawing primitives in the ```wireframes.shapes``` namespace to create
 objects such as lines, bezier curves, polygons, circles, cuboids, cylinders and torus shapes.
 
-The basic mechanism for *building* shapes is **extrusion**. For example, to create a cube, 
-start with a square polygon in the X-Y plane, and extrude that shape into a line along the 
+The basic mechanism for *building* shapes is **extrusion**. For example, to create a cube,
+start with a square polygon in the X-Y plane, and extrude that shape into a line along the
 Z-axis, as per the following code:
 
 ```clojure
@@ -98,12 +98,13 @@ out to a PNG file:
 (use 'wireframes.shapes.curved-solids)
 (use 'wireframes.transform)
 (use 'wireframes.renderer.bitmap)
+(use 'wireframes.renderer.color)
 
 (write-png
   (->img
     (draw-solid
       {:focal-length 3
-       :fill-color Color/WHITE
+       :color-fn (wireframes :transparent)
        :style :transparent
        :transform (combine
                     (rotate :z (degrees->radians 65))
@@ -125,40 +126,50 @@ MATLAB-style function plots can be generated thus:
 (use 'wireframes.shapes.primitives)
 (use 'wireframes.transform)
 (use 'wireframes.renderer.bitmap)
+(use 'wireframes.renderer.lighting)
+(use 'wireframes.renderer.color)
 
-(defn sqr [x] 
+(defn sqr [x]
   (* x x))
 
-(defn sinc 
+(defn sinc
   "Unnormalized/cardinal sine function"
   [x] (if (zero? x)
         1.0
         (/ (Math/sin x) x)))
 
-(defn hat [x y]
+(defn mexican-hat [x y]
   (* 15 (sinc (Math/sqrt (+ (sqr x) (sqr y ))))))
 
 (write-png
   (->img
     (draw-solid
       {:focal-length 30
-       :style :opaque
+       :color-fn (comp
+                   black-edge                         ; [1]
+                   (positional-lighting-decorator     ; [2]
+                     default-position
+                     (spectral-z -6.5 15)))           ; [3]
+       :style :shaded
        :transform (combine
                     (rotate :z (degrees->radians 15))
                     (rotate :x (degrees->radians 135))
                     (scale 0.05)
                     (translate 0 0 10))
-       :shape (make-surface
+       :shape (make-surface                           ; [4]
                 (range -22 22 0.25)
                 (range -22 22 0.25)
-                hat)})
+                mexican-hat)})                        ; [5]
     [600 600])
   "sinc3D.png")
 ```
 
 Results in:
 
-![Hat](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/sinc3D.png)
+![Hat](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/sinc3D.png)
+
+#### Program Notes
+TODO
 
 ### Loading common 3D shape files
 
@@ -172,7 +183,7 @@ code sample:
 
 (write-png
   (->img
-    (draw-solid 
+    (draw-solid
       {:focal-length 10
        :fill-color Color/WHITE
        :style :translucent
@@ -246,7 +257,7 @@ can then be viewed using the GitHub 3D viewer.
 * Improve documentation
 * Examples
 * ~~MATLAB style surface functions~~
-* Integrate [Inkspot](https://github.com/rm-hull/inkspot) & custom vertex/fragment shader
+* ~~Integrate [Inkspot](https://github.com/rm-hull/inkspot) & custom vertex/fragment shader~~
 * Constructive Solid Geometry (CSG) boolean operators
 
 ## Known Bugs
