@@ -104,7 +104,7 @@ out to a PNG file:
   (->img
     (draw-solid
       {:focal-length 3
-       :color-fn (wireframes :transparent)
+       :color-fn (wireframe :white :transparent)
        :style :transparent
        :transform (combine
                     (rotate :z (degrees->radians 65))
