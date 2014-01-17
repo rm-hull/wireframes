@@ -36,10 +36,10 @@
                          :let [b (inc a)
                                d (+ b num-points)
                                c (dec d)]]
-                     [a b d c])]
+                     {:vertices [a b d c]})]
     (merge-with fv/catvec
       extruded-shape
-      {:polygons (mapv #(hash-map :vertices %) polygons)})))
+      {:polygons (fv/vec polygons)})))
 
 (defn extrude
   "Given a shape, make a more complicated shape by copying it through the
