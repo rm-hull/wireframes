@@ -230,6 +230,44 @@
                (t/scale 0.05)
                (t/translate 0 0 10))})
 
+
+(spit "wineglass.svg"
+(wireframes.renderer.svg/->svg
+  (partial wireframes.renderer.svg/draw-solid  {
+  :style :translucent
+  :fill-color 0xeaf5fc
+  :color-fn (c/wireframe 0xeaf5fc :translucent)
+  :shape (cs/make-wineglass 60)
+  :focal-length 20
+  :transform (t/combine
+               (t/rotate :z (t/degrees->radians 15))
+               (t/rotate :x (t/degrees->radians 20))
+               (t/scale 1.75)
+               (t/translate 0 0 10))})
+ [800 600]))
+
+(spit "sinc3D.svg"
+  (wireframes.renderer.svg/->svg
+    (partial wireframes.renderer.svg/draw-solid  {
+    :style :shaded
+    :color-fn (comp
+                ;(c/tee println)
+                c/dup
+                (l/positional-lighting-decorator
+                  l/default-position
+                  (c/spectral-z -6.5 15)))
+    :shape (p/make-surface
+             (range -22 22 0.4)
+             (range -22 22 0.4)
+             hat)
+    :focal-length 30
+    :transform (t/combine
+                 (t/rotate :z (t/degrees->radians 15))
+                 (t/rotate :x (t/degrees->radians 135))
+                 (t/scale 0.05)
+                 (t/translate 0 0 10))})
+   [800 600]))
+
 (comment
 
 (harness {
@@ -345,19 +383,7 @@
            50)
   "Weird swirly thing, created with https://github/rm-hull/wireframes [October 16 2013]"
   "doc/gallery/weird-swirly-thing.stl")
-
-(spit "wineglass.svg"
-(wireframes.renderer.vector/->svg
-  (partial wireframes.renderer.vector/draw-solid  {
-  :style :translucent
-  :fill-color 0xeaf5fc
-  :shape (cs/make-wineglass 60)
-  :focal-length 20
-  :transform (t/combine
-               (t/rotate :z (t/degrees->radians 15))
-               (t/rotate :x (t/degrees->radians 20))
-               (t/scale 1.75)
-               (t/translate 0 0 10))})
- [800 600]))
-
 )
+
+
+

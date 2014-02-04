@@ -1,58 +1,48 @@
 ;; HTML5 canvas renderer
 
 (ns wireframes.renderer.canvas
-  (:require [wireframes.transform :as t])
-  (:use [wireframes.renderer :only [get-3d-points get-2d-points priority-fill shader compute-scale order-polygons]]
-        [wireframes.renderer.color :only [adjust-color create-color]]
-        [monet.canvas :only [save restore stroke-width stroke-cap stroke-style fill fill-style
-                             begin-path line-to move-to stroke close-path scale translate]]))
+  (:require
+    [wireframes.transform :as t]
+    [wireframes.renderer :refer [get-3d-points get-2d-points priority-fill shader compute-scale order-polygons]]
+    [inkspot.color :refer [rgba]]
+    [monet.canvas :refer [save restore stroke-width stroke-cap stroke-style fill fill-style
+                          begin-path line-to move-to stroke close-path scale translate]]))
 
 (defn walk-polygon [ctx points-2d polygon]
-  (let [[ax ay] (get points-2d (first polygon))]
+  (let [vertices (:vertices polygon)
+        [ax ay] (get points-2d (first vertices))]
     (->
       ctx
       (begin-path)
       (move-to ax ay))
-    (loop [ps (next polygon)]
-      (if (nil? ps)
+    (loop [vs (next vertices)]
+      (if (nil? vs)
         (-> ctx close-path)
-        (let [[bx by] (get points-2d (first ps))]
+        (let [[bx by] (get points-2d (first vs))]
           (line-to ctx bx by)
-          (recur (next ps)))))))
+          (recur (next vs)))))))
 
-(defn wireframe-draw-fn [ctx points-2d fill-color edge-color]
-  (->
-    ctx
-    (stroke-style edge-color)
-    (fill-style fill-color))
+(defn create-polygon-renderer [ctx points-2d fragment-shader-fn]
   (fn [polygon]
-    (->
-      ctx
-      (walk-polygon points-2d polygon)
-      (fill)
-      (stroke))))
-
-(defn shader-draw-fn [ctx points-2d shader]
-  (fn [polygon]
-    (let [color (shader polygon)]
+    (let [[fill-color edge-color] (fragment-shader-fn polygon)]
       (->
         ctx
         (walk-polygon points-2d polygon)
-        (fill-style color)
-        (stroke-style color)
+        (fill-style fill-color)
+        (stroke-style edge-color)
         (fill)
         (stroke)))))
 
-(defn draw-solid [{:keys [focal-length transform shape fill-color lighting-position style]} ctx]
-  (let [fill-color (adjust-color style fill-color)
-        points-3d (get-3d-points transform shape)
+(defn draw-solid [{:keys [focal-length transform shape color-fn style]} ctx]
+  (let [points-3d (get-3d-points transform shape)
         points-2d (get-2d-points focal-length points-3d)
         key-fn    ((priority-fill memoize) points-3d)
-        draw-fn   (if (= style :shaded)
-                    (shader-draw-fn ctx points-2d (shader points-3d (create-color fill-color) lighting-position))
-                    (wireframe-draw-fn ctx points-2d fill-color "rgb(0,0,0)"))]
+        render-fn (create-polygon-renderer
+                    ctx
+                    points-2d
+                    (shader (:points shape) points-3d color-fn))]
   (doseq [polygon (order-polygons style key-fn shape)]
-    (draw-fn polygon)))
+    (render-fn polygon)))
   ctx)
 
 (defn ->canvas [ctx]

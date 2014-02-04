@@ -26,9 +26,10 @@
 
   Alternatively it can be specified as a float in the range 0.0 to 1.0"
   [color opacity]
-  (let [alpha (if (and (float? opacity) (>= opacity 0.0) (<= 1.0))
-                opacity
-                (get {:transparent 0.0 :translucent 0.6 :opaque 1.0} opacity 1.0))]
+  (let [alpha (cond
+                (keyword? opacity) (get {:transparent 0.0 :translucent 0.6 :opaque 1.0} opacity 1.0)
+                (and (>= opacity 0.0) (<= 1.0)) opacity
+                :else 1.0)]
     (coerce
      [(red color)
       (green color)

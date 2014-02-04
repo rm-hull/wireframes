@@ -1,20 +1,22 @@
 ;; SVG renderer
 
 ^{:cljs
-  (ns wireframes.renderer.vector
-    (:require [wireframes.transform :as t])
-    (:use [clojure.string :only [join]]
-          [dommy.template :only [->node-like]]
-          [wireframes.renderer :only [compute-scale priority-fill get-3d-points get-2d-points shader order-polygons]]
-          [wireframes.renderer.color :only [adjust-color create-color rgba]])
+  (ns wireframes.renderer.svg
+    (:require
+      [wireframes.transform :as t]
+      [clojure.string :as str]
+      [dommy.template :refer [->node-like]]
+      [wireframes.renderer :refer [compute-scale priority-fill get-3d-points get-2d-points shader order-polygons]]
+      [inkspot.color :refer [rgba]])
     (:use-macros [dommy.macros :only [node]]))
 }
-(ns wireframes.renderer.vector
-  (:require [wireframes.transform :as t])
-  (:use [clojure.string :only [join]]
-        [hiccup.core :only [html]]
-        [wireframes.renderer :only [compute-scale priority-fill get-3d-points get-2d-points shader order-polygons]]
-        [wireframes.renderer.color :only [adjust-color create-color rgba]]))
+(ns wireframes.renderer.svg
+  (:require
+    [wireframes.transform :as t]
+    [clojure.string :as str]
+    [hiccup.core :refer [html]]
+    [wireframes.renderer :refer [compute-scale priority-fill get-3d-points get-2d-points shader order-polygons]]
+    [inkspot.color :refer [rgba]]))
 
 (defn- transform [w h]
   (let [scale (compute-scale w h)]
@@ -23,13 +25,16 @@
       "scale(" scale "," scale ")")))
 
 (defn walk-polygon [points-2d polygon]
-  (letfn [(directive [cmd p]
-            (let [[x y] (get points-2d p)]
-              (str cmd x "," y " ")))]
+  (let [vertices (:vertices polygon)
+        directive (fn [cmd p]
+                    (let [[x y] (get points-2d p)]
+                      (str cmd x "," y " ")))]
       (str
-        (directive "M" (first polygon))
-        (apply str (map (partial directive "L") (rest polygon)))
+        (directive "M" (first vertices))
+        (apply str (map (partial directive "L") (rest vertices)))
         "Z")))
+; TODO more efficient to str/join?
+
 
 (defn- style [fill-color edge-color sw]
   (str
@@ -37,28 +42,24 @@
     "stroke:" (rgba edge-color) ";"
     "fill:" (rgba fill-color) ";"))
 
-(defn wireframe-draw-fn [points-2d fill-color edge-color sw]
-  (let [style (style fill-color edge-color sw)]
+(defn create-polygon-renderer [stroke-width points-2d fragment-shader-fn]
   (fn [polygon]
-    [:path
-     {:style style :d (walk-polygon points-2d polygon)}])))
+    (let [[fill-color edge-color] (fragment-shader-fn polygon)]
+      [:path
+        {:style (style fill-color edge-color stroke-width)
+         :d (walk-polygon points-2d polygon)}])))
 
-(defn shader-draw-fn [points-2d shader sw]
-  (fn [polygon]
-    (let [color (shader polygon)]
-      [:path {:style (style color color sw) :d (walk-polygon points-2d polygon)}])))
-
-(defn draw-solid [{:keys [focal-length transform shape fill-color lighting-position style]}]
+(defn draw-solid [{:keys [focal-length transform shape color-fn style]}]
   (let [stroke-width (/ 0.5 800) ; TODO parameterize this
-        fill-color (adjust-color style fill-color)
         points-3d (get-3d-points transform shape)
         points-2d (get-2d-points focal-length points-3d)
         key-fn    ((priority-fill memoize) points-3d)
-        draw-fn   (if (= style :shaded)
-                    (shader-draw-fn points-2d (shader points-3d (create-color fill-color) lighting-position) stroke-width)
-                    (wireframe-draw-fn points-2d fill-color "rgb(0,0,0)" stroke-width))]
+        render-fn (create-polygon-renderer
+                    stroke-width
+                    points-2d
+                    (shader (:points shape) points-3d color-fn))]
   (for [polygon (order-polygons style key-fn shape)]
-    (draw-fn polygon))))
+    (render-fn polygon))))
 
 (defn ->svg [draw-fn [w h]]
   (^{:cljs node} html

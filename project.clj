@@ -16,10 +16,11 @@
                  [jayq "2.5.0"]
                  [rm-hull/monet "0.1.10"]
                  [rm-hull/inkspot "0.0.1-SNAPSHOT"]]
-  :plugins [[lein-cljsbuild "1.0.1"]
+  :plugins [[lein-cljsbuild "1.0.2"]
             [com.birdseye-sw/lein-dalap "0.1.0"]]
-  :hooks [leiningen.dalap]
-  :source-paths ["src" "target/generated-src"]
+  :hooks [leiningen.dalap
+          leiningen.cljsbuild]
+  :source-paths ["src"]
   :cljsbuild {
     :repl-listen-port 9000
     :repl-launch-commands
