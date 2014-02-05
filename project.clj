@@ -26,7 +26,7 @@
     :test-commands {"phantomjs"  ["phantomjs" "target/unit-test.js"]}
     :builds {
       :main {
-        :source-paths ["target/generated-src"]
+        :source-paths ["src-cljs" "target/generated-src"]
         :jar true
         :compiler {
           :output-to "target/wireframes.js"
@@ -36,7 +36,7 @@
           :pretty-print true
           :externs ["resources/private/externs/jquery.js"] }}
       :test {
-        :source-paths ["target/generated-src" "test"]
+        :source-paths ["src-cljs" "target/generated-src" "test"]
         :incremental? true
         :compiler {
           :output-to "target/unit-test.js"
@@ -45,7 +45,7 @@
           :optimizations :whitespace
           :pretty-print true }}
       :demo {
-        :source-paths ["target/generated-src" "doc/gallery/cljs-demo"]
+        :source-paths ["src-cljs" "target/generated-src" "doc/gallery/cljs-demo"]
         :incremental? true
         :compiler {
           :output-to "target/demo.js"
