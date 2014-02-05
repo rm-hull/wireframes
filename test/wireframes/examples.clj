@@ -10,6 +10,7 @@
             [wireframes.shapes.stl-loader :as sl]
             [wireframes.renderer.bitmap :as b]
             [wireframes.renderer.color :as c]
+            [wireframes.renderer.svg :as svg]
             [wireframes.renderer.lighting :as l]
             [inkspot.color :as color]
             [inkspot.color-chart :as cc])
@@ -208,51 +209,13 @@
 (defn hat [x y]
   (* 15 (sinc (Math/sqrt (+ (sqr x) (sqr y ))))))
 
-
-(harness {
-  :filename "sinc3D.png"
-  :style :shaded
-  :color-fn (comp
-              ;(c/tee println)
-              c/black-edge
-              (l/positional-lighting-decorator
-                l/default-position
-                (c/spectral-z -6.5 15)))
-  :shape (p/make-surface
-           (range -22 22 0.4)
-           (range -22 22 0.4)
-           hat)
-  :focal-length 30
-  :size [600 600]
-  :transform (t/combine
-               (t/rotate :z (t/degrees->radians 15))
-               (t/rotate :x (t/degrees->radians 135))
-               (t/scale 0.05)
-               (t/translate 0 0 10))})
-
-
-(spit "wineglass.svg"
-(wireframes.renderer.svg/->svg
-  (partial wireframes.renderer.svg/draw-solid  {
-  :style :translucent
-  :fill-color 0xeaf5fc
-  :color-fn (c/wireframe 0xeaf5fc :translucent)
-  :shape (cs/make-wineglass 60)
-  :focal-length 20
-  :transform (t/combine
-               (t/rotate :z (t/degrees->radians 15))
-               (t/rotate :x (t/degrees->radians 20))
-               (t/scale 1.75)
-               (t/translate 0 0 10))})
- [800 600]))
-
-(spit "sinc3D.svg"
-  (wireframes.renderer.svg/->svg
-    (partial wireframes.renderer.svg/draw-solid  {
+(deftest ^:examples surface-test
+  (harness {
+    :filename "sinc3D.png"
     :style :shaded
     :color-fn (comp
                 ;(c/tee println)
-                c/dup
+                c/black-edge
                 (l/positional-lighting-decorator
                   l/default-position
                   (c/spectral-z -6.5 15)))
@@ -261,12 +224,50 @@
              (range -22 22 0.4)
              hat)
     :focal-length 30
+    :size [600 600]
     :transform (t/combine
                  (t/rotate :z (t/degrees->radians 15))
                  (t/rotate :x (t/degrees->radians 135))
                  (t/scale 0.05)
-                 (t/translate 0 0 10))})
-   [800 600]))
+                 (t/translate 0 0 10))}))
+
+(deftest ^:examples svg
+  (spit "wineglass.svg"
+    (svg/->svg
+      (partial svg/draw-solid  {
+      :style :translucent
+      :fill-color 0xeaf5fc
+      :color-fn (c/wireframe 0xeaf5fc :translucent)
+      :shape (cs/make-wineglass 60)
+      :focal-length 20
+      :transform (t/combine
+                   (t/rotate :z (t/degrees->radians 15))
+                   (t/rotate :x (t/degrees->radians 20))
+                   (t/scale 1.75)
+                   (t/translate 0 0 10))})
+     [800 600]))
+
+  (spit "sinc3D.svg"
+    (svg/->svg
+      (partial svg/draw-solid  {
+      :style :shaded
+      :color-fn (comp
+                  ;(c/tee println)
+                  c/dup
+                  (l/positional-lighting-decorator
+                    l/default-position
+                    (c/spectral-z -6.5 15)))
+      :shape (p/make-surface
+               (range -22 22 0.4)
+               (range -22 22 0.4)
+               hat)
+      :focal-length 30
+      :transform (t/combine
+                   (t/rotate :z (t/degrees->radians 15))
+                   (t/rotate :x (t/degrees->radians 135))
+                   (t/scale 0.05)
+                   (t/translate 0 0 10))})
+     [800 600])))
 
 (comment
 

@@ -13,6 +13,5 @@
   ["src/wireframes/renderer/canvas.cljs" "target/generated-src/wireframes/renderer/canvas.cljs"] []
   ["src/wireframes/renderer/color.clj" "target/generated-src/wireframes/renderer/color.cljs"] []
   ["src/wireframes/renderer/lighting.clj" "target/generated-src/wireframes/renderer/lighting.cljs"] []
-  ["test/wireframes/demo.cljs" "target/generated-src/wireframes/demo.cljs"] []
 }
 
