@@ -31,10 +31,10 @@
                 (and (>= opacity 0.0) (<= 1.0)) opacity
                 :else 1.0)]
     (coerce
-     [(red color)
-      (green color)
-      (blue color)
-      alpha])))
+      [(red color)
+        (green color)
+        (blue color)
+        alpha])))
 
 (defn flat-color [color & [opacity]]
   "Creates a fragment shader function which colors polygons"

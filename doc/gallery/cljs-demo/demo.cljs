@@ -1,6 +1,7 @@
 (ns wireframes.demo
   (:require
-    [wireframes.renderer.color :refer [wireframe]]
+    [wireframes.renderer.color :refer [wireframe solid flat-color black-edge]]
+    [wireframes.renderer.lighting :refer [positional-lighting-decorator default-position]]
     [wireframes.renderer.canvas :refer [draw-solid ->canvas]]
     [wireframes.transform :refer [combine rotate translate degrees->radians]]
     [wireframes.shapes.curved-solids :refer [make-torus]]
@@ -22,8 +23,10 @@
   ((->canvas ctx)
     (partial draw-solid
       {:style :translucent
-       :focal-length 3
        :color-fn (wireframe 0xeaf5fc :translucent)
+       ;:style :shaded
+       ;:color-fn (solid :white)
+       :focal-length 3
        :shape icosahedron
        :transform (combine
                     (rotate :x (degrees->radians x))

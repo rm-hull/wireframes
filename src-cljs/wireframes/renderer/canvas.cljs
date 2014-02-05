@@ -28,8 +28,8 @@
       (->
         ctx
         (walk-polygon points-2d polygon)
-        (fill-style fill-color)
-        (stroke-style edge-color)
+        (fill-style (rgba fill-color))
+        (stroke-style (rgba edge-color))
         (fill)
         (stroke)))))
 
