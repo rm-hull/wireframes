@@ -4,7 +4,6 @@
   (:require
     [wireframes.transform :as t]
     [wireframes.renderer :refer [get-3d-points get-2d-points priority-fill shader compute-scale order-polygons]]
-    [inkspot.color :refer [rgba]]
     [monet.canvas :refer [save restore stroke-width stroke-cap stroke-style fill fill-style
                           begin-path line-to move-to stroke close-path scale translate]]))
 
@@ -28,8 +27,8 @@
       (->
         ctx
         (walk-polygon points-2d polygon)
-        (fill-style (rgba fill-color))
-        (stroke-style (rgba edge-color))
+        (fill-style fill-color)
+        (stroke-style edge-color)
         (fill)
         (stroke)))))
 

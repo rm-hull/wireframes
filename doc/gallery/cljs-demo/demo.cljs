@@ -22,10 +22,10 @@
     (fill-rect { :x 0 :y 0 :w 800 :h 600}))
   ((->canvas ctx)
     (partial draw-solid
-      {:style :translucent
-       :color-fn (wireframe 0xeaf5fc :translucent)
-       ;:style :shaded
-       ;:color-fn (solid :white)
+      {;:style :translucent
+       ;:color-fn (wireframe 0xeaf5fc :translucent)
+       :style :shaded
+       :color-fn (solid [0x0E 0xAF 0x5F])
        :focal-length 3
        :shape icosahedron
        :transform (combine

@@ -30,11 +30,7 @@
                 (keyword? opacity) (get {:transparent 0.0 :translucent 0.6 :opaque 1.0} opacity 1.0)
                 (and (>= opacity 0.0) (<= 1.0)) opacity
                 :else 1.0)]
-    (coerce
-      [(red color)
-        (green color)
-        (blue color)
-        alpha])))
+    [(red color) (green color) (blue color) alpha]))
 
 (defn flat-color [color & [opacity]]
   "Creates a fragment shader function which colors polygons"
@@ -71,8 +67,12 @@
    with a shaded color and no perceptible outline (i.e. the same color as
    the fill), with a light source at the given position."
   [& [color lighting-position]]
-  (comp
-    dup
-    (positional-lighting-decorator
-      (or lighting-position default-position)
-      (flat-color (or color :white)))))
+  (let [color  (coerce (or color :white))
+        rgba [(red color) (green color) (blue color) (alpha color)]]
+        ; more efficient to store this as a vector rather than coerce
+        ; to native format
+    (comp
+      dup
+      (positional-lighting-decorator
+        (or lighting-position default-position)
+        (flat-color rgba)))))
