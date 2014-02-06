@@ -30,11 +30,17 @@
                 (keyword? opacity) (get {:transparent 0.0 :translucent 0.6 :opaque 1.0} opacity 1.0)
                 (and (>= opacity 0.0) (<= 1.0)) opacity
                 :else 1.0)]
-    [(red color) (green color) (blue color) alpha]))
+    (coerce
+      [(red color)
+       (green color)
+       (blue color)
+       alpha])))
 
 (defn flat-color [color & [opacity]]
   "Creates a fragment shader function which colors polygons"
-  (let [adjusted-color (adjust-color color opacity)]
+  (let [adjusted-color (if opacity
+                         (adjust-color color opacity)
+                         color)]
      (fn [points-3d transformed-points polygon]
         adjusted-color)))
 
@@ -70,7 +76,9 @@
   (let [color  (coerce (or color :white))
         rgba [(red color) (green color) (blue color) (alpha color)]]
         ; more efficient to store this as a vector rather than coerce
-        ; to native format
+        ; to native format, as we know it will get later coerced into
+        ; a color by the positional lighting decorator. Doing it
+        ; prematurely will cause unnecessary string->color parsing
     (comp
       dup
       (positional-lighting-decorator
