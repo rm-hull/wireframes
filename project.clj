@@ -18,7 +18,7 @@
                  [rm-hull/inkspot "0.0.1-SNAPSHOT"]
                  [rm-hull/cljs-test "0.0.7"]]
   :plugins [[lein-cljsbuild "1.0.2"]
-            [com.birdseye-sw/lein-dalap "0.1.1"]]
+            [com.birdseye-sw/lein-dalap "0.1.0"]]
   :hooks [leiningen.dalap
           leiningen.cljsbuild]
   :source-paths ["src"]
