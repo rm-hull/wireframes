@@ -2,7 +2,7 @@
   (:require [wireframes.shapes.primitives :as p]
             [wireframes.transform :as t]))
 
-(def epsilon 0.0000001)
+(def epsilon 0.00001)
 
 (defn- =approx [^double x ^double y]
   (< (Math/abs (- x y)) epsilon))
@@ -55,10 +55,35 @@
                      {:vertices [a b c]}))]
   {:points points :polygons polygons }))
 
-(def dodecahedron nil)
+(def dodecahedron
+  "A 12-sided polyhedron with regular pentagonal faces"
+  (let [points (vec
+                 (apply concat
+                   (for [x [-1 1]
+                         y [-1 1]
+                         z [-1 1]]
+                     (t/point x y z))
+
+                   (for [a [(/ -1 rho) (/ 1 rho)]
+                         b [(- rho) rho]]
+                     (map #(apply t/point %) (take 3 (partition 3 1 (cycle [0 a b])))))))
+        polygons (vec
+                   (for [a (range (count points))
+                         b (range a)
+                         c (range b)
+                         d (range (count points))
+                         e (range d)
+                         :when (and
+                                 (=approx (t/distance (points a) (points b)) (dec sqrt-5))
+                                 (=approx (t/distance (points b) (points c)) (dec sqrt-5))
+                                 (=approx (t/distance (points c) (points d)) (dec sqrt-5))
+                                 (=approx (t/distance (points d) (points e)) (dec sqrt-5))
+                                 (=approx (t/distance (points e) (points a)) (dec sqrt-5)))]
+                     {:vertices [a b c d e]}))]
+  {:points points :polygons polygons}))
 
 (def icosahedron
-  "A 20-sided polyhedron"
+  "A 20-sided polyhedron with triangular faces"
   (let [points (vec
                  (apply concat
                    (for [x [-1 1]

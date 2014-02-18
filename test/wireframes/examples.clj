@@ -119,6 +119,17 @@
                      (t/translate 0 0 16))})
 
       (harness {
+        :filename "dodecahedron.png"
+        :style style
+        :shape ps/dodecahedron
+        :focal-length 5
+        :size [300 300]
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 55))
+                     (t/rotate :y (t/degrees->radians -30))
+                     (t/translate 0 0 16))})
+
+      (harness {
         :filename "wineglass.png"
         :fill-color 0xEAF5FC
         :style style

@@ -5,7 +5,7 @@
     [wireframes.renderer.canvas :refer [draw-solid ->canvas]]
     [wireframes.transform :refer [combine rotate translate degrees->radians]]
     [wireframes.shapes.curved-solids :refer [make-torus]]
-    [wireframes.shapes.platonic-solids :refer [icosahedron]]
+    [wireframes.shapes.platonic-solids :refer [dodecahedron icosahedron]]
     [monet.canvas :refer [get-context fill-rect fill-style]]
     [monet.core :refer [animation-frame]]
     [jayq.core :refer [$]]))
@@ -22,12 +22,12 @@
     (fill-rect { :x 0 :y 0 :w 800 :h 600}))
   ((->canvas ctx)
     (partial draw-solid
-      {;:style :translucent
-       ;:color-fn (wireframe 0xeaf5fc :translucent)
-       :style :shaded
-       :color-fn (solid [0x0E 0xAF 0x5F])
+      {:style :translucent
+       :color-fn (wireframe 0xeaf5fc :translucent)
+       ;:style :shaded
+       ;:color-fn (solid [0x0E 0xAF 0x5F])
        :focal-length 3
-       :shape icosahedron
+       :shape dodecahedron
        :transform (combine
                     (rotate :x (degrees->radians x))
                     (rotate :y (degrees->radians y))

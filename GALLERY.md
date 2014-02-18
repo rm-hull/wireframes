@@ -19,6 +19,12 @@ files, and then drawn with the renderers within this project. See the [test/wire
 ![Icosahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/icosahedron.png)
 ![Icosahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/icosahedron.png)
 
+## Dodecahedron
+
+![Dodecahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/dodecahedron.png)
+![Dodecahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/dodecahedron.png)
+
+
 ## Sphere
 
 ![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/sphere.png)
@@ -42,7 +48,7 @@ files, and then drawn with the renderers within this project. See the [test/wire
 
 ## Utah Teapot
 
-These images are generated from the original patch data files crafted by 
+These images are generated from the original patch data files crafted by
 [Martin Newell](https://en.wikipedia.org/wiki/Martin_Newell_%28computer_scientist%29) in 1975.
 
 ![Teapot](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/teapot.png)
