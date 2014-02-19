@@ -289,6 +289,8 @@ can then be viewed using the GitHub 3D viewer.
 * http://stackoverflow.com/questions/3749678/expand-fill-of-convex-polygon
 * http://stackoverflow.com/questions/1109536/an-algorithm-for-inflating-deflating-offsetting-buffering-polygons
 * https://github.com/tsaastam/cljs-webgl-example
+* http://www.cs.arizona.edu/classes/cs437/fall11/ch3d.prn.pdf
+* https://github.com/rm-hull/project-euler/blob/master/src/util/geometry.clj#L55
 
 ## License
 
