@@ -108,11 +108,22 @@
                  (dec (count x-range))
                  (dec (count y-range))))})
 
+(defn active-points
+  "Filters points that only participate in polygon faces"
+  [shape]
+  (->>
+    shape
+    :polygons
+    (apply merge-with concat)
+    :vertices
+    set
+    (mapv #(get (:points shape) %))))
+
 (defn compute-bounds
   "Calculates the minimum and maximum bounds for the shape"
   [shape]
   (->>
-    (:points shape)
+    (active-points shape) ;(:points shape)
     (apply map (juxt min max))
     (apply map (comp t/point vector))))
 
