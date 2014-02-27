@@ -26,12 +26,14 @@
 
 (deftest compute-bounds-test
   (is (=points [[1 3 5 1] [1 3 5 1]]
-               {:points (compute-bounds (make-point 1 3 5))})))
+               {:points (compute-bounds (make-polygon
+                                         (make-point 1 3 5)))})))
 
 (deftest center-at-origin-test
   (is (=points [[0 0 0 1]]
                (center-at-origin
-                 (make-point 1 3 5))))
+                 (make-polygon
+                   (make-point 1 3 5)))))
   (is (=points [[0 -1 -1 1] [0 -1 1 1] [0 1 1 1] [0 1 -1 1]]
                (center-at-origin
                  (make-polygon
