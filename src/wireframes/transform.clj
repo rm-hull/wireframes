@@ -99,21 +99,6 @@
       (let [p (/ focal-length (- focal-length z))]
         [(* p x) (* p y)]))))
 
-;(defn normal
-;  "Calculate the normal of a triangle"
-;  [[ax ay az] [bx by bz] [cx cy cz]]
-;  (let [v10 (- ax bx)
-;        v11 (- ay by)
-;        v12 (- az bz)
-;        v20 (- bx cx)
-;        v21 (- by cy)
-;        v22 (- bz cz)
-;        n0  (- (* v11 v22) (* v12 v21))
-;        n1  (- (* v12 v20) (* v10 v22))
-;        n2  (- (* v10 v21) (* v11 v20))
-;        mag (Math/sqrt (+ (* n0 n0) (* n1 n1) (* n2 n2)))]
-;    [ (/ n0 mag) (/ n1 mag) (/ n2 mag)]))
-
 (defn normal
   "Calculate the normal of a triangle"
   [[ax ay az] [bx by bz] [cx cy cz]]
@@ -127,6 +112,20 @@
      (- (* uz vx) (* ux vz))
      (- (* ux vy) (* uy vx))]))
 
+(defn centroid
+  "Calculate the centroid of a triangle"
+  [[ax ay az] [bx by bz] [cx cy cz]]
+  [(double (/ (+ ax bx cx) 3))
+   (double (/ (+ ay by cy) 3))
+   (double (/ (+ az bz cz) 3))])
+
+
+(defn mid-point
+  "Calculate the midpoint of a line"
+  [[ax ay az] [bx by bz]]
+  [(double (/ (+ ax bx) 2))
+   (double (/ (+ ay by) 2))
+   (double (/ (+ az bz) 2))])
 
 (defn sqr [x]
   (* x x))
@@ -167,3 +166,23 @@
         (recur
           (conj! acc p)
           (c/simple-concat ps (next polygons)))))))
+
+(defn multiply [[x y z] n]
+  (point (* x n) (* y n) (* z n)))
+
+(defn divide [[x y z] n]
+  (point (/ x n) (/ y n) (/ z n)))
+
+(defn mag-sq [xyz]
+  (dot-product xyz xyz))
+
+(defn magnitude [[x y z]]
+  (Math/sqrt (mag-sq [x y z])))
+
+(defn normalize
+  ([xyz] (normalize xyz 1.0))
+  ([xyz scale]
+    (let [m (double (/ (magnitude xyz) scale))]
+      (if (and (not= m 0) (not= m 1))
+        (divide xyz m)
+        xyz))))

@@ -4,7 +4,7 @@
     [wireframes.renderer.lighting :refer [positional-lighting-decorator default-position]]
     [wireframes.renderer.canvas :refer [draw-solid ->canvas]]
     [wireframes.transform :refer [combine rotate translate degrees->radians]]
-    [wireframes.shapes.curved-solids :refer [make-torus]]
+    [wireframes.shapes.curved-solids :refer [make-torus make-isosphere]]
     [wireframes.shapes.platonic-solids :refer [dodecahedron icosahedron]]
     [monet.canvas :refer [get-context fill-rect fill-style]]
     [monet.core :refer [animation-frame]]
@@ -15,6 +15,8 @@
 (enable-console-print!)
 
 (def torus (make-torus 1 3 30 30))
+
+(def isosphere (make-isosphere 3 2))
 
 (defn render [x y z]
   (-> ctx
@@ -27,7 +29,7 @@
        ;:style :shaded
        ;:color-fn (solid [0x0E 0xAF 0x5F])
        :focal-length 3
-       :shape dodecahedron
+       :shape isosphere
        :transform (combine
                     (rotate :x (degrees->radians x))
                     (rotate :y (degrees->radians y))

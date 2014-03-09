@@ -1,7 +1,9 @@
 (ns wireframes.shapes.curved-solids
-  (:require [wireframes.shapes.primitives :as p]
-            [wireframes.bezier :as b]
-            [wireframes.transform :as t]))
+  (:require
+    [wireframes.shapes.primitives :as p]
+    [wireframes.shapes.platonic-solids :as ps]
+    [wireframes.bezier :as b]
+    [wireframes.transform :as t]))
 
 (def intervals->radians
   (let [atan8 (* (Math/atan 1.0) 8.0)]
@@ -63,6 +65,47 @@
                (make-circle (* r (Math/sin %)) n))
            (iterate (partial + angle) 0))
       n)))
+
+(defn get-centroid [shape vertices scale]
+  (t/normalize
+    (apply t/centroid (map (partial get (:points shape)) vertices))
+    scale))
+
+(defn get-midpoint [shape vertices]
+  (apply t/mid-point (map (partial get (:points shape)) vertices)))
+
+(defn split-triangle [shape scale face-index]
+  (let [[a b c] (get-in shape [:polygons face-index :vertices])
+        ab (+ (* 3 face-index) (count (:points shape)))
+        bc (inc ab)
+        ca (inc bc)]
+    {:polygons [
+      {:vertices [a ab ca]}
+      {:vertices [b bc ab]}
+      {:vertices [c ca bc]}
+      {:vertices [ab bc ca]}]
+     :points [
+      (get-midpoint shape [a b])
+      (get-midpoint shape [b c])
+      (get-midpoint shape [c a])]}))
+
+(defn split-faces [shape scale]
+  (apply merge-with (comp vec concat)
+    (select-keys shape [:points])
+    (for [i (range (count (:polygons shape)))]
+      (split-triangle shape scale i))))
+
+(defn make-isosphere
+  "Create an isosahedron iterated a number of times with radius r"
+  [r iterations]
+  (let [radius (t/magnitude (first (:points ps/icosahedron)))]
+    (loop [i iterations
+           s ps/icosahedron]
+      (if (zero? i)
+        (update-in s [:points] (partial mapv #(t/normalize % r)))
+        (recur
+          (dec i)
+          (split-faces s radius))))))
 
 (defn make-wineglass [n]
   (p/center-at-origin
