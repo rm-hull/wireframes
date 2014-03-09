@@ -57,30 +57,28 @@
 
 (def dodecahedron
   "A 12-sided polyhedron with regular pentagonal faces"
-  (let [points (vec
-                 (apply concat
-                   (for [x [-1 1]
-                         y [-1 1]
-                         z [-1 1]]
-                     (t/point x y z))
+  {:points (vec
+             (apply concat
+               (for [x [-1 1]
+                     y [-1 1]
+                     z [-1 1]]
+                 (t/point x y z))
 
-                   (for [a [(/ -1 rho) (/ 1 rho)]
-                         b [(- rho) rho]]
-                     (map #(apply t/point %) (take 3 (partition 3 1 (cycle [0 a b])))))))
-        polygons (vec
-                   (for [a (range (count points))
-                         b (range a)
-                         c (range b)
-                         d (range (count points))
-                         e (range d)
-                         :when (and
-                                 (=approx (t/distance (points a) (points b)) (dec sqrt-5))
-                                 (=approx (t/distance (points b) (points c)) (dec sqrt-5))
-                                 (=approx (t/distance (points c) (points d)) (dec sqrt-5))
-                                 (=approx (t/distance (points d) (points e)) (dec sqrt-5))
-                                 (=approx (t/distance (points e) (points a)) (dec sqrt-5)))]
-                     {:vertices [a b c d e]}))]
-  {:points points :polygons polygons}))
+               (for [a [(/ -1 rho) (/ 1 rho)]
+                     b [(- rho) rho]]
+                 (map #(apply t/point %) (take 3 (partition 3 1 (cycle [0 a b])))))))
+   :polygons [{:vertices [14 8 0 10 2]}
+              {:vertices [14 8 4 13 6]}
+              {:vertices [15 9 0 8 4]}
+              {:vertices [15 9 1 11 5]}
+              {:vertices [16 10 0 9 1]}
+              {:vertices [16 10 2 12 3]}
+              {:vertices [17 11 1 16 3]}
+              {:vertices [17 11 5 19 7]}
+              {:vertices [18 12 2 14 6]}
+              {:vertices [18 12 3 17 7]}
+              {:vertices [19 13 4 15 5]}
+              {:vertices [19 13 6 18 7]}]})
 
 (def icosahedron
   "A 20-sided polyhedron with triangular faces"
