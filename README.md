@@ -21,9 +21,12 @@ would really like to go with this is:
 As this is a *software* renderer, please don't expect OpenGL levels of performance (or until WebGL
 and OpenGL renderers have been written).
 
-A variety of (in-progress) Clojure-generated wireframe and solid shapes can be found
-in the [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md), and a ClojureScript demo of an
-[animated torus tumbling in 3D space](http://programming-enchiladas.destructuring-bind.org/rm-hull/7098992).
+A variety of (in-progress) generated shapes and demos:
+* A [gallery](https://github.com/rm-hull/wireframes/blob/master/GALLERY.md) of some shapes 
+  and imports from common 3D formats, 
+* An [animated torus tumbling in 3D space](http://programming-enchiladas.destructuring-bind.org/rm-hull/7098992), 
+  and other shapes,
+* A [taxonomy of 3D polyhedra](http://programming-enchiladas.destructuring-bind.org/rm-hull/9261323).
 
 ### Pre-requisites
 
