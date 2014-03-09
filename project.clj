@@ -4,23 +4,23 @@
   :license {:name "The MIT License (MIT)"
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/clojurescript "0.0-2156"]
+                 [org.clojure/clojurescript "0.0-2173"]
                  [org.clojure/core.rrb-vector "0.0.10"]
                  [gloss "0.2.2"]
                  [potemkin "0.3.4"]
                  [byte-streams "0.1.9"]
-                 [com.taoensso/timbre "2.7.1"]
+                 [com.taoensso/timbre "3.1.2"]
                  [cljs-webgl "0.1.4-SNAPSHOT"]
                  [rm-hull/dommy "0.1.3-SNAPSHOT"]
                  [hiccup "1.0.5"]
                  [jayq "2.5.0"]
                  [rm-hull/monet "0.1.10"]
                  [rm-hull/inkspot "0.0.1-SNAPSHOT"]
-                 [rm-hull/cljs-test "0.0.7"]]
+		 [rm-hull/cljs-test "0.0.7"]]
   :plugins [[lein-cljsbuild "1.0.2"]
-            [com.birdseye-sw/lein-dalap "0.1.0"]]
+	    [com.birdseye-sw/lein-dalap "0.1.0"]]
   :hooks [leiningen.dalap
-          leiningen.cljsbuild]
+	  leiningen.cljsbuild]
   :source-paths ["src"]
   :cljsbuild {
     :test-commands {"phantomjs"  ["phantomjs" "target/unit-test.js"]}
