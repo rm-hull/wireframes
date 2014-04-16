@@ -94,7 +94,7 @@
         i (range x-divisions)
         :let [a (+ i (* j (inc x-divisions)))
               b (inc a)
-              c (+ b y-divisions)
+              c (+ b x-divisions)
               d (inc c)]]
     {:vertices [a b d c]})) ; order of points is important
 
