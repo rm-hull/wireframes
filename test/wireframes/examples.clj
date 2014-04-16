@@ -67,8 +67,8 @@
         :focal-length 3
         :size [400 400]
         :transform (t/combine
-                     (t/rotate :z (t/degrees->radians 65))
-                     (t/rotate :y (t/degrees->radians -15))
+                     (t/rotate :y (t/degrees->radians 15))
+                     (t/rotate :x (t/degrees->radians 15))
                      (t/translate 0 0 8))})
 
       (harness {
@@ -421,6 +421,11 @@
            50)
   "Weird swirly thing, created with https://github/rm-hull/wireframes [October 16 2013]"
   "doc/gallery/weird-swirly-thing.stl")
+
+(sl/save-shape
+  (cs/make-mobius-strip 0.1 0.1)
+  "Mobius Strip, created with https://github/rm-hull/wireframes [April 17 2014]"
+  "doc/gallery/mobius-strip.stl")
 )
 
 
