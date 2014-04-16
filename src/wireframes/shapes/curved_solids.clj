@@ -122,3 +122,15 @@
           (make-bezier-spline control-points 10)))
       (t/rotate :y (intervals->radians n))
       n)))
+
+(defn make-mobius-strip [i j]
+  (let [x (fn [u v] (* (inc (* (/ v 2) (Math/sin (/ u 2)))) (Math/cos u)))
+        y (fn [u v] (* (inc (* (/ v 2) (Math/cos (/ u 2)))) (Math/sin u)))
+        z (fn [u v] (* (/ v 2) (Math/sin (/ u 2))))
+        u (range 0 (+ (* 2 Math/PI) i) i)
+        v (range -1 (+ 1 j) j)]
+    {:polygons (p/mesh (dec (count u)) (dec (count v)))
+     :points (vec
+               (for [v' v
+                     u' u]
+                 (t/point (x u' v') (y u' v') (z u' v'))))}))

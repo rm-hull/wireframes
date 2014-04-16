@@ -61,9 +61,31 @@
                      (t/translate 0 0 16))})
 
       (harness {
+        :filename "mobius-strip.png"
+        :style style
+        :shape (cs/make-mobius-strip 0.1 0.1)
+        :focal-length 3
+        :size [400 400]
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 65))
+                     (t/rotate :y (t/degrees->radians -15))
+                     (t/translate 0 0 8))})
+
+      (harness {
         :filename "sphere.png"
         :style style
         :shape (cs/make-sphere 3 30)
+        :focal-length 3
+        :size [400 400]
+        :transform (t/combine
+                     (t/rotate :x (t/degrees->radians 60))
+                     (t/rotate :y (t/degrees->radians -15))
+                     (t/translate 0 0 16))})
+
+      (harness {
+        :filename "geosphere.png"
+        :style style
+        :shape (cs/make-isosphere 3 3)
         :focal-length 3
         :size [400 400]
         :transform (t/combine
