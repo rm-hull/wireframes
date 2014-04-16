@@ -151,6 +151,7 @@
                      (t/rotate :y (t/degrees->radians -30))
                      (t/translate 0 0 16))})
 
+(comment ; see issue #8
       (harness {
         :filename "wineglass.png"
         :fill-color 0xEAF5FC
@@ -163,6 +164,7 @@
                      (t/rotate :x (t/degrees->radians 20))
                      (t/scale 1.75)
                      (t/translate 0 0 10))})
+)
 
       (harness {
         :filename "teapot.png"
@@ -265,6 +267,7 @@
                  (t/translate 0 0 10))}))
 
 (deftest ^:examples svg
+  (comment ; see issue #8
   (spit "wineglass.svg"
     (svg/->svg
       (partial svg/draw-solid  {
@@ -279,6 +282,7 @@
                    (t/scale 1.75)
                    (t/translate 0 0 10))})
      [800 600]))
+  )
 
   (spit "sinc3D.svg"
     (svg/->svg
