@@ -295,11 +295,27 @@ can then be viewed using the GitHub 3D viewer.
 * http://www.cs.arizona.edu/classes/cs437/fall11/ch3d.prn.pdf
 * https://github.com/rm-hull/project-euler/blob/master/src/util/geometry.clj#L55
 
+## Contributing
+
+You're more than welcome to pitch in, there are loads of interesting computational
+geometry features I'd like to implement (as well as a few bugs to squash) - take a
+look at the TODO list and the references above.
+
+If there's any you feel you'd specifically like to have a go at, create an
+[issue](https://github.com/rm-hull/wireframes/issues/new) and I'll back-fill it
+with some background information to get you going, and it can then be used as
+the discussion focus.
+
+Fork the repo, create a feature branch and once the feature is complete, submit
+a pull request. Also, please try and add some tests where practical (demo's and
+examples even more so) and keep this README up-to-date, and make sure you've pulled
+from origin master before doing a PR.
+
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2013 Richard Hull
+Copyright (c) 2014 Richard Hull
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
