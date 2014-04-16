@@ -9,10 +9,7 @@
         [byte-streams :only [to-byte-buffer print-bytes transfer]]))
 
 (defcodec point-spec
-  (ordered-map
-    :x :float32-le
-    :y :float32-le
-    :z :float32-le))
+  [:float32-le :float32-le :float32-le])
 
 (defcodec triangle-spec
   (ordered-map
@@ -27,7 +24,7 @@
 
 (defn convert [points]
   (fv/vec
-    (for [{:keys [x y z]} points]
+    (for [[x y z] points]
       (t/point x y z))))
 
 (defn load-shape [file]
@@ -38,17 +35,20 @@
      :polygons polygons}))
 
 (defn build-triangle [polygon]
-  {:normal (apply t/normal (:vertices polygon))
-   :points (map t/vec (:vertices polygon))
+  {:normal (apply t/normal polygon)
+   :points (map t/vec polygon)
    :attributes 0})
 
 (defn save-shape [shape description file]
   (let [file     (io/file file)
         polygons (for [polygon (t/reduce-polygons (:polygons shape))]
-                   (mapv (:points shape) polygon))]
+                   (mapv (:points shape) (:vertices polygon)))]
     (.delete file)
     (transfer
       (encode stl-spec
         {:header (c/pad description 80)
          :triangles (map build-triangle polygons)})
-      (io/file file))))
+      (io/file file))
+
+    ; Return the actual number of triangulated polygons written
+    (count polygons)))
