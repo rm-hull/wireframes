@@ -265,17 +265,7 @@ can then be viewed using the GitHub 3D viewer.
 
 ## Known Bugs
 
-* Bug in shader/lighting position - affected by applied transforms?
-* ~~Improve depth criteria for priority fill/painters algorithm~~
-* Cube (multi-dimension) extrusion is generating erroneous polygons
-* ~~RRB-Vector implementation does not bundle .cljs files! See http://dev.clojure.org/jira/browse/CRRBV-1~~
-* Priority fill fails with TimSort exception _“Comparison method violates its general contract!”_ if any point is NaN.
-* `make-wineglass` fails with a stack overflow exception, not sure if this is caused by code, JDK8, Clojure 1.6.0
-* Exception in `stl-loader/save-shape`
-* Clojurescript warnings: 
-
-    WARNING: divide already refers to: /divide being replaced by: wireframes.transform/divide at line 27 target/generated-src/wireframes/transform.cljs
-    WARNING: unsigned-bit-shift-right already refers to: #'clojure.core/unsigned-bit-shift-right in namespace: cljs.core, being replaced by: #'cljs.core/unsigned-bit-shift-right
+See open [issues](https://github.com/rm-hull/wireframes/issues?page=1&state=open).
 
 # References
 
