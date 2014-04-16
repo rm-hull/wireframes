@@ -5,18 +5,17 @@
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2202"]
-                 [org.clojure/core.rrb-vector "0.0.11"]
+                 [org.clojure/core.rrb-vector "0.0.11" :exclusions [org.clojure/clojurescript]]
                  [gloss "0.2.2"]
                  [potemkin "0.3.4"]
                  [byte-streams "0.1.10"]
                  [com.taoensso/timbre "3.1.6"]
-                 [cljs-webgl "0.1.4-SNAPSHOT"]
-                 [rm-hull/dommy "0.1.3-SNAPSHOT"]
+                 [cljs-webgl "0.1.4-SNAPSHOT" :exclusions [org.clojure/clojurescript]]
+                 [rm-hull/dommy "0.1.3-SNAPSHOT" :exclusions [org.clojure/clojurescript]]
                  [hiccup "1.0.5"]
-                 [jayq "2.5.0"]
-                 [rm-hull/monet "0.1.10"]
-                 [rm-hull/inkspot "0.0.1-SNAPSHOT"]
-                 [rm-hull/cljs-test "0.0.8-SNAPSHOT"]]
+                 [rm-hull/monet "0.1.11" :exclusions [org.clojure/clojurescript]]
+                 [rm-hull/inkspot "0.0.1-SNAPSHOT" :exclusions [org.clojure/clojurescript]]
+                 [rm-hull/cljs-test "0.0.8-SNAPSHOT" :exclusions [org.clojure/clojurescript]]]
   :plugins [[lein-cljsbuild "1.0.3"]
             [com.birdseye-sw/lein-dalap "0.1.0"]]
   :hooks [leiningen.dalap
@@ -33,8 +32,7 @@
           :source-map "target/wireframes.map"
           :static-fns true
           ;:optimizations :advanced
-          :pretty-print true
-          :externs ["resources/private/externs/jquery.js"] }}
+          :pretty-print true }}
       :test {
         :source-paths ["src-cljs" "target/generated-src" "test"]
         :incremental? true
