@@ -105,7 +105,7 @@ out to a PNG file:
 
 (write-png
   (->img
-    (draw-solid
+    #(draw-solid
       {:focal-length 3
        :color-fn (wireframe :white :transparent)
        :style :transparent
@@ -113,7 +113,7 @@ out to a PNG file:
                     (rotate :z (degrees->radians 65))
                     (rotate :y (degrees->radians -30))
                     (translate 0 0 16))
-       :shape (make-torus 1 3 60 60)})
+       :shape (make-torus 1 3 60 60)} %)
     [400 400])
   "torus-65.png")
 ```
@@ -141,12 +141,12 @@ MATLAB-style function plots can be generated thus:
         1.0
         (/ (Math/sin x) x)))
 
-(defn mexican-hat [x y]
+(defn sombrero [x y]
   (* 15 (sinc (Math/sqrt (+ (sqr x) (sqr y ))))))
 
 (write-png
   (->img
-    (draw-solid
+    #(draw-solid
       {:focal-length 30
        :color-fn (comp
                    black-edge                         ; [1]
@@ -162,7 +162,7 @@ MATLAB-style function plots can be generated thus:
        :shape (make-surface                           ; [4]
                 (range -22 22 0.25)
                 (range -22 22 0.25)
-                mexican-hat)})                        ; [5]
+                sombrero)} %)                        ; [5]
     [600 600])
   "sinc3D.png")
 ```
@@ -186,7 +186,7 @@ code sample:
 
 (write-png
   (->img
-    (draw-solid
+    #(draw-solid
       {:focal-length 10
        :fill-color Color/WHITE
        :style :translucent
@@ -194,7 +194,7 @@ code sample:
                     (rotate :z (degrees->radians 35))
                     (rotate :x (degrees->radians -70))
                     (translate 0 -1 40))
-       :shape (load-shape "resources/newell-teapot/teapot")})
+       :shape (load-shape "resources/newell-teapot/teapot")} %)
     [1000 900])
   "teapot.png")
 ```
