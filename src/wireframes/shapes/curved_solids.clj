@@ -124,12 +124,12 @@
       n)))
 
 (defn make-mobius-strip [i j]
-  (let [x (fn [u v] (* (inc (* (/ v 2) (Math/sin (/ u 2)))) (Math/cos u)))
-        y (fn [u v] (* (inc (* (/ v 2) (Math/cos (/ u 2)))) (Math/sin u)))
-        z (fn [u v] (* (/ v 2) (Math/sin (/ u 2))))
-        u (range 0 (+ (* 2 Math/PI) i) i)
-        v (range -1 (+ 1 j) j)]
-    {:polygons (p/mesh (dec (count u)) (dec (count v)))
+  (let [x (fn [u v] (* (inc (* (/ v 2.0) (Math/sin (/ u 2.0)))) (Math/cos u)))
+        y (fn [u v] (* (inc (* (/ v 2.0) (Math/cos (/ u 2.0)))) (Math/sin u)))
+        z (fn [u v] (* (/ v 2.0) (Math/sin (/ u 2.0))))
+        u (range 0.0 (+ (* 2.0 Math/PI) i) i)
+        v (range -1.0 (+ 1.0 j) j)]
+    {:polygons (vec (p/mesh (dec (count u)) (dec (count v))))
      :points (vec
                (for [v' v
                      u' u]
