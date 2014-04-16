@@ -270,8 +270,14 @@ can then be viewed using the GitHub 3D viewer.
 * Cube (multi-dimension) extrusion is generating erroneous polygons
 * ~~RRB-Vector implementation does not bundle .cljs files! See http://dev.clojure.org/jira/browse/CRRBV-1~~
 * Priority fill fails with TimSort exception _“Comparison method violates its general contract!”_ if any point is NaN.
+* `make-wineglass` fails with a stack overflow exception, not sure if this is caused by code, JDK8, Clojure 1.6.0
+* Exception in `stl-loader/save-shape`
+* Clojurescript warnings: 
 
-## References
+    WARNING: divide already refers to: /divide being replaced by: wireframes.transform/divide at line 27 target/generated-src/wireframes/transform.cljs
+    WARNING: unsigned-bit-shift-right already refers to: #'clojure.core/unsigned-bit-shift-right in namespace: cljs.core, being replaced by: #'cljs.core/unsigned-bit-shift-right
+
+# References
 
 * http://lists.canonical.org/pipermail/kragen-hacks/2007-February/000448.html
 * http://www.sjbaker.org/wiki/index.php?title=The_History_of_The_Teapot
