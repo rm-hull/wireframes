@@ -1,8 +1,8 @@
 # Wireframes Gallery
 
-All the images below were either created programmatically by extrusion, or loaded from external 3D data
-files, and then drawn with the renderers within this project. See the [test/wireframes/examples.clj]
-(https://github.com/rm-hull/wireframes/blob/master/test/wireframes/examples.clj) file for details.
+All the images below were either created programmatically by extrusion or parametric computation, else
+loaded from external 3D data files, and then drawn with the renderers within this project. 
+See the [test/wireframes/examples.clj](https://github.com/rm-hull/wireframes/blob/master/test/wireframes/examples.clj) file for details.
 
 ## Tetrahedron
 
@@ -24,7 +24,6 @@ files, and then drawn with the renderers within this project. See the [test/wire
 ![Dodecahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/dodecahedron.png)
 ![Dodecahedron](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/dodecahedron.png)
 
-
 ## Sphere
 
 ![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/sphere.png)
@@ -32,12 +31,27 @@ files, and then drawn with the renderers within this project. See the [test/wire
 ![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/sphere.png)
 ![Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/sphere.png)
 
+## Geodesic Sphere
+
+![Geodesic Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/geosphere.png)
+![Geodesic Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/geosphere.png)
+![Geodesic Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/geosphere.png)
+![Geodesic Sphere](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/geosphere.png)
+
 ## Torus
 
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/torus.png)
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/torus.png)
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/torus.png)
 ![Torus](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/torus.png)
+
+## Möbius Strip
+
+![Mobius Strip](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/mobius-strip.png)
+![Mobius Strip](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/mobius-strip.png)
+![Mobius Strip](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/mobius-strip.png)
+![Mobius Strip](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/mobius-strip.png)
+
 
 ## Wine Glass
 
