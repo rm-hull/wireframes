@@ -6,7 +6,7 @@
     [wireframes.transform :refer [combine rotate translate degrees->radians]]
     [wireframes.shapes.curved-solids :refer [make-torus make-isosphere make-mobius-strip]]
     [wireframes.shapes.platonic-solids :refer [dodecahedron icosahedron]]
-    [monet.canvas :refer [get-context fill-rect fill-style]]
+    [monet.canvas :refer [get-context fill-rect fill-style text stroke-style]]
     [monet.core :refer [animation-frame]]))
 
 (def canvas (.getElementById js/document "demo"))
@@ -17,12 +17,14 @@
 
 (def isosphere (make-isosphere 3 2))
 
-(def mobius-strip (make-mobius-strip 0.1 0.1))
+(def mobius-strip (make-mobius-strip 50 10))
 
 (defn render [x y z]
-  (-> ctx
+  (->
+    ctx
     (fill-style "rgba(255,255,255,0.75")
     (fill-rect { :x 0 :y 0 :w 800 :h 600}))
+
   ((->canvas ctx)
     (partial draw-solid
       {:style :translucent
@@ -36,7 +38,12 @@
                     (rotate :y (degrees->radians y))
                     (rotate :z (degrees->radians z))
                     (translate 0 0 8))})
-    [800 600]))
+    [800 600])
+
+  (->
+    ctx
+    (fill-style :black)
+    (text {:text (pr-str x y z) :x 30 :y 30})))
 
 (defn animate []
   (letfn [(loop [x y z]

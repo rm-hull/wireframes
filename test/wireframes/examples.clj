@@ -63,12 +63,13 @@
       (harness {
         :filename "mobius-strip.png"
         :style style
-        :shape (cs/make-mobius-strip 0.1 0.1)
+        :shape (cs/make-mobius-strip 60 10)
         :focal-length 3
         :size [400 400]
         :transform (t/combine
-                     (t/rotate :y (t/degrees->radians 15))
-                     (t/rotate :x (t/degrees->radians 15))
+                     (t/rotate :z (t/degrees->radians 236))
+                     (t/rotate :y (t/degrees->radians -314))
+                     (t/rotate :x (t/degrees->radians 162))
                      (t/translate 0 0 8))})
 
       (harness {

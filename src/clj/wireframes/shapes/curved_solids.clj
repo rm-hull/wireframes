@@ -123,13 +123,18 @@
       (t/rotate :y (intervals->radians n))
       n)))
 
-(defn make-mobius-strip [i j]
-  (let [x (fn [u v] (* (inc (* (/ v 2.0) (Math/cos (/ u 2.0)))) (Math/cos u)))
+(defn make-mobius-strip [x-divisions y-divisions]
+  (let [i (/ (* 2.0 Math/PI) x-divisions)
+        j (/ 2.0 y-divisions)
+        x (fn [u v] (* (inc (* (/ v 2.0) (Math/cos (/ u 2.0)))) (Math/cos u)))
         y (fn [u v] (* (inc (* (/ v 2.0) (Math/cos (/ u 2.0)))) (Math/sin u)))
         z (fn [u v] (* (/ v 2.0) (Math/sin (/ u 2.0))))
-        u (range 0.0 (+ (* 2.0 Math/PI) i) i)
-        v (range -1.0 (+ 1.0 j) j)]
-    {:polygons (vec (p/mesh (dec (count u)) (dec (count v))))
+        u (range 0.0 (+ i (* 2.0 Math/PI)) i)
+        v (range -1.0 (+ j 1.0) j)]
+    {:polygons (vec
+                 (p/mesh
+                   (dec (count u))
+                   (dec (count v))))
      :points (vec
                (for [v' v
                      u' u]
