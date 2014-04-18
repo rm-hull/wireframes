@@ -24,12 +24,12 @@
             [com.birdseye-sw/lein-dalap "0.1.0"]]
   :hooks [leiningen.dalap
           leiningen.cljsbuild]
-  :source-paths ["src"]
+  :source-paths ["src/clj"]
   :cljsbuild {
     :test-commands {"phantomjs"  ["phantomjs" "target/unit-test.js"]}
     :builds {
       :main {
-        :source-paths ["src-cljs" "target/generated-src"]
+        :source-paths ["src/cljs" "target/generated-src"]
         :jar true
         :compiler {
           :output-to "target/wireframes.js"
