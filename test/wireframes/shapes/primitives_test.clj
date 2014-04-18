@@ -1,7 +1,8 @@
 (ns wireframes.shapes.primitives-test
-  (:use [clojure.test]
-        [wireframes.shapes.primitives])
-  (:require [wireframes.transform :as t]))
+  (:require
+    [clojure.test :refer :all]
+    [wireframes.transform :as t]
+    [wireframes.shapes.primitives :refer :all]))
 
 (defn =points [expected actual]
   (is (= (mapv #(vec (into-array Double/TYPE %)) expected)
@@ -41,3 +42,28 @@
                    (make-point 2 2 4)
                    (make-point 2 4 4)
                    (make-point 2 4 2))))))
+
+(deftest mesh-generation
+  (is (= (mesh 3 2)
+         [{:vertices [0 1 5 4]}
+          {:vertices [1 2 6 5]}
+          {:vertices [2 3 7 6]}
+          {:vertices [4 5 9 8]}
+          {:vertices [5 6 10 9]}
+          {:vertices [6 7 11 10]}]))
+
+  ; just extend periodicity along Y dimension
+  (is (= (mesh 3 2 false true)
+         [{:vertices [0 1 5 4]}
+          {:vertices [1 2 6 5]}
+          {:vertices [2 3 7 6]}
+          {:vertices [4 5 9 8]}
+          {:vertices [5 6 10 9]}
+          {:vertices [6 7 11 10]}
+          {:vertices [8 9 1 0]}
+          {:vertices [9 10 2 1]}
+          {:vertices [10 11 3 2]}])))
+
+(mesh 3 1 true)
+
+(mesh 3 2 false true)

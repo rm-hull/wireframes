@@ -89,14 +89,16 @@
      (extrude (t/translate 1 0 0) w)
      (extrude (t/translate 0 1 0) h)))
 
-(defn mesh [x-divisions y-divisions]
-  (for [j (range y-divisions)
-        i (range x-divisions)
-        :let [a (+ i (* j (inc x-divisions)))
-              b (inc a)
-              c (+ b x-divisions)
-              d (inc c)]]
-    {:vertices [a b d c]})) ; order of points is important
+; x-periodic? not yet supported
+(defn mesh [x-divisions y-divisions & [x-periodic? y-periodic?]]
+  (let [m (* (inc x-divisions) (inc y-divisions))]
+    (for [j (range ((if y-periodic? inc identity) y-divisions))
+          i (range  x-divisions)
+          :let [a (+ i (* j (inc x-divisions)))
+                b (inc a)
+                c (mod (+ b x-divisions) m)
+                d (inc c)]]
+      {:vertices [a b d c]}))) ; order of points is important
 
 (defn make-surface [x-range y-range z-fn]
   {:points (vec
