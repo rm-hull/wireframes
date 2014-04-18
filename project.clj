@@ -21,9 +21,9 @@
                  [me.raynes/fs "1.4.5" :scope "test"]]
 
   :plugins [[lein-cljsbuild "1.0.3"]
-            [com.birdseye-sw/lein-dalap "0.1.0"]]
+	    [com.birdseye-sw/lein-dalap "0.1.0"]]
   :hooks [leiningen.dalap
-          leiningen.cljsbuild]
+	  leiningen.cljsbuild]
   :source-paths ["src/clj"]
   :cljsbuild {
     :test-commands {"phantomjs"  ["phantomjs" "target/unit-test.js"]}
@@ -38,7 +38,7 @@
           ;:optimizations :advanced
           :pretty-print true }}
       :test {
-        :source-paths ["src-cljs" "target/generated-src" "test"]
+        :source-paths ["src/cljs" "target/generated-src" "test"]
         :incremental? true
         :compiler {
           :output-to "target/unit-test.js"
@@ -47,7 +47,7 @@
           :optimizations :whitespace
           :pretty-print true }}
       :demo {
-        :source-paths ["src-cljs" "target/generated-src" "doc/gallery/cljs-demo"]
+        :source-paths ["src/cljs" "target/generated-src" "doc/gallery/cljs-demo"]
         :incremental? true
         :compiler {
           :output-to "target/demo.js"
