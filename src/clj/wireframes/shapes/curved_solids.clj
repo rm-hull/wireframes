@@ -5,6 +5,10 @@
     [wireframes.bezier :as b]
     [wireframes.transform :as t]))
 
+(def π Math/PI)
+(def two-π (* 2.0 π))
+
+
 (def intervals->radians
   (let [atan8 (* (Math/atan 1.0) 8.0)]
     (fn  [num-intervals]
@@ -124,12 +128,12 @@
       n)))
 
 (defn make-mobius-strip [x-divisions y-divisions]
-  (let [i (/ (* 2.0 Math/PI) x-divisions)
+  (let [i (/ two-π x-divisions)
         j (/ 2.0 y-divisions)
         x (fn [u v] (* (inc (* (/ v 2.0) (Math/cos (/ u 2.0)))) (Math/cos u)))
         y (fn [u v] (* (inc (* (/ v 2.0) (Math/cos (/ u 2.0)))) (Math/sin u)))
         z (fn [u v] (* (/ v 2.0) (Math/sin (/ u 2.0))))
-        u (range 0.0 (+ i (* 2.0 Math/PI)) i)
+        u (range 0.0 (+ i two-π) i)
         v (range -1.0 (+ j 1.0) j)]
     {:polygons (vec
                  (p/mesh
@@ -139,3 +143,42 @@
                (for [v' v
                      u' u]
                  (t/point (x u' v') (y u' v') (z u' v'))))}))
+
+(defn make-klein-bagel [r divisions]
+  (let [i (/ two-π divisions)
+        x (fn [r θ v] (* (+ r (* (Math/cos (/ θ 2)) (Math/sin v)) (- (* (Math/sin (/ θ 2)) (Math/sin (* 2 v))))) (Math/cos θ)))
+        y (fn [r θ v] (* (+ r (* (Math/cos (/ θ 2)) (Math/sin v)) (- (* (Math/sin (/ θ 2)) (Math/sin (* 2 v))))) (Math/sin θ)))
+        z (fn [r θ v] (+ (* (Math/sin (/ θ 2)) (Math/sin v)) (* (Math/cos (/ θ 2)) (Math/sin (* 2 v)))))
+        θ (range 0.0 (+ i two-π) i)
+        v (range 0.0 (+ i two-π) i)]
+    {:polygons (vec
+                 (p/mesh
+                   (dec (count θ))
+                   (dec (count v))))
+     :points (vec
+               (for [v' v
+                     θ' θ]
+                 (t/point (x r θ' v') (y r θ' v') (z r θ' v'))))}))
+
+; http://paulbourke.net/geometry/klein/
+(defn make-klein-bottle [length loop width divisions]
+  (let [i (/ two-π divisions)
+        r (fn [u] (* width (- 1.0 (/ (Math/cos u) 2.0))))
+        x (fn [u v] (if (< u π)
+                     (+ (* loop (Math/cos u) (inc (Math/sin u))) (* (r u) (Math/cos u) (Math/cos v)))
+                     (+ (* loop (Math/cos u) (inc (Math/sin u))) (* (r u) (Math/cos (+ v π))))))
+        y (fn [u v] (if (< u π)
+                     (+ (* length (Math/sin u)) (* (r u) (Math/sin u) (Math/cos v)))
+                     (* length (Math/sin u))))
+        z (fn [u v] (* (r u) (Math/sin v)))
+        u (range 0.0 (+ i two-π) i)
+        v (range 0.0 (+ i two-π) i)]
+    {:polygons (vec
+                 (p/mesh
+                   (dec (count u))
+                   (dec (count v))))
+     :points (vec
+               (for [v' v
+                     u' u]
+                 (t/point (x u' v') (y u' v') (z u' v'))))}))
+

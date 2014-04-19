@@ -70,7 +70,31 @@
                      (t/rotate :z (t/degrees->radians 236))
                      (t/rotate :y (t/degrees->radians -314))
                      (t/rotate :x (t/degrees->radians 162))
-                     (t/translate 0 0 8))})
+                     (t/translate 0 0 15))})
+
+      (harness {
+        :filename "klein-bagel.png"
+        :style style
+        :shape (cs/make-klein-bagel 2 40)
+        :focal-length 3
+        :size [400 400]
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians -14.5))
+                     (t/rotate :y (t/degrees->radians 36))
+                     (t/rotate :x (t/degrees->radians 12))
+                     (t/translate 0 0 15))})
+
+      (harness {
+        :filename "klein-bottle.png"
+        :style style
+        :shape (cs/make-klein-bottle 6 2 2 40)
+        :focal-length 3
+        :size [400 400]
+        :transform (t/combine
+                     (t/rotate :z (t/degrees->radians 19.5))
+                     (t/rotate :y (t/degrees->radians -11))
+                     (t/rotate :x (t/degrees->radians 32.7))
+                     (t/translate 0 0 30))})
 
       (harness {
         :filename "sphere.png"

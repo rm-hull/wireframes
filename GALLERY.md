@@ -52,6 +52,20 @@ See the [test/wireframes/examples.clj](https://github.com/rm-hull/wireframes/blo
 ![Mobius Strip](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/mobius-strip.png)
 ![Mobius Strip](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/mobius-strip.png)
 
+## Klein Bottle
+
+![Klein Bottle](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/klein-bottle.png)
+![Klein Bottle](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/klein-bottle.png)
+![Klein Bottle](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/klein-bottle.png)
+![Klein Bottle](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/klein-bottle.png)
+
+## Klein Bagel
+
+![Klein Bagel](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/transparent/klein-bagel.png)
+![Klein Bagel](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/translucent/klein-bagel.png)
+![Klein Bagel](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/opaque/klein-bagel.png)
+![Klein Bagel](https://raw.github.com/rm-hull/wireframes/master/doc/gallery/shaded/klein-bagel.png)
+
 
 ## Wine Glass
 
