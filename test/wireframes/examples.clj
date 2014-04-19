@@ -70,7 +70,7 @@
                      (t/rotate :z (t/degrees->radians 236))
                      (t/rotate :y (t/degrees->radians -314))
                      (t/rotate :x (t/degrees->radians 162))
-                     (t/translate 0 0 15))})
+                     (t/translate 0 0 8))})
 
       (harness {
         :filename "klein-bagel.png"
