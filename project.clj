@@ -20,10 +20,15 @@
                  [com.taoensso/timbre "3.1.6" :scope "test"]
                  [me.raynes/fs "1.4.5" :scope "test"]]
 
-  :plugins [[lein-cljsbuild "1.0.3"]
-	    [com.birdseye-sw/lein-dalap "0.1.0"]]
-  :hooks [leiningen.dalap
-	  leiningen.cljsbuild]
+  :plugins [
+    [codox "0.6.7"]
+    [lein-cljsbuild "1.0.3"]
+    [com.birdseye-sw/lein-dalap "0.1.1"]
+  ]
+  :hooks [
+    leiningen.dalap
+    leiningen.cljsbuild
+  ]
   :source-paths ["src/clj"]
   :cljsbuild {
     :test-commands {"phantomjs"  ["phantomjs" "target/unit-test.js"]}
@@ -55,8 +60,14 @@
           :static-fns true
           :optimizations :whitespace
           :pretty-print true }}}}
-  :test-selectors {:default (complement :examples)
-                   :examples :examples }
+  :test-selectors {
+    :default (complement :examples)
+    :examples :examples }
+  :codox {
+    :sources ["src/clj" "src/cljs"]
+    :output-dir "doc/api"
+    :src-dir-uri "http://github.com/rm-hull/wireframes/blob/master/"
+    :src-linenum-anchor-prefix "L" }
   :min-lein-version "2.3.4"
   :global-vars {*warn-on-reflection* true}
   :repositories {"sonartype snapshots" "https://oss.sonatype.org/content/repositories/snapshots"})

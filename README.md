@@ -30,14 +30,13 @@ A variety of (in-progress) generated shapes and demos:
 
 ### Pre-requisites
 
-You will need [Leiningen](https://github.com/technomancy/leiningen) 2.3.2 or above installed.
+You will need [Leiningen](https://github.com/technomancy/leiningen) 2.3.4 or above installed.
 
 ### Building
 
 To build and install the library locally, run:
 
     $ lein test
-    $ lein cljsbuild once
     $ lein install
 
 To re-generate the examples in the ```doc/gallery``` directory, run:
@@ -64,6 +63,8 @@ For maven-based projects, add the following to your `pom.xml`:
 ```
 
 ## Basic Usage
+
+See the [API Documentation](http://rm-hull.github.io/wireframes).
 
 ### Creating shapes
 
