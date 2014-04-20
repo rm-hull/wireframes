@@ -1,4 +1,5 @@
-(ns wireframes.bezier)
+(ns wireframes.bezier
+  (:require [clojure.string :as str]))
 
 (defn- add
   "Add two points"

@@ -1,5 +1,5 @@
 (ns wireframes.transform
-  (:refer-clojure :exclude [identity vec])
+  (:refer-clojure :exclude [identity vec divide unsigned-bit-shift-right])
   (:require [wireframes.common :as c]))
 
 (defn degrees->radians [d]
