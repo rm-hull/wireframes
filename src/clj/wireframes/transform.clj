@@ -68,6 +68,12 @@
 (defn dot-product [^doubles as ^doubles bs]
   (reduce + (mapv * as bs)))
 
+(defn cross-product [[ax ay az] [bx by bz]]
+  (point
+    (- (* ay bz) (* az by))
+    (- (* az bx) (* ax bz))
+    (- (* ax by) (* ay bx))))
+
 (defn transform-point [matrix]
   (fn [[ax ay az aw]]
     (mapv
@@ -118,7 +124,6 @@
   [(double (/ (+ ax bx cx) 3))
    (double (/ (+ ay by cy) 3))
    (double (/ (+ az bz cz) 3))])
-
 
 (defn mid-point
   "Calculate the midpoint of a line"
@@ -186,3 +191,14 @@
       (if (and (not= m 0) (not= m 1))
         (divide xyz m)
         xyz))))
+      
+(defn perpendicular [[x y z]]
+  (if (and (zero? z) (= (- x) y))
+    (point (- (- y z)) x x)
+    (point z z (- (- x y)))))
+    
+(defn perpendicular-vectors [v]
+  (let [n (normalize v)
+        a (perpendicular n)
+        b (cross-product n a)]
+    [a b]))
