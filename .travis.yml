@@ -1,5 +1,16 @@
 language: clojure
-lein: lein2
-script: lein2 test
+lein: 2.8.1
+install:
+  # Get recent node:
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - npm install
+before_script:
+  - npm install -g eclint
+  - eclint check $(git ls-files)
+  - lein install
+script:
+  - lein test
 jdk:
-  - openjdk7
+  - oraclejdk8
